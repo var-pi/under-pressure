@@ -1,7 +1,3 @@
-<template>
-  <input type="range" min="1" max="100" value="50">
-</template>
-
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
 
