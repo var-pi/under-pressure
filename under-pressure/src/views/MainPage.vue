@@ -1,7 +1,9 @@
 <template>
-  <div>
-    <LineGraph></LineGraph>
-    <input type="range" :min="1" :max="100" v-model="rangeValue">
+  <div id="contents">
+    <LineGraph ref="lineGraph" :sliderValue="rangeValue" />
+    <input type="range" id="slider" :min="0" :max="100" v-model="rangeValue">
+    <label for="slider">{{ rangeValue }}</label>
+    <button @click="submitStressValue">Sisesta</button>
   </div>
 </template>
 
@@ -17,6 +19,14 @@ export default defineComponent({
     return {
       rangeValue: 50,
     };
+  },
+  methods: {
+    submitStressValue() {
+      // Access the child component using the ref and call the method
+      if (this.$refs.lineGraph) {
+        (this.$refs.lineGraph as any).updateSliderValue(this.rangeValue);
+      }
+    },
   },
 });
 </script>
