@@ -53,6 +53,7 @@ export default {
       // Handle button click for the selected itemText
       console.log(`Button clicked for item: ${itemText}`);
       // TODO: fetch info according to subject
+      this.$emit('button-clicked', itemText);
     },
   },
 };
