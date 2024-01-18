@@ -43,7 +43,7 @@ export default {
     },
   },
   methods: {
-    toggleMenu(): void {
+    toggleMenu(this: any): void {
       this.isDropdownVisible = !this.isDropdownVisible;
     },
     handleButtonClick(subjectText: string): void {
