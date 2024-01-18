@@ -6,12 +6,7 @@
 
 <script lang="ts">
 import Chart, { ChartConfiguration } from 'chart.js/auto';
-import { onMounted, ref, watch, SetupContext } from 'vue';
-
-interface LineGraphProps {
-  sliderValue: number;
-  selectedSubject: string;
-}
+import { onMounted, ref } from 'vue';
 
 export default {
   name: 'LineGraph',
@@ -26,7 +21,7 @@ export default {
       default: "",
     }
   },
-  setup(props: LineGraphProps, context: SetupContext) {
+  setup() {
     // Initial data for labels and values in the line graph
     // Todo: get initial values from database
     let labels = ['1', '2', '3', '4', '5', '6', '7'];
@@ -94,12 +89,6 @@ export default {
         lineGraph.update();
       }
     };
-    // Watch for changes in the selectedSubject prop
-    watch(() => props.selectedSubject, (newSubject) => {
-      console.log('Selected Subject:', newSubject);
-      // TODO: Handle the selected subject information as needed
-    });
-
     // Return the references and methods for external use
     return {
       lineGraphRef,

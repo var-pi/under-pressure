@@ -5,10 +5,10 @@
       <input id="search-bar" type="text" placeholder="Otsi" v-model="filter">
       <div class="scrollable-content">
         <button v-for="item in filteredItems" 
-        :key="item.text" 
-        :style="{ display: item.display }" 
-        @click="handleButtonClick(item.text)">
-        {{ item.text }}
+                :key="item.text" 
+                :style="{ display: item.display }" 
+                @click="handleButtonClick(item.text)">
+          {{ item.text }}
         </button>
       </div>
     </div>
@@ -17,7 +17,18 @@
 
 <script lang="ts">
 export default {
-  data() {
+  props: {
+    // Prop to receive the slider value from the parent component
+    subjects: {
+      type: Array,
+      default: () => [],
+    },
+  },
+  data(): {
+    filter: string;
+    isDropdownVisible: boolean;
+    items: { text: string; display: string }[];
+  } {
     return {
       filter: "",
       isDropdownVisible: false,
@@ -37,23 +48,23 @@ export default {
     };
   },
   computed: {
-    filteredItems() {
+    filteredItems(): Array<{ text: string; display: string }> {
       const filter = this.filter.toUpperCase();
-      return this.items.map(item => ({
+      return this.items.map((item) => ({
         text: item.text,
         display: item.text.toUpperCase().indexOf(filter) > -1 ? "block" : "none",
       }));
     },
   },
   methods: {
-    toggleMenu() {
+    toggleMenu(): void {
       this.isDropdownVisible = !this.isDropdownVisible;
+      console.log(this.subjects);
     },
-    handleButtonClick(itemText: string) {
+    handleButtonClick(itemText: string): void {
       // Handle button click for the selected itemText
       console.log(`Button clicked for item: ${itemText}`);
       // TODO: fetch info according to subject
-      this.$emit('button-clicked', itemText);
     },
   },
 };
