@@ -17,7 +17,7 @@ export default {
       default: 50,
     },
   },
-  setup(props) {
+  setup() {
     // Initial data for labels and values in the line graph
     // Todo: get initial values from database
     let labels = ['1', '2', '3', '4', '5', '6', '7'];

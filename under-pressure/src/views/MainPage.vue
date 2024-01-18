@@ -4,16 +4,19 @@
     <input type="range" id="slider" :min="0" :max="100" v-model="rangeValue">
     <label for="slider">{{ rangeValue }}</label>
     <button @click="submitStressValue">Sisesta</button>
+    <DropdownSubjects/>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import LineGraph from '@/components/LineGraph.vue';
+import DropdownSubjects from '@/components/DropdownSubjects.vue';
 
 export default defineComponent({
   components: {
     LineGraph,
+    DropdownSubjects
   },
   data() {
     return {
