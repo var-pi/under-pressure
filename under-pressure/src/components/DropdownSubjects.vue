@@ -4,11 +4,11 @@
     <div v-if="isDropdownVisible" class="dropdown-content">
       <input id="search-bar" type="text" placeholder="Otsi" v-model="filter">
       <div class="scrollable-content">
-        <button v-for="item in filteredItems" 
-                :key="item.text" 
-                :style="{ display: item.display }" 
-                @click="handleButtonClick(item.text)">
-          {{ item.text }}
+        <button v-for="subject in filteredSubjects" 
+                :key="subject.text" 
+                :style="{ display: subject.display }" 
+                @click="handleButtonClick(subject.text)">
+          {{ subject.text }}
         </button>
       </div>
     </div>
@@ -27,43 +27,28 @@ export default {
   data(): {
     filter: string;
     isDropdownVisible: boolean;
-    items: { text: string; display: string }[];
   } {
     return {
       filter: "",
       isDropdownVisible: false,
-      items: [
-        { text: "Kõrgem matemaatika I", display: "block" },
-        { text: "Matemaatiline maailmapilt", display: "block" },
-        { text: "Programmeerimine I", display: "block" },
-        { text: "Algebra I", display: "block" },
-        { text: "Algoritmid ja andmestruktuurid", display: "block" },
-        { text: "Programmeerimine II", display: "block" },
-        { text: "Andmebaasid", display: "block" },
-        { text: "Mitme muutuja matemaatiline analüüs", display: "block" },
-        { text: "Tarkvaratehnika", display: "block" },
-        { text: "Veebirakenduse loomine", display: "block" },
-        { text: "Terved hambad kõigile", display: "block" },
-      ],
     };
   },
   computed: {
-    filteredItems(): Array<{ text: string; display: string }> {
+    filteredSubjects(): Array<{ text: string; display: string }> {
       const filter = this.filter.toUpperCase();
-      return this.items.map((item) => ({
-        text: item.text,
-        display: item.text.toUpperCase().indexOf(filter) > -1 ? "block" : "none",
+      return (this.subjects as string[]).map((subject) => ({
+        text: subject,
+        display: subject.toUpperCase().indexOf(filter) > -1 ? "block" : "none",
       }));
     },
   },
   methods: {
     toggleMenu(): void {
       this.isDropdownVisible = !this.isDropdownVisible;
-      console.log(this.subjects);
     },
-    handleButtonClick(itemText: string): void {
+    handleButtonClick(subjectText: string): void {
       // Handle button click for the selected itemText
-      console.log(`Button clicked for item: ${itemText}`);
+      console.log(`Button clicked for item: ${subjectText}`);
       // TODO: fetch info according to subject
     },
   },

@@ -5,7 +5,7 @@
     <label for="slider">{{ rangeValue }}</label>
     <button @click="fetchSubjects">Fetch Subjects</button>
     <button @click="submitStressValue">Sisesta</button>
-    <DropdownSubjects/>
+    <DropdownSubjects :subjects="subjects" />
   </div>
 </template>
 
@@ -46,13 +46,10 @@ export default defineComponent({
         const array = data.data;
         for (const item of array) {
           const matches = item.value.match(/\(\d+,"([^"]+)"\)/);
-
           if (matches && matches[1] !== undefined) [
             this.subjects.push(matches[1])
           ]
-        }
-        console.log(this.subjects[0]);
-        
+        }        
       })
       .catch((error) => {
         console.error("Error:", error);
