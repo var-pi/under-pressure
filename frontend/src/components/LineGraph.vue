@@ -1,12 +1,18 @@
 <template>
   <div id="graphContainer">
-    <canvas ref="lineGraphRef" ></canvas>
+    <canvas ref="lineGraphRef"></canvas>
   </div>
 </template>
 
 <script lang="ts">
+// Script in Composition API
 import Chart, { ChartConfiguration } from 'chart.js/auto';
 import { onMounted, ref } from 'vue';
+
+interface LineGraphProps {
+  sliderValue: number;
+  selectedSubject: string;
+}
 
 export default {
   name: 'LineGraph',
@@ -16,8 +22,12 @@ export default {
       type: Number,
       default: 50,
     },
+    selectedSubject: {
+      type: String,
+      default: "",
+    },
   },
-  setup(props) {
+  setup(props: LineGraphProps) {
     // Initial data for labels and values in the line graph
     // Todo: get initial values from database
     let labels = ['1', '2', '3', '4', '5', '6', '7'];
@@ -69,7 +79,7 @@ export default {
 
       // Add Date as a label for the graph
       const date = new Date();
-      labels.push(date.toLocaleDateString())
+      labels.push(date.toLocaleDateString());
 
       // Update the chart data with the new arrays
       updateChartData();
