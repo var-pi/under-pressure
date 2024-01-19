@@ -10,6 +10,7 @@
 </template>
 
 <script lang="ts">
+// Script in Options API
 import { defineComponent } from 'vue';
 import LineGraph from '../components/LineGraph.vue';
 import DropdownSubjects from '../components/DropdownSubjects.vue';
@@ -32,7 +33,7 @@ export default defineComponent({
   methods: {
     fetchSubjects() {
       console.log("Fetching subjects");
-      fetch("http://172.17.158.156:8081/subjects", {
+      fetch("http://172.17.159.197:8081/subjects", {
         method: "GET",
         // headers: {
         //   "Content-Type": "application/json",
