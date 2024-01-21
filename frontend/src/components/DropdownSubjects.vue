@@ -35,6 +35,7 @@ export default {
   },
   // Setup function for reactive data and component logic
   setup(props: DropdownSubjectsProps) {
+    
     // Reactive reference for the filter text
     const filter = ref('');
     // Reactive reference for dropdown visibility

@@ -1,0 +1,9 @@
+{
+  "data": [
+      "Programmeerimine I",
+      "Kõrgem matemaatika I",
+      "Algebra I"
+  ],
+  "message": "These are all of the available subjects.",
+  "status": "success"
+}

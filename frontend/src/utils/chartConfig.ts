@@ -41,11 +41,8 @@ export const updateChartData = (config: ChartConfiguration, newData: number[]): 
     config.data.labels = []; // Initialize labels if not already present
   }
 
-  console.log('Before update:', config.data.labels);
   // If date is same as last date then change last data value
   config.data.labels.push((new Date).toLocaleDateString());
-
-  console.log('After update:', config.data.labels);
 
   // Assuming a single dataset in this example
   const dataset: ChartDataset = config.data.datasets[0];

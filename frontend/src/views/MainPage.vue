@@ -6,7 +6,7 @@
     <label for="slider">{{ sliderValue }}</label>
     <button @click="fetchSubjects">Fetch Subjects</button>
     <button @click="submittedSliderValue = sliderValue">Sisesta</button>
-    <DropdownSubjects :subjects="subjects" />
+    <DropdownSubjects :subjects="localSubjects" />
   </div>
 </template>
 
@@ -14,6 +14,7 @@
 import { defineComponent, ref, PropType } from 'vue';
 import DropdownSubjects from '../components/DropdownSubjects.vue';
 import LineGraph from "../components/LineGraph.vue"
+
 
 interface MainPageProps {
   subjects: string[];
@@ -32,26 +33,19 @@ export default defineComponent({
     },
   },
   setup(props: MainPageProps) {
-    const subjects = ref(props.subjects);
     const sliderValue = ref(50);
     const submittedSliderValue = ref(50); // Initialize it with the default value or any other value you want
-
+    const localSubjects = ref(props.subjects.slice()); // Copy the props to local state
 
     // Methods
     const fetchSubjects = async () => {
-      console.log('Fetching subjects');
       try {
-        const response = await fetch('https://1403-2001-bb8-2002-98-bdb3-dd6f-41d1-b4f3.ngrok-free.app', {
+        //const response = await fetch('https://6296-2001-7d0-87fb-e800-ca6f-49a2-39c7-4844.ngrok-free.app/subjects', {
+        const response = await fetch('http://localhost:8080/subjects.json', {
           method: 'GET',
         });
         const data = await response.json();
-        const newData = data.data
-          .map((item: any) => item.value.match(/\(\d+,"([^"]+)"\)/))
-          .filter((matches: RegExpMatchArray | null) => matches && matches[1] !== undefined)
-          .map((matches: RegExpMatchArray) => matches[1]);
-
-        subjects.value = newData;
-        
+        localSubjects.value = data.data as string[];
       } catch (error) {
         console.error('Error:', error);
       }
@@ -59,6 +53,7 @@ export default defineComponent({
 
     return {
       sliderValue,
+      localSubjects,
       fetchSubjects,
       submittedSliderValue,
     };

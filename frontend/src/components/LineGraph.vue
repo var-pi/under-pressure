@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- Canvas element for rendering the chart -->
     <canvas ref="lineChartCanvas" height="400" width="400"></canvas>
   </div>
 </template>
