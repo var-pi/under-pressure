@@ -20,9 +20,8 @@
 import { ref, computed, PropType } from 'vue';
 
 // Interface for the structure of a subject item
-interface SubjectItem {
-  text: string;
-  display: string;
+interface DropdownSubjectsProps {
+  subjects: string[];
 }
 
 // Exporting the Vue component
@@ -35,7 +34,7 @@ export default {
     },
   },
   // Setup function for reactive data and component logic
-  setup(props) {
+  setup(props: DropdownSubjectsProps) {
     // Reactive reference for the filter text
     const filter = ref('');
     // Reactive reference for dropdown visibility
