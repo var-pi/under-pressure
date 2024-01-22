@@ -12,6 +12,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, PropType } from 'vue';
+import { getSubjects, getSubjectData } from '../api/api';
 import DropdownSubjects from '../components/DropdownSubjects.vue';
 import LineGraph from "../components/LineGraph.vue"
 
@@ -44,55 +45,16 @@ export default defineComponent({
     // Methods
     const fetchSubjects = async () => {
       try {
-        //const response = await fetch('https://6296-2001-7d0-87fb-e800-ca6f-49a2-39c7-4844.ngrok-free.app/subjects', {
-        const response = await fetch('http://localhost:8080/subjects.json', {
-          method: 'GET',
-        });
-        const data = await response.json();
-        localSubjects.value = data.data as string[];
+        localSubjects.value = await getSubjects();
       } catch (error) {
         console.error('Error:', error);
       }
     };
-    const fetchSubjectData = async (subject: string) => {
-      try {        
-        //const response = await fetch('https://6296-2001-7d0-87fb-e800-ca6f-49a2-39c7-4844.ngrok-free.app/subjects', {
-        const response = await fetch('http://localhost:8080/entries.json', {
-          method: 'GET',
-        });
-        const data = await response.json()
-        // Check if data is an array
-        if (Array.isArray(data)) {
-          const matchingItem = data.find((item) => {
-            return item && item.subject && item.subject === subject;
-          });
-
-          if (matchingItem) {
-            return matchingItem;
-          } else {
-            console.log("No matching item found for subject:", subject);
-            return null; // or handle the case when no match is found
-          }
-        } else {
-          console.error('Error: Data is not an array');
-          return null; // or handle the case when data is not an array
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        return null; // or handle the error case
-      }
-    };
-
     const handleSelectedSubjectUpdate = async (subject: string) => {
       try {
-        // You can update any other local state or perform additional actions if needed
-        const item = await fetchSubjectData(subject);
-        
-        chartData.value = item;        
-
-        // Continue with additional logic using the fetched item
+        const item = await getSubjectData(subject);
+        chartData.value = item;
       } catch (error) {
-        // Handle errors if needed
         console.error('Error while fetching subject data:', error);
       }
     };
