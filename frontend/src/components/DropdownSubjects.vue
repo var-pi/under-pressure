@@ -7,7 +7,7 @@
         <button v-for="subject in filteredSubjects"
                 :key="subject.text"
                 :style="{ display: subject.display }"
-                @click="handleButtonClick(subject.text)">
+                @click="selectSubject(subject.text)">
           {{ subject.text }}
         </button>
       </div>
@@ -34,7 +34,7 @@ export default {
     },
   },
   // Setup function for reactive data and component logic
-  setup(props: DropdownSubjectsProps) {
+  setup(props: DropdownSubjectsProps, { emit }) {
     
     // Reactive reference for the filter text
     const filter = ref('');
@@ -57,9 +57,8 @@ export default {
     };
 
     // Method to handle button click for a subject
-    const handleButtonClick = (subjectText: string) => {
-      console.log(`Button clicked for item: ${subjectText}`);
-      // TODO: fetch info according to subject
+    const selectSubject = (subjectText: string) => {
+      emit('update:selectedSubject', subjectText);
     };
 
     // Return reactive data and methods for external use
@@ -68,7 +67,7 @@ export default {
       isDropdownVisible,
       filteredSubjects,
       toggleMenu,
-      handleButtonClick,
+      selectSubject,
     };
   },
 };
