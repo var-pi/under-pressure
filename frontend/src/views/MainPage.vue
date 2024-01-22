@@ -4,7 +4,7 @@
     <LineGraph :newStressValue="submittedSliderValue" :chartData="chartData"></LineGraph>
     <input type="range" id="slider" :min="0" :max="100" v-model="sliderValue" />
     <label for="slider">{{ sliderValue }}</label>
-    <button @click="fetchSubjects">Fetch Subjects</button>
+    <button id="fetch-subjects" @click="fetchSubjects">Fetch Subjects</button>
     <button @click="submittedSliderValue = sliderValue">Sisesta</button>
     <DropdownSubjects :subjects="localSubjects" :selectedSubject="selectedSubject" @update:selectedSubject="handleSelectedSubjectUpdate"/>
   </div>

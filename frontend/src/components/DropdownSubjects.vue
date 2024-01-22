@@ -4,7 +4,7 @@
     <div v-if="isDropdownVisible" class="dropdown-content">
       <input id="search-bar" type="text" placeholder="Otsi" v-model="filter" />
       <div class="scrollable-content">
-        <button v-for="subject in filteredSubjects"
+        <button class="menubtn" v-for="subject in filteredSubjects"
                 :key="subject.text"
                 :style="{ display: subject.display }"
                 @click="selectSubject(subject.text)">

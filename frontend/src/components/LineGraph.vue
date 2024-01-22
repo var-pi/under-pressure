@@ -37,28 +37,23 @@ export default {
   setup(props: Props) {
     // Reference to the canvas element
     const lineChartCanvas = ref<HTMLCanvasElement | null>(null);
-    const chartInstance: Ref<Chart | null> = ref(null);
+    const newChart: Ref<Chart | null> = ref(null);
 
-    // Function to update the chart
     const updateChart = () => {
       const canvas = lineChartCanvas.value;
 
-      // Check if the element is a canvas
       if (canvas) {
         const context = canvas.getContext('2d');
 
-        // Check if 2D rendering context is available
         if (context) {
-          
-          // If there is an existing chart, destroy it
-          if (chartInstance.value) {
-            chartInstance.value.destroy();
+          if (newChart.value) {
+            newChart.value.destroy();
           }
 
-          // Create a new Chart instance using Chart.js library
-          const newChart = new Chart(context, getChartConfig());
-          // Store the new chart instance on the canvas element
-          chartInstance.value = newChart;
+        const chartConfig = getChartConfig();
+        const chartInstance = new Chart(context, chartConfig) as Chart;
+
+        newChart.value = chartInstance;
 
           console.log('Created chart');
         } else {
