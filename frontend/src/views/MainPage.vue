@@ -26,6 +26,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+
 import {
   getSubjects,
   postPersonalSubjects,
@@ -75,4 +76,6 @@ const handleSelectedSubjectUpdate = async (subject: string) => {
     console.error("Error while fetching subject data:", error);
   }
 };
+
 </script>
+
