@@ -4,10 +4,13 @@
     <div v-if="isDropdownVisible" class="dropdown-content">
       <input id="search-bar" type="text" placeholder="Otsi" v-model="filter" />
       <div class="scrollable-content">
-        <button class="menubtn" v-for="subject in filteredSubjects"
-                :key="subject.text"
-                :style="{ display: subject.display }"
-                @click="selectSubject(subject.text)">
+        <button
+          class="menubtn"
+          v-for="subject in filteredSubjects"
+          :key="subject.text"
+          :style="{ display: subject.display }"
+          @click="selectSubject(subject.text)"
+        >
           {{ subject.text }}
         </button>
       </div>
@@ -17,7 +20,7 @@
 
 <script lang="ts">
 // Script in Composition API
-import { ref, computed, PropType } from 'vue';
+import { ref, computed, PropType } from "vue";
 
 // Interface for the structure of a subject item
 interface DropdownSubjectsProps {
@@ -35,9 +38,8 @@ export default {
   },
   // Setup function for reactive data and component logic
   setup(props: DropdownSubjectsProps, { emit }) {
-    
     // Reactive reference for the filter text
-    const filter = ref('');
+    const filter = ref("");
     // Reactive reference for dropdown visibility
     const isDropdownVisible = ref(false);
 
@@ -47,7 +49,7 @@ export default {
       // Map subjects to SubjectItem structure with text and display properties
       return props.subjects.map((subject: string) => ({
         text: subject,
-        display: subject.toUpperCase().includes(filterText) ? 'block' : 'none',
+        display: subject.toUpperCase().includes(filterText) ? "block" : "none",
       }));
     });
 
@@ -58,7 +60,7 @@ export default {
 
     // Method to handle button click for a subject
     const selectSubject = (subjectText: string) => {
-      emit('update:selectedSubject', subjectText);
+      emit("update:selectedSubject", subjectText);
     };
 
     // Return reactive data and methods for external use
@@ -72,7 +74,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .dropdown-content {
