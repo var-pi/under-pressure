@@ -19,7 +19,7 @@
     />
     <DropdownPersonalSubjects
       :personalSubjects="personalSubjects"
-      @addSelectedSubject="addWatchedSubject"
+      @additionalSelectedSubject="addWatchedSubject"
     />
   </div>
 </template>
@@ -44,38 +44,43 @@ const personalSubjects = ref<string[]>([])
 const chartData = ref() // Will be changed with new interface
 
 // Methods
-const getUserSubjects = async (userId: string) => {
+async function getUserSubjects(userId: string) {
   try {
     // Will be changed with new interface
-    console.log(userId)
+    console.log(userId);
     personalSubjects.value = await getSubjects();
   } catch (error) {
     console.error("Error:", error);
   }
-};
-const addStaticEntry = async () => {
+}
+
+async function addStaticEntry() {
   const result = await addEntry("1", "Algebra I", 55);
   console.log(result);
-};
-const addWatchedSubject = async (subjectName: string) => {
+}
+
+async function addWatchedSubject(subjectName: string) {
   const result = await addPersonalSubject("Hjalmar", subjectName);
   console.log(result);
-};
-const fetchSubjects = async () => {
+}
+
+async function fetchSubjects() {
   try {
     localSubjects.value = await getSubjects();
   } catch (error) {
     console.error("Error:", error);
   }
-};
-const handleSelectedSubjectUpdate = async (subject: string) => {
+}
+
+async function handleSelectedSubjectUpdate(subject: string) {
   try {
     // Will be changed with new interface
     //chartData.value = await getSubjectData(subject);
   } catch (error) {
     console.error("Error while fetching subject data:", error);
   }
-};
+}
+
 
 </script>
 

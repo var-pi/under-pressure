@@ -28,7 +28,7 @@ const props = defineProps<{
 const lineChartCanvas = ref<HTMLCanvasElement | null>(null);
 const newChart: Ref<Chart | null> = ref(null);
 
-const updateChart = () => {
+  function updateChart() {
   const canvas = lineChartCanvas.value;
 
   if (canvas) {
@@ -51,10 +51,10 @@ const updateChart = () => {
   } else {
     console.error("Canvas element not found");
   }
-};
+}
 
 // Function to update the chart with new value
-const updateChartInfo = () => {
+function updateChartInfo() {
   console.log("Updating graph with the input value of:", props.newStressValue);
   const newValue = props.newStressValue;
   if (!isNaN(newValue)) {
@@ -64,16 +64,16 @@ const updateChartInfo = () => {
     console.error("Invalid input value. Please enter a valid number.");
   }
   updateChart();
-};
+}
 
-// TODO:Function to update the chart with new chart value
-const initializeChartInfo = () => {
+// Function to update the chart with new chart value
+function initializeChartInfo() {
   console.log("Got new data:", props.chartData);
 
   initializeChart(getChartConfig(), props.chartData);
 
   updateChart();
-};
+}
 
 // Call updateChart when the component is mounted
 onMounted(() => {

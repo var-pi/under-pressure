@@ -30,25 +30,26 @@ const props = defineProps<{
 
 
 // Reactive reference for the filter text
-const filter = ref("");
+const filter = ref<string>("");
 // Reactive reference for dropdown visibility
 const isDropdownVisible = ref(false);
 
 // Computed property for filtered subjects based on the filter text
-const filteredSubjects = computed(() => {
+const filteredSubjects = computed(function() {
   const filterText = filter.value.toUpperCase();
   // Map subjects to SubjectItem structure with text and display properties
-  return props.subjects.map((subject: string) => ({
-    text: subject,
-    display: subject.toUpperCase().includes(filterText) ? "block" : "none",
-  }));
+  return props.subjects.map(function(subject) {
+    return {
+      text: subject,
+      display: subject.toUpperCase().includes(filterText) ? "block" : "none",
+    };
+  });
 });
 
-
 // Method to toggle dropdown visibility
-const toggleMenu = () => {
+function toggleMenu() {
   isDropdownVisible.value = !isDropdownVisible.value;
-};
+}
 </script>
 
 <style scoped>
