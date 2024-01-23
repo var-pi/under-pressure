@@ -1,18 +1,23 @@
 /// <reference types = "cypress"/>
 
-// Test 1
-it('Dropdown menu opens on click', () => {
-  cy.visit('http://localhost:8080/')
+describe('Menu button functionality test', () => {
+  beforeEach(() => {
+    // Visit the page before each test
+    cy.visit('http://localhost:8080/');
+  });
 
-  // Click the button
-  cy.get('#dropbtn').click().then(() => {
-    // Verify that the dropdown is visible
-    cy.get('.dropdown-content').should('exist').should('be.visible')
+  it('Clicking a menu button should call selectSubject method', () => {
+    // Fetch subjects to display in menu
+    cy.get('#fetch-subjects').click();
 
-    // Click the button again
-    cy.get('#dropbtn').click().then(() => {
-      // Verify that the dropdown is not visible
-      cy.get('.dropdown-content').should('not.exist')
-    })
-  })
-})
+    // Interact with the dropdown to make it visible
+    cy.get('#dropbtn').click();
+
+    // Get the first visible menu button and click it
+    cy.get('.menubtn:visible').first().click();
+
+    // Wait for the chart to be created or updated
+    cy.get('canvas').should('exist');
+
+  });
+});

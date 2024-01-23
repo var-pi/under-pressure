@@ -1,17 +1,21 @@
 <!-- MainPage.vue -->
 <template>
   <div id="contents">
-    <LineGraph :newStressValue="submittedSliderValue"></LineGraph>
+    <LineGraph :newStressValue="submittedSliderValue" :chartData="chartData"></LineGraph>
     <input type="range" id="slider" :min="0" :max="100" v-model="sliderValue" />
     <label for="slider">{{ sliderValue }}</label>
-    <button @click="fetchSubjects">Fetch Subjects</button>
+    <button id="fetch-subjects" @click="fetchSubjects">Fetch Subjects</button>
     <button @click="submittedSliderValue = sliderValue">Sisesta</button>
-    <DropdownSubjects :subjects="subjects" />
+    <button @click="addStaticEntry">Lisa</button>
+    <button @click="getSubjectData('1')">User</button>
+    <button @click="addWatchedSubject('1', 'Matemaatiline maailmapilt')">Add subject</button>
+    <DropdownSubjects :subjects="localSubjects" :selectedSubject="selectedSubject" @update:selectedSubject="handleSelectedSubjectUpdate"/>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, PropType } from 'vue';
+import { getSubjects, postPersonalSubjects, addPersonalSubject, addEntry } from '../api/api';
 import DropdownSubjects from '../components/DropdownSubjects.vue';
 import LineGraph from "../components/LineGraph.vue"
 
@@ -25,6 +29,10 @@ export default defineComponent({
     LineGraph
   },
   props: {
+    selectedSubject: {
+      type: String,
+      default: null,
+    },
     subjects: {
       type: Array as PropType<string[]>,
       required: true,
@@ -32,35 +40,50 @@ export default defineComponent({
     },
   },
   setup(props: MainPageProps) {
-    const subjects = ref(props.subjects);
     const sliderValue = ref(50);
     const submittedSliderValue = ref(50); // Initialize it with the default value or any other value you want
-
+    const localSubjects = ref(props.subjects.slice()); // Copy the props to local state
+    const chartData = ref();
 
     // Methods
+    const getSubjectData = async (userId: string) => {
+      const subjects = await postPersonalSubjects(userId);
+      console.log("Siit", subjects);
+    }
+    const addStaticEntry = async () => {
+      const result = await addEntry('1', 'Algebra I', 55);
+      console.log(result);
+    };
+    const addWatchedSubject = async (userId: string, subjectName: string) => {
+      const result = await addPersonalSubject(userId, subjectName);
+      console.log(result);
+    }
     const fetchSubjects = async () => {
-      console.log('Fetching subjects');
       try {
-        const response = await fetch('https://1403-2001-bb8-2002-98-bdb3-dd6f-41d1-b4f3.ngrok-free.app', {
-          method: 'GET',
-        });
-        const data = await response.json();
-        const newData = data.data
-          .map((item: any) => item.value.match(/\(\d+,"([^"]+)"\)/))
-          .filter((matches: RegExpMatchArray | null) => matches && matches[1] !== undefined)
-          .map((matches: RegExpMatchArray) => matches[1]);
-
-        subjects.value = newData;
-        
+        localSubjects.value = await getSubjects();
       } catch (error) {
         console.error('Error:', error);
+      }
+    };
+    const handleSelectedSubjectUpdate = async (subject: string) => {
+      try {
+        const item = await getSubjectData(subject);
+        chartData.value = item;
+      } catch (error) {
+        console.error('Error while fetching subject data:', error);
       }
     };
 
     return {
       sliderValue,
+      localSubjects,
       fetchSubjects,
       submittedSliderValue,
+      handleSelectedSubjectUpdate,
+      chartData,
+      addStaticEntry,
+      getSubjectData,
+      addWatchedSubject
     };
   },
 });
