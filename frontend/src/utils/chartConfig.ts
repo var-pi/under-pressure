@@ -1,5 +1,5 @@
 // chartConfig.ts
-import { ChartConfiguration, ChartData, ChartDataset } from 'chart.js';
+import { ChartConfiguration, ChartDataset } from 'chart.js';
 
 // Define the initial static data
 const initialData: ChartConfiguration['data'] = {
