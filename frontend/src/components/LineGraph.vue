@@ -6,25 +6,18 @@
 
 <script setup lang="ts">
 import Chart from "chart.js/auto";
-import { onMounted, ref, watch, Ref, PropType, defineProps } from "vue";
+import { onMounted, ref, watch, Ref, defineProps } from "vue";
 import {
   getChartConfig,
   initializeChart,
   updateChartData,
 } from "../utils/chartConfig";
 
-interface Props {
-  newStressValue: number;
-  chartData: ChartData;
-}
-
 interface ChartData {
   subject: string;
-  entries: any[]; // You might want to replace 'any' with a more specific type if you know the structure of entries
-  dates: any[]; // Similarly, replace 'any' with the actual type of dates
+  entries: number[];
+  dates: string[];
 }
-
-const name = "LineGraph"; // Component name
 
 const props = defineProps<{
   newStressValue: number;

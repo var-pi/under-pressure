@@ -1,16 +1,16 @@
 <template>
   <div class="dropdown">
-    <button @click="toggleMenu" id="dropbtn">Dropdown</button>
-    <div v-if="isDropdownVisible" class="dropdown-content">
-      <input id="search-bar" type="text" placeholder="Otsi" v-model="filter" />
+    <button id="dropbtn" @click="toggleMenu">Dropdown</button>
+    <div v-if="isDropdownVisible" 
+    class="dropdown-content">
+      <input id="search-bar" type="text" v-model="filter" placeholder="Otsi"/>
       <div class="scrollable-content">
         <button
-          class="menubtn"
           v-for="subject in filteredSubjects"
           :key="subject.text"
           :style="{ display: subject.display }"
           @click="$emit('update:selectedSubject', subject.text)"
-        >
+          class="menubtn">
           {{ subject.text }}
         </button>
       </div>
@@ -20,12 +20,7 @@
 
 <script setup lang="ts">
 // Script in Composition API
-import { ref, computed, PropType, defineComponent, defineProps } from "vue";
-
-// Interface for the structure of a subject item
-interface DropdownSubjectsProps {
-  subjects: string[];
-}
+import { ref, computed, defineProps } from "vue";
 
 // Prop definition for subjects array
 const props = defineProps<{

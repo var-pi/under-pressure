@@ -1,4 +1,3 @@
-<!-- MainPage.vue -->
 <template>
   <div id="contents">
     <LineGraph
@@ -22,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent, ref, PropType, defineProps } from "vue";
+import { ref } from "vue";
 import {
   getSubjects,
   postPersonalSubjects,
@@ -32,17 +31,14 @@ import {
 import DropdownSubjects from "../components/DropdownSubjects.vue";
 import LineGraph from "../components/LineGraph.vue";
 
-// setup(props: MainPageProps) {
 const sliderValue = ref<number>(50);
-const submittedSliderValue = ref<number>(50); // Initialize it with the default value or any other value you want
-const localSubjects = ref<string[]>([]); // Copy the props to local state
-// props.subjects.slice()
+const submittedSliderValue = ref<number>(50);
+const localSubjects = ref<string[]>([]);
 const chartData = ref();
 
 // Methods
 const getSubjectData = async (userId: string) => {
   const subjects = await postPersonalSubjects(userId);
-  console.log("Siit", subjects);
 };
 const addStaticEntry = async () => {
   const result = await addEntry("1", "Algebra I", 55);
@@ -68,4 +64,3 @@ const handleSelectedSubjectUpdate = async (subject: string) => {
   }
 };
 </script>
-
