@@ -22,10 +22,12 @@
 // Script in Composition API
 import { ref, computed, defineProps } from "vue";
 
+
 // Prop definition for subjects array
 const props = defineProps<{
   subjects: string[];
 }>();
+
 
 // Reactive reference for the filter text
 const filter = ref("");
@@ -41,6 +43,7 @@ const filteredSubjects = computed(() => {
     display: subject.toUpperCase().includes(filterText) ? "block" : "none",
   }));
 });
+
 
 // Method to toggle dropdown visibility
 const toggleMenu = () => {
@@ -70,4 +73,3 @@ const toggleMenu = () => {
   width: 190px;
 }
 </style>
-
