@@ -1,6 +1,6 @@
 <template>
   <div class="dropdown">
-    <button id="dropbtn" @click="toggleMenu">Subjects</button>
+    <button id="dropbtn" @click="toggleMenu">My subjects</button>
     <div v-if="isDropdownVisible" 
     class="dropdown-content">
       <input id="search-bar" type="text" v-model="filter" placeholder="Otsi"/>
@@ -9,7 +9,7 @@
           v-for="subject in filteredSubjects"
           :key="subject.text"
           :style="{ display: subject.display }"
-          @click="$emit('newSelectedSubject', subject.text)"
+          @click="$emit('addSelectedSubject', subject.text)"
           class="menubtn">
           {{ subject.text }}
         </button>
@@ -24,7 +24,7 @@ import { ref, computed, defineProps } from "vue";
 
 // Prop definition for subjects array
 const props = defineProps<{
-  subjects: string[];
+  personalSubjects: string[];
 }>();
 
 // Reactive reference for the filter text
@@ -36,7 +36,7 @@ const isDropdownVisible = ref(false);
 const filteredSubjects = computed(() => {
   const filterText = filter.value.toUpperCase();
   // Map subjects to SubjectItem structure with text and display properties
-  return props.subjects.map((subject: string) => ({
+  return props.personalSubjects.map((subject: string) => ({
     text: subject,
     display: subject.toUpperCase().includes(filterText) ? "block" : "none",
   }));
