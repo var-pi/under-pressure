@@ -22,12 +22,10 @@
 // Script in Composition API
 import { ref, computed, defineProps } from "vue";
 
-
 // Prop definition for subjects array
 const props = defineProps<{
   subjects: string[];
 }>();
-
 
 // Reactive reference for the filter text
 const filter = ref<string>("");

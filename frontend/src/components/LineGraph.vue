@@ -6,29 +6,36 @@
 
 <script setup lang="ts">
 import Chart from "chart.js/auto";
-import { onMounted, ref, watch, Ref, defineProps } from "vue";
+import { onMounted, ref, Ref, watch, defineProps } from "vue";
 import {
   getChartConfig,
   initializeChart,
   updateChartData,
 } from "../utils/chartConfig";
+import { ChartData } from "../interfaces/interfaces";
 
-interface ChartData {
-  subject: string;
-  entries: number[];
-  dates: string[];
-}
-
-const props = defineProps<{
-  newStressValue: number;
-  chartData: ChartData;
-}>();
-
-// Reference to the canvas element
 const lineChartCanvas = ref<HTMLCanvasElement | null>(null);
 const newChart: Ref<Chart | null> = ref(null);
 
-  function updateChart() {
+const props = defineProps<{
+  newStressValue: number,
+  chartData: ChartData,
+}>();
+
+onMounted(() => {
+  lineChartCanvas.value = document.querySelector("canvas");
+
+  if (lineChartCanvas.value) {
+    updateChart();
+  } else {
+    console.error("Canvas element not found");
+  }
+});
+
+watch(() => props.newStressValue, updateChartInfo);
+watch(() => props.chartData, initializeChartInfo);
+
+function updateChart() {
   const canvas = lineChartCanvas.value;
 
   if (canvas) {
@@ -40,9 +47,8 @@ const newChart: Ref<Chart | null> = ref(null);
       }
 
       const chartConfig = getChartConfig();
-      const chartInstance = new Chart(context, chartConfig) as Chart;
-
-      newChart.value = chartInstance;
+      const chartInstance = new Chart(context, chartConfig);
+      newChart.value = chartInstance as Chart;
 
       console.log("Created chart");
     } else {
@@ -55,10 +61,8 @@ const newChart: Ref<Chart | null> = ref(null);
 
 // Function to update the chart with new value
 function updateChartInfo() {
-  console.log("Updating graph with the input value of:", props.newStressValue);
   const newValue = props.newStressValue;
   if (!isNaN(newValue)) {
-    // Use the getChartConfig function to obtain the chart configuration
     updateChartData(getChartConfig(), [newValue]);
   } else {
     console.error("Invalid input value. Please enter a valid number.");
@@ -68,10 +72,7 @@ function updateChartInfo() {
 
 // Function to update the chart with new chart value
 function initializeChartInfo() {
-  console.log("Got new data:", props.chartData);
-
   initializeChart(getChartConfig(), props.chartData);
-
   updateChart();
 }
 
@@ -80,9 +81,5 @@ onMounted(() => {
   lineChartCanvas.value = document.querySelector("canvas"); // or use another method to get the canvas element
   updateChart();
 });
-
-// Watch for changes in chartData prop and update the chart accordingly
-watch(() => props.newStressValue, updateChartInfo);
-watch(() => props.chartData, initializeChartInfo);
 </script>
 
