@@ -1,4 +1,4 @@
-import { BASE_URL } from "@/api/api.config";
+import { BASE_URL } from "../api.config";
 import axios from "axios";
 
 export const getEntries: (

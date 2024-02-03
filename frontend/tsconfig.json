@@ -13,18 +13,11 @@
     "useDefineForClassFields": true,
     "sourceMap": true,
     "baseUrl": "./",
-    "types": ["webpack-env", "vue-next", "vue"],
+    "types": ["webpack-env", "vue"], //"vue-next", // What is the vue-next needed for?
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": [
     "src/**/*.ts",
@@ -33,7 +26,6 @@
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
+

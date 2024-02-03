@@ -1,6 +1,6 @@
 interface ApiResponse<T> {
   data: T;
-  message: String;
+  message: string;
   status: "success" | "fail";
 }
 
