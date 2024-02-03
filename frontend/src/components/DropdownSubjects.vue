@@ -1,16 +1,23 @@
 <template>
   <div class="dropdown">
-    <button id="dropbtn" @click="toggleMenu">Subjects</button>
-    <div v-if="isDropdownVisible" 
-    class="dropdown-content">
-      <input id="search-bar" type="text" v-model="filter" placeholder="Otsi"/>
+    <button id="dropbtn" @click="toggleMenu">
+      Subjects
+    </button>
+    <div
+      v-if="isDropdownVisible"
+      class="dropdown-content">
+      <input
+        id="search-bar"
+        v-model="filter"
+        type="text"
+        placeholder="Otsi" />
       <div class="scrollable-content">
         <button
           v-for="subject in filteredSubjects"
           :key="subject.text"
           :style="{ display: subject.display }"
-          @click="$emit('newSelectedSubject', subject.text)"
-          class="menubtn">
+          class="menubtn"
+          @click="$emit('newSelectedSubject', subject.text)">
           {{ subject.text }}
         </button>
       </div>
@@ -20,12 +27,15 @@
 
 <script setup lang="ts">
 // Script in Composition API
-import { ref, computed, defineProps } from "vue";
+import { ref, computed, defineProps, defineEmits } from "vue";
 
 // Prop definition for subjects array
 const props = defineProps<{
   subjects: string[];
 }>();
+
+// Declare emitted event
+const emits = defineEmits(["newSelectedSubject"]);
 
 // Reactive reference for the filter text
 const filter = ref<string>("");
@@ -33,10 +43,10 @@ const filter = ref<string>("");
 const isDropdownVisible = ref(false);
 
 // Computed property for filtered subjects based on the filter text
-const filteredSubjects = computed(function() {
+const filteredSubjects = computed(function () {
   const filterText = filter.value.toUpperCase();
   // Map subjects to SubjectItem structure with text and display properties
-  return props.subjects.map(function(subject) {
+  return props.subjects.map(function (subject) {
     return {
       text: subject,
       display: subject.toUpperCase().includes(filterText) ? "block" : "none",
@@ -48,6 +58,9 @@ const filteredSubjects = computed(function() {
 function toggleMenu() {
   isDropdownVisible.value = !isDropdownVisible.value;
 }
+
+// Ensure emits is used, even if it's not used explicitly in your component
+console.log(emits);
 </script>
 
 <style scoped>

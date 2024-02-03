@@ -1,25 +1,36 @@
 <template>
   <div id="contents">
     <LineGraph
-      :newStressValue="submittedSliderValue"
-      :chartData="chartData"
-    ></LineGraph>
-    <input type="range" id="slider" :min="0" :max="100" v-model="sliderValue" />
-    <label for="slider">{{ sliderValue }}</label>
-    <button id="fetch-subjects" @click="fetchSubjects">Fetch Subjects</button>
-    <button @click="addEntry()">Sisesta</button>
-    <button @click="getUserSubjects('Hjalmar')">User</button>
+      :new-stress-value="submittedSliderValue"
+      :chart-data="chartData">
+    </LineGraph>
+    <input 
+      id="slider" 
+      v-model="sliderValue"
+      type="range" 
+      :min="0" 
+      :max="100" />
+    <label for="slider">
+      {{ sliderValue }}
+    </label>
+    <button id="fetch-subjects" @click="fetchSubjects">
+      Fetch Subjects
+    </button>
+    <button @click="addEntry()">
+      Sisesta
+    </button>
+    <button @click="getUserSubjects('Hjalmar')">
+      User
+    </button>
     <button @click="addFollowedSubject('Matemaatiline maailmapilt')">
       Add subject
     </button>
     <DropdownSubjects
       :subjects="allSubjects"
-      @newSelectedSubject="addFollowedSubject"
-    />
+      @new-selected-subject="addFollowedSubject" />
     <DropdownPersonalSubjects
-      :personalSubjects="personalSubjects"
-      @handleSelectedSubjectUpdate="getSubjectEntries"
-    />
+      :personal-subjects="personalSubjects"
+      @handle-selected-subject-update="getSubjectEntries" />
   </div>
 </template>
 
