@@ -9,7 +9,7 @@
           v-for="subject in filteredSubjects"
           :key="subject.text"
           :style="{ display: subject.display }"
-          @click="$emit('additionalSelectedSubject', subject.text)"
+          @click="$emit('handleSelectedSubjectUpdate', subject.text)"
           class="menubtn">
           {{ subject.text }}
         </button>
