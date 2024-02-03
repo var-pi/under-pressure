@@ -29,13 +29,17 @@ import { ref } from "vue";
 
 import {
   getSubjects,
-  postPersonalSubjects,
-  addPersonalSubject,
-  addEntry,
+  getMySubjects,
+  getEntries,
+  followSubject,
+  unfollowSubject,
+  setEntry,
+  createUser,
 } from "../api/api";
 import DropdownSubjects from "../components/DropdownSubjects.vue";
 import DropdownPersonalSubjects from "../components/DropdownPersonalSubjects.vue";
 import LineGraph from "../components/LineGraph.vue";
+import { ApiResponse } from "../interfaces/interfaces"
 
 const sliderValue = ref<number>(50);
 const submittedSliderValue = ref<number>(50);
@@ -46,27 +50,50 @@ const chartData = ref() // Will be changed with new interface
 // Methods
 async function getUserSubjects(userId: string) {
   try {
-    // Will be changed with new interface
-    console.log(userId);
-    personalSubjects.value = await getSubjects();
+    // Ideally as type ApiResponse<string[]>
+    const apiResponse: ApiResponse<string[]> = await getMySubjects(userId);
+
+    if (apiResponse) {
+      // Extract the array of strings
+      const subjectsArray: string[] = apiResponse.data as string[];
+
+      // Assign the value to localSubjects
+      personalSubjects.value = subjectsArray;
+    } else {
+      // Handle the case when the API call is not successful
+      console.error('Failed to get subjects.');
+    }
   } catch (error) {
     console.error("Error:", error);
   }
 }
 
 async function addStaticEntry() {
-  const result = await addEntry("1", "Algebra I", 55);
+  const result = await setEntry("1", "Algebra I", 55);
   console.log(result);
 }
 
 async function addWatchedSubject(subjectName: string) {
-  const result = await addPersonalSubject("Hjalmar", subjectName);
+  const result = await followSubject("Hjalmar", subjectName);
   console.log(result);
 }
 
 async function fetchSubjects() {
   try {
-    localSubjects.value = await getSubjects();
+    // Ideally should be type ApiResponse<string[]>
+    const apiResponse: ApiResponse<string[]> = await getSubjects();
+
+    // Check if the ApiResponse was successful before extracting the value
+    if (apiResponse) {
+      // Extract the array of strings
+      const subjectsArray: string[] = apiResponse.data as string[];
+
+      // Assign the value to localSubjects
+      localSubjects.value = subjectsArray;
+    } else {
+      // Handle the case when the API call is not successful
+      console.error('Failed to get subjects.');
+    }
   } catch (error) {
     console.error("Error:", error);
   }

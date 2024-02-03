@@ -5,3 +5,9 @@ export interface ChartData {
   entries: number[];
   dates: string[];
 }
+
+export interface ApiResponse<T> {
+  //success: boolean;
+  data: string[];
+  //error?: string;
+}
