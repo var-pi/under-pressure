@@ -19,7 +19,7 @@
     <button @click="addEntry()">
       Sisesta
     </button>
-    <button @click="getUserSubjects('Hjalmar')">
+    <button @click="getUserSubjects(3)">
       User
     </button>
     <button @click="addFollowedSubject('Matemaatiline maailmapilt')">
@@ -43,7 +43,6 @@ import {
   followSubject,
   unfollowSubject,
   setEntry,
-  createUser,
 } from "../api/api";
 import DropdownSubjects from "../components/DropdownSubjects.vue";
 import DropdownPersonalSubjects from "../components/DropdownPersonalSubjects.vue";
@@ -57,7 +56,7 @@ const personalSubjects = ref<string[]>([])
 const chartData = ref() // Will be changed with new interface
 
 // Methods
-async function getUserSubjects(userId: string) {
+async function getUserSubjects(userId: number) {
   try {
     // Ideally as type ApiResponse<string[]>
     const apiResponse: ApiResponse<string[]> = await getMySubjects(userId);
@@ -79,7 +78,7 @@ async function getUserSubjects(userId: string) {
 
 async function addEntry() {
   try {
-    const result = await setEntry("1", "Algebra I", sliderValue.value);
+    const result = await setEntry(3, "Algebra I", sliderValue.value);
     if (result.status == "success") {
       // Updates after change. Needs to be fixed
       submittedSliderValue = sliderValue.value;
@@ -94,7 +93,7 @@ async function addEntry() {
 }
 
 async function addFollowedSubject(subjectName: string) {
-  const result = await followSubject("1", subjectName);
+  const result = await followSubject(3, subjectName);
   console.log(result);
 }
 
@@ -122,7 +121,7 @@ async function fetchSubjects() {
 async function getSubjectEntries(subject: string) {
   try {
     // Fetch entries for the selected subject TODO: make dynamic
-    const result = await getEntries("1", subject);
+    const result = await getEntries(3, subject);
 
     if (result.status == "success") {
       chartData.value = result.data;

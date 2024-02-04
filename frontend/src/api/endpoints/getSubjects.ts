@@ -1,8 +1,7 @@
-import { BASE_URL } from "@/api/api.config";
+import { BASE_URL } from "../api.config";
 import axios from "axios";
 
-// Original Promise<ApiResponse<Subject[]>>
-export const getSubjects: () => Promise<ApiResponse<string[]>> = () =>
+export const getSubjects: () => Promise<ApiResponse<Subject[]>> = () =>
   axios
     .get(BASE_URL + "/subjects")
     .then((res) => res.data)
