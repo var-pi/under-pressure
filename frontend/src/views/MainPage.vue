@@ -59,7 +59,7 @@ const chartData = ref() // Will be changed with new interface
 async function getUserSubjects(userId: number) {
   try {
     // Ideally as type ApiResponse<string[]>
-    const apiResponse: ApiResponse<string[]> = await getMySubjects(userId);
+    const apiResponse: ApiResponse<String[]> = await getMySubjects(userId);
 
     if (apiResponse) {
       // Extract the array of strings
@@ -100,7 +100,7 @@ async function addFollowedSubject(subjectName: string) {
 async function fetchSubjects() {
   try {
     // Ideally should be type ApiResponse<string[]>
-    const apiResponse: ApiResponse<string[]> = await getSubjects();
+    const apiResponse: ApiResponse<String[]> = await getSubjects();
 
     // Check if the ApiResponse was successful before extracting the value
     if (apiResponse) {
