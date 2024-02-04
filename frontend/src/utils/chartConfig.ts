@@ -3,13 +3,13 @@ import { ChartConfiguration, ChartDataset } from 'chart.js';
 
 // Define the initial static data
 const initialData: ChartConfiguration['data'] = {
-  labels: [],
+  labels: ["02.02.2024"],
   datasets: [
     {
       label: 'Stressitase',
       backgroundColor: 'rgb(255, 99, 132)',
       borderColor: 'rgb(75, 192, 192)',
-      data: [],
+      data: [13],
       fill: false,
       tension: 0.2,
     },
@@ -30,7 +30,7 @@ export const getChartConfig = (): ChartConfiguration => {
 };
 
 // Function to update chart data
-export const updateChartData = (config: ChartConfiguration, newData: number[]): void => {
+export const updateChartData = (config: ChartConfiguration, newData: number): void => {
   if (!config.data) {
     config.data = { ...initialData }; // Initialize data if not already present
   }
@@ -39,16 +39,18 @@ export const updateChartData = (config: ChartConfiguration, newData: number[]): 
     config.data.labels = []; // Initialize labels if not already present
   }
 
-  // If date is same as last date then change last data value
-  config.data.labels.push((new Date).toLocaleDateString());
-
-  // Assuming a single dataset in this example
+  const currentDate: string = (new Date).toLocaleDateString()
   const dataset: ChartDataset = config.data.datasets[0];
-
-  // Update dataset's data with new values
-  dataset.data = [...dataset.data, ...newData];
-  console.log('Updated data to', dataset.data);
   
+  if (config.data.labels.slice(-1)[0] == currentDate) {
+    // Update the last data value to newData
+    dataset.data[dataset.data.length - 1] = newData;
+  } else {
+    // Add newData to data values and currentDate to labels
+    config.data.labels.push(currentDate);
+    dataset.data = [...dataset.data, newData];
+  }  
+  console.log('Updated data to', dataset.data);
 };
 
 export const initializeChart = (config: ChartConfiguration, subjectData: { subject: string, entries: number[], dates: string[] }): void => {

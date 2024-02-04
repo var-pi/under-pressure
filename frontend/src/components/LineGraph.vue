@@ -4,25 +4,38 @@
       canvas
     </canvas>
   </div>
+  <input 
+    id="slider" 
+    v-model="sliderValue"
+    type="range" 
+    :min="0" 
+    :max="100" />
+  <label for="slider">
+    {{ sliderValue }}
+  </label>
+  <button @click="addEntry()">
+    Sisesta
+  </button>
 </template>
 
 <script setup lang="ts">
 import Chart from "chart.js/auto";
-import { onMounted, ref, Ref, watch, defineProps } from "vue";
+import { onMounted, ref, Ref } from "vue";
 import {
   getChartConfig,
   initializeChart,
   updateChartData,
 } from "../utils/chartConfig";
+import { 
+  setEntry,
+  getEntries
+ } from "../api/api";
 import { ChartData } from "../interfaces/interfaces";
 
 const lineChartCanvas = ref<HTMLCanvasElement | null>(null);
 const newChart: Ref<Chart | null> = ref(null);
+const sliderValue = ref<number>(50);
 
-const props = defineProps<{
-  newStressValue: number,
-  chartData: ChartData,
-}>();
 
 onMounted(() => {
   lineChartCanvas.value = document.querySelector("canvas");
@@ -33,9 +46,6 @@ onMounted(() => {
     console.error("Canvas element not found");
   }
 });
-
-watch(() => props.newStressValue, updateChartInfo);
-watch(() => props.chartData, initializeChartInfo);
 
 function updateChart() {
   const canvas = lineChartCanvas.value;
@@ -62,10 +72,10 @@ function updateChart() {
 }
 
 // Function to update the chart with new value
-function updateChartInfo() {
-  const newValue = props.newStressValue;
+function updateChartInfo(newValue: number) {
+  console.log("siin olen");
   if (!isNaN(newValue)) {
-    updateChartData(getChartConfig(), [newValue]);
+    updateChartData(getChartConfig(), newValue);
   } else {
     console.error("Invalid input value. Please enter a valid number.");
   }
@@ -74,8 +84,41 @@ function updateChartInfo() {
 
 // Function to update the chart with new chart value
 function initializeChartInfo() {
-  initializeChart(getChartConfig(), props.chartData);
+  // TODO: initialize chartData
+  initializeChart(getChartConfig(), chartData);
   updateChart();
+}
+
+async function addEntry() {
+  try {
+    const newStressValue = sliderValue.value;
+    const result = await setEntry(3, "Algebra I", newStressValue);    
+    updateChartInfo(newStressValue);
+    /*if (result) {
+      // Updates after change. Needs to be fixed
+      console.log("Successfully added entry:", result.message);
+    } else {
+      console.log("Failed adding entry:", result);
+    }*/
+  } catch (error) {
+    console.error("Error adding entry:", error);
+  }
+}
+
+async function getSubjectEntries(subject: string) {
+  try {
+    // Fetch entries for the selected subject TODO: make dynamic
+    const result = await getEntries(3, subject);
+
+    if (result.status == "success") {
+      chartData.value = result.data;
+      console.log("Successfully fetched entries.", result.message);
+    } else {
+      console.log("Failed to get entries.", result.message);
+    }
+  } catch (error) {
+    console.error("Error while fetching subject data:", error);
+  }
 }
 
 // Call updateChart when the component is mounted
