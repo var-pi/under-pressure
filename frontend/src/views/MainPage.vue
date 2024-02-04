@@ -36,8 +36,7 @@ import {
 import DropdownSubjects from "../components/DropdownSubjects.vue";
 import DropdownPersonalSubjects from "../components/DropdownPersonalSubjects.vue";
 import LineGraph from "../components/LineGraph.vue";
-import { ApiResponse } from "@/api/types/apiResponse";
-import { subject } from "@/api/types/subject";
+import { ApiResponse, subject } from "@/api/types";
 
 const sliderValue = ref<number>(50);
 let submittedSliderValue = 50;

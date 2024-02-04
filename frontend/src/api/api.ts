@@ -1,14 +1,5 @@
-// import { getSubjects } from "./endpoints/getSubjects";
-// import { getMySubjects } from "./endpoints/getMySubjects";
-// import { getEntries } from "./endpoints/getEntries";
-// import { followSubject } from "./endpoints/followSubject";
-// import { unfollowSubject } from "./endpoints/unfollowSubject";
-// import { setEntry } from "./endpoints/setEntry";
-
-import { ApiResponse } from "./types/apiResponse";
-import { userId } from "./types/userId";
-import { subject } from "./types/subject";
 import server from "./server";
+import { ApiResponse, Entry, subject, userId } from "./types";
 
 const getSubjects = (): Promise<ApiResponse<subject[]>> =>
   server.get("/subjects");
@@ -24,7 +15,7 @@ const unfollowSubject = (subjectName: string): Promise<ApiResponse<null>> =>
     subjectName,
   });
 
-const getEntries = (subjectName: string): Promise<ApiResponse<null>> =>
+const getEntries = (subjectName: string): Promise<ApiResponse<Entry[]>> =>
   server.authorized.post("/personal/entries", {
     subjectName,
   });
