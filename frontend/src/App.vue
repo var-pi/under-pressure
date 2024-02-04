@@ -3,8 +3,8 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import Main from './views/MainPage.vue';
+import { Options, Vue } from "vue-class-component";
+import Main from "./views/MainPage.vue";
 
 @Options({
   components: {
@@ -24,3 +24,4 @@ export default class App extends Vue {}
   margin-top: 60px;
 }
 </style>
+
