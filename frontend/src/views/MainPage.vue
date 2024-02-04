@@ -7,14 +7,14 @@
       {{ sliderValue }}
     </label>
     <button id="fetch-subjects" @click="fetchSubjects">Fetch Subjects</button>
-    <button @click="addEntry()">Sisesta</button>
-    <button @click="getUserSubjects(3)">User</button>
-    <button @click="addFollowedSubject('Matemaatiline maailmapilt')">
-      Add subject
-    </button>
+    <button @click="getUserSubjects(3)">Fetch User Subjects</button>
+    <button @click="followAlgebraI('Algebra I')">Follow Algebr I</button>
+    <button @click="unfollowAlgebraI('Algebra I')">Unfollow Algebra I</button>
+    <button @click="setEntryForAlgebraI()">Set Entry For Algebra I</button>
+    <button @click="getEntriesOfAlgebraI()">Get Entries Of Algebra I</button>
     <DropdownSubjects
       :subjects="allSubjects"
-      @new-selected-subject="addFollowedSubject"
+      @new-selected-subject="followAlgebraI"
     />
     <DropdownPersonalSubjects
       :personal-subjects="personalSubjects"
@@ -25,14 +25,22 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+//import {
+// getSubjects,
+// getMySubjects,
+// getEntries,
+// followSubject,
+// unfollowSubject,
+// setEntry } from
+// "../api/api";
 import {
   getSubjects,
   getMySubjects,
-  getEntries,
   followSubject,
   unfollowSubject,
+  getEntries,
   setEntry,
-} from "../api/api";
+} from "../apiNew/api";
 import DropdownSubjects from "../components/DropdownSubjects.vue";
 import DropdownPersonalSubjects from "../components/DropdownPersonalSubjects.vue";
 import LineGraph from "../components/LineGraph.vue";
@@ -66,9 +74,9 @@ async function getUserSubjects(userId: number) {
   }
 }
 
-async function addEntry() {
+async function setEntryForAlgebraI() {
   try {
-    const result = await setEntry(3, "Algebra I", sliderValue.value);
+    const result = await setEntry("Algebra I", sliderValue.value);
     if (result.status == "success") {
       // Updates after change. Needs to be fixed
       submittedSliderValue = sliderValue.value;
@@ -82,9 +90,12 @@ async function addEntry() {
   }
 }
 
-async function addFollowedSubject(subjectName: string) {
-  const result = await followSubject(3, subjectName);
-  console.log(result);
+async function followAlgebraI(subjectName: string) {
+  await followSubject(subjectName);
+}
+
+async function unfollowAlgebraI(subjectName: string) {
+  await unfollowSubject(subjectName);
 }
 
 async function fetchSubjects() {
@@ -108,10 +119,25 @@ async function fetchSubjects() {
   }
 }
 
+async function getEntriesOfAlgebraI() {
+  try {
+    // Fetch entries for the selected subject TODO: make dynamic
+    const result = await getEntries("Algebra I");
+
+    if (result.status == "success") {
+      console.log("Successfully fetched entries.", result.data);
+    } else {
+      console.log("Failed to get entries.", result.message);
+    }
+  } catch (error) {
+    console.error("Error while fetching subject data:", error);
+  }
+}
+
 async function getSubjectEntries(subject: string) {
   try {
     // Fetch entries for the selected subject TODO: make dynamic
-    const result = await getEntries(3, subject);
+    const result = await getEntries(subject);
 
     if (result.status == "success") {
       chartData.value = result.data;
