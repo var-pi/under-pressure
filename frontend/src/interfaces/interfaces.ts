@@ -6,8 +6,8 @@ export interface ChartData {
   dates: string[];
 }
 
-export interface ApiResponse<T> {
-  //success: boolean;
-  data: string[];
-  //error?: string;
-}
+// export interface ApiResponse<T> {
+//   //success: boolean;
+//   data: string[];
+//   //error?: string;
+// }

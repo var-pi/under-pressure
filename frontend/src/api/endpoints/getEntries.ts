@@ -1,5 +1,8 @@
 import { BASE_URL } from "../api.config";
 import axios from "axios";
+import { userId } from "../types/userId";
+import { ApiResponse } from "../types/apiResponse";
+import { Entry } from "../types/entry";
 
 export const getEntries: (
   userId: userId,

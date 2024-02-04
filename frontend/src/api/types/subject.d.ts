@@ -1,2 +1,2 @@
-type Subject = String;
+export type subject = string;
 

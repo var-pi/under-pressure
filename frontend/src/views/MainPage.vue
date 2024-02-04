@@ -1,36 +1,25 @@
 <template>
   <div id="contents">
-    <LineGraph
-      :new-stress-value="submittedSliderValue"
-      :chart-data="chartData">
+    <LineGraph :new-stress-value="submittedSliderValue" :chart-data="chartData">
     </LineGraph>
-    <input 
-      id="slider" 
-      v-model="sliderValue"
-      type="range" 
-      :min="0" 
-      :max="100" />
+    <input id="slider" v-model="sliderValue" type="range" :min="0" :max="100" />
     <label for="slider">
       {{ sliderValue }}
     </label>
-    <button id="fetch-subjects" @click="fetchSubjects">
-      Fetch Subjects
-    </button>
-    <button @click="addEntry()">
-      Sisesta
-    </button>
-    <button @click="getUserSubjects(3)">
-      User
-    </button>
+    <button id="fetch-subjects" @click="fetchSubjects">Fetch Subjects</button>
+    <button @click="addEntry()">Sisesta</button>
+    <button @click="getUserSubjects(3)">User</button>
     <button @click="addFollowedSubject('Matemaatiline maailmapilt')">
       Add subject
     </button>
     <DropdownSubjects
       :subjects="allSubjects"
-      @new-selected-subject="addFollowedSubject" />
+      @new-selected-subject="addFollowedSubject"
+    />
     <DropdownPersonalSubjects
       :personal-subjects="personalSubjects"
-      @handle-selected-subject-update="getSubjectEntries" />
+      @handle-selected-subject-update="getSubjectEntries"
+    />
   </div>
 </template>
 
@@ -47,19 +36,20 @@ import {
 import DropdownSubjects from "../components/DropdownSubjects.vue";
 import DropdownPersonalSubjects from "../components/DropdownPersonalSubjects.vue";
 import LineGraph from "../components/LineGraph.vue";
-import { ApiResponse } from "../interfaces/interfaces"
+import { ApiResponse } from "@/api/types/apiResponse";
+import { subject } from "@/api/types/subject";
 
 const sliderValue = ref<number>(50);
 let submittedSliderValue = 50;
 const allSubjects = ref<string[]>([]);
-const personalSubjects = ref<string[]>([])
-const chartData = ref() // Will be changed with new interface
+const personalSubjects = ref<string[]>([]);
+const chartData = ref(); // Will be changed with new interface
 
 // Methods
 async function getUserSubjects(userId: number) {
   try {
     // Ideally as type ApiResponse<string[]>
-    const apiResponse: ApiResponse<string[]> = await getMySubjects(userId);
+    const apiResponse: ApiResponse<subject[]> = await getMySubjects(userId);
 
     if (apiResponse) {
       // Extract the array of strings
@@ -69,7 +59,7 @@ async function getUserSubjects(userId: number) {
       personalSubjects.value = subjectsArray;
     } else {
       // Handle the case when the API call is not successful
-      console.error('Failed to get subjects.');
+      console.error("Failed to get subjects.");
     }
   } catch (error) {
     console.error("Error:", error);
@@ -100,7 +90,7 @@ async function addFollowedSubject(subjectName: string) {
 async function fetchSubjects() {
   try {
     // Ideally should be type ApiResponse<string[]>
-    const apiResponse: ApiResponse<string[]> = await getSubjects();
+    const apiResponse: ApiResponse<subject[]> = await getSubjects();
 
     // Check if the ApiResponse was successful before extracting the value
     if (apiResponse) {
@@ -134,3 +124,4 @@ async function getSubjectEntries(subject: string) {
   }
 }
 </script>
+
