@@ -1,19 +1,8 @@
 <template>
-  <!-- <Main></Main> -->
   <RouterView />
 </template>
 
-<script lang="ts">
-import { Options, Vue } from "vue-class-component";
-import Main from "./views/MainPage.vue";
-
-@Options({
-  components: {
-    Main,
-  },
-})
-export default class App extends Vue {}
-</script>
+<script setup lang="ts"></script>
 
 <style lang="scss">
 #app {
