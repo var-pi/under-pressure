@@ -25,14 +25,6 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-//import {
-// getSubjects,
-// getMySubjects,
-// getEntries,
-// followSubject,
-// unfollowSubject,
-// setEntry } from
-// "../api/api";
 import {
   getSubjects,
   getMySubjects,
