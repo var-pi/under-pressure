@@ -1,4 +1,3 @@
-<!-- MainPage.vue -->
 <template>
   <div id="contents">
     <LineGraph
@@ -10,20 +9,24 @@
     <button id="fetch-subjects" @click="fetchSubjects">Fetch Subjects</button>
     <button @click="submittedSliderValue = sliderValue">Sisesta</button>
     <button @click="addStaticEntry">Lisa</button>
-    <button @click="getSubjectData('1')">User</button>
-    <button @click="addWatchedSubject('1', 'Matemaatiline maailmapilt')">
+    <button @click="getUserSubjects('Hjalmar')">User</button>
+    <button @click="addWatchedSubject('Matemaatiline maailmapilt')">
       Add subject
     </button>
     <DropdownSubjects
       :subjects="localSubjects"
-      :selectedSubject="selectedSubject"
-      @update:selectedSubject="handleSelectedSubjectUpdate"
+      @newSelectedSubject="handleSelectedSubjectUpdate"
+    />
+    <DropdownPersonalSubjects
+      :personalSubjects="personalSubjects"
+      @additionalSelectedSubject="addWatchedSubject"
     />
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, PropType } from "vue";
+<script setup lang="ts">
+import { ref } from "vue";
+
 import {
   getSubjects,
   postPersonalSubjects,
@@ -31,75 +34,53 @@ import {
   addEntry,
 } from "../api/api";
 import DropdownSubjects from "../components/DropdownSubjects.vue";
+import DropdownPersonalSubjects from "../components/DropdownPersonalSubjects.vue";
 import LineGraph from "../components/LineGraph.vue";
 
-interface MainPageProps {
-  subjects: string[];
+const sliderValue = ref<number>(50);
+const submittedSliderValue = ref<number>(50);
+const localSubjects = ref<string[]>([]);
+const personalSubjects = ref<string[]>([])
+const chartData = ref() // Will be changed with new interface
+
+// Methods
+async function getUserSubjects(userId: string) {
+  try {
+    // Will be changed with new interface
+    console.log(userId);
+    personalSubjects.value = await getSubjects();
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }
 
-export default defineComponent({
-  components: {
-    DropdownSubjects,
-    LineGraph,
-  },
-  props: {
-    selectedSubject: {
-      type: String,
-      default: null,
-    },
-    subjects: {
-      type: Array as PropType<string[]>,
-      required: true,
-      default: () => [],
-    },
-  },
-  setup(props: MainPageProps) {
-    const sliderValue = ref(50);
-    const submittedSliderValue = ref(50); // Initialize it with the default value or any other value you want
-    const localSubjects = ref(props.subjects.slice()); // Copy the props to local state
-    const chartData = ref();
+async function addStaticEntry() {
+  const result = await addEntry("1", "Algebra I", 55);
+  console.log(result);
+}
 
-    // Methods
-    const getSubjectData = async (userId: string) => {
-      const subjects = await postPersonalSubjects(userId);
-      console.log("Siit", subjects);
-    };
-    const addStaticEntry = async () => {
-      const result = await addEntry("1", "Algebra I", 55);
-      console.log(result);
-    };
-    const addWatchedSubject = async (userId: string, subjectName: string) => {
-      const result = await addPersonalSubject(userId, subjectName);
-      console.log(result);
-    };
-    const fetchSubjects = async () => {
-      try {
-        localSubjects.value = await getSubjects();
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-    const handleSelectedSubjectUpdate = async (subject: string) => {
-      try {
-        const item = await getSubjectData(subject);
-        chartData.value = item;
-      } catch (error) {
-        console.error("Error while fetching subject data:", error);
-      }
-    };
+async function addWatchedSubject(subjectName: string) {
+  const result = await addPersonalSubject("Hjalmar", subjectName);
+  console.log(result);
+}
 
-    return {
-      sliderValue,
-      localSubjects,
-      fetchSubjects,
-      submittedSliderValue,
-      handleSelectedSubjectUpdate,
-      chartData,
-      addStaticEntry,
-      getSubjectData,
-      addWatchedSubject,
-    };
-  },
-});
+async function fetchSubjects() {
+  try {
+    localSubjects.value = await getSubjects();
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+async function handleSelectedSubjectUpdate(subject: string) {
+  try {
+    // Will be changed with new interface
+    //chartData.value = await getSubjectData(subject);
+  } catch (error) {
+    console.error("Error while fetching subject data:", error);
+  }
+}
+
+
 </script>
 

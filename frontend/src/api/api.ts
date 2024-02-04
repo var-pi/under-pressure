@@ -1,11 +1,11 @@
-//const API_BASE_URL = 'http://localhost:8080';
-const API_BASE_URL = 'https://39f9-2001-bb8-2002-98-bdb3-dd6f-41d1-b4f3.ngrok-free.app';
+const API_BASE_URL = 'http://localhost:8080';
+//const API_BASE_URL = 'https://39f9-2001-bb8-2002-98-bdb3-dd6f-41d1-b4f3.ngrok-free.app';
 
 // GET /subjects
 // Returns all of the subjects available.
 export async function getSubjects() {
   try {
-    const response = await fetch(`${API_BASE_URL}/subjects`, {
+    const response = await fetch(`${API_BASE_URL}/subjects.json`, {
       method: 'GET',
     });
     const data = await response.json();
