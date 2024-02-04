@@ -32,7 +32,7 @@ import {
   unfollowSubject,
   getEntries,
   setEntry,
-} from "../apiNew/api";
+} from "../api/api";
 import DropdownSubjects from "../components/DropdownSubjects.vue";
 import DropdownPersonalSubjects from "../components/DropdownPersonalSubjects.vue";
 import LineGraph from "../components/LineGraph.vue";
@@ -142,4 +142,6 @@ async function getSubjectEntries(subject: string) {
   }
 }
 </script>
+
+../api/api
 
