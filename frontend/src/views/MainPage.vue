@@ -2,13 +2,15 @@
   <div id="contents">
     <LineGraph
       :new-selected-subject="newSelectedSubject" />
-    <button id="fetch-subjects" @click="fetchSubjects">
+    <button id="fetch-subjects" @click="getAllSubjects">
       Fetch Subjects
     </button>
     <button @click="getUserSubjects()">Fetch User Subjects</button>
+    <button @click="unfollowSubject('Algebra I')">Unfollow Algebra I</button>
+    <button @click="followSubject('Algebra I')">Follow Algebra I</button>
     <DropdownSubjects
       :subjects="allSubjects"
-      @new-selected-subject="followAlgebraI"
+      @new-selected-subject="addFollowedSubject"
     />
     <DropdownPersonalSubjects
       :personal-subjects="personalSubjects"
@@ -34,7 +36,7 @@ const personalSubjects = ref<string[]>([])
 const newSelectedSubject = ref("")
 
 // Methods
-async function getAllSubjects(userId: number) {
+async function getAllSubjects() {
   try {
     // Ideally as type ApiResponse<string[]>
       const apiResponse: ApiResponse<subject[]> = await getSubjects();
@@ -76,12 +78,10 @@ async function getUserSubjects() {
   }
 }
 
-async function followAlgebraI(subjectName: string) {
-  await followSubject(subjectName);
-}
 
-async function unfollowAlgebraI(subjectName: string) {
-  await unfollowSubject(subjectName);
+async function addFollowedSubject(subjectName: string) {
+  const result = await followSubject(subjectName);
+  console.log(result);
 }
 
 async function fetchSubjects() {
@@ -109,6 +109,3 @@ function updateSelectedSubject(subject: string) {
   newSelectedSubject.value = subject;
 }
 </script>
-
-../api/api
-
