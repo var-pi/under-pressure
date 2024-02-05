@@ -13,9 +13,9 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import DropdownSubjects from "../components/DropdownSubjects.vue";
-import DropdownPersonalSubjects from "../components/DropdownPersonalSubjects.vue";
-import LineGraph from "../components/LineGraph.vue";
+import DropdownSubjects from "@/components/DropdownSubjects.vue";
+import DropdownPersonalSubjects from "@/components/DropdownPersonalSubjects.vue";
+import LineGraph from "@/components/LineGraph.vue";
 
 const newSelectedSubject = ref("")
 

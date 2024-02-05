@@ -25,12 +25,12 @@ import {
   getChartConfig,
   initializeChart,
   updateChartData,
-} from "../utils/chartConfig";
+} from "@/utils/chartConfig";
 import { 
   setEntry,
   getEntries
- } from "../api/api";
-import { ChartData } from "../interfaces/interfaces";
+ } from "@/api/api";
+import { ChartData } from "@/interfaces/interfaces";
 
 const props = defineProps<{
   newSelectedSubject: string,
