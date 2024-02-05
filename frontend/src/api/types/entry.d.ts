@@ -1,5 +1,5 @@
 interface Entry {
-  createdAt: Date;
+  creationDate: Date;
   stressLevel: number;
 }
 

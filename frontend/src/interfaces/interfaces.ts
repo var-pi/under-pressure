@@ -2,12 +2,12 @@
 
 export interface ChartData {
   subject: string;
-  entries: number[];
-  dates: string[];
+  data: Entry[];
 }
 
 export interface ApiResponse<T> {
-  //success: boolean;
-  data: string[];
-  //error?: string;
+  data: T;
+  message: string;
+  status: "success" | "fail";
 }
+
