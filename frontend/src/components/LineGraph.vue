@@ -101,7 +101,7 @@ function initializeChartInfo() {
 async function addEntry() {
   try {
     const newStressValue = sliderValue.value;
-    const result = await setEntry(3, props.newSelectedSubject, newStressValue);    
+    const result = await setEntry(props.newSelectedSubject, newStressValue);    
     updateChartInfo(newStressValue);
     /*if (result) {
       // Updates after change. Needs to be fixed
@@ -117,13 +117,13 @@ async function addEntry() {
 async function getSubjectEntries(subject: string) {
   try {
     // Fetch entries for the selected subject TODO: make dynamic
-    const result = await getEntries(3, subject);
+    const result = await getEntries(subject);
 
     if (result.status == "success") {
       chartData.data = result.data;
       console.log("Successfully fetched entries.", result.message);
       chartData.subject = subject;
-      chartData.data = result.data;
+      chartData = result.data;
       initializeChart(getChartConfig(), chartData);
       updateChart();
     } else {
