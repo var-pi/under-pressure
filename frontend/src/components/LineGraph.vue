@@ -1,21 +1,23 @@
 <template>
-  <div>
-    <canvas ref="lineChartCanvas" height="400" width="400">
+  <div id="canvas">
+    <canvas id="chart" ref="lineChartCanvas">
       canvas
     </canvas>
+    <div id="slider-component">
+      <div class="slider">
+        <input 
+          v-model="sliderValue"
+          class="wrapper" 
+          type="range" 
+          :min="0" 
+          :max="100" />
+      </div>
+      <button id="enter-btn" @click="addEntry()">
+        Sisesta <br />
+        {{ sliderValue }}
+      </button>
+    </div>
   </div>
-  <input 
-    id="slider" 
-    v-model="sliderValue"
-    type="range" 
-    :min="0" 
-    :max="100" />
-  <label for="slider">
-    {{ sliderValue }}
-  </label>
-  <button @click="addEntry()">
-    Sisesta
-  </button>
 </template>
 
 <script setup lang="ts">
@@ -122,3 +124,107 @@ async function getSubjectEntries(subject: string) {
 }
 </script>
 
+Add slider styling to separate file
+<style scoped>
+#canvas {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  aspect-ratio: 1/0.6;
+}
+
+.wrapper {
+  position: relative;
+  height: 20rem;
+  width: 3rem;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  background-color: rgba(63, 63, 63, 0.979);
+  top: 50%;
+  left: 50%;
+  margin-bottom: 1vw;
+  margin-top: 0;
+  padding: 0;
+  width: 60vw;
+  height: 8vw;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  border-radius: 1rem;
+  overflow: hidden;
+  cursor: row-resize;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 0;
+    box-shadow: -20rem 0 0 20rem rgba(255, 255, 255, 0.2);
+  }
+
+  &::-moz-range-thumb {
+    border: none;
+    width: 0;
+    box-shadow: -20rem 0 0 20rem rgba(255, 255, 255, 0.2);
+  }
+}
+
+label {
+  color: #000000;
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+#enter-btn {
+  background-color: #0b0b2d;
+  color: #fff;
+  aspect-ratio: 1/1;
+  width: 8vw;
+  border-radius: 50%;
+  padding: 0.5rem 1rem;
+  margin-top: 1.5vw;
+  border: none;
+  cursor: pointer;
+  font-size: 70%;
+  align-self: center;
+
+  &:hover {
+    color: rgb(143, 143, 143);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    width: 9vw;
+    margin-top: 1vw;
+  }
+}
+
+.slider {
+  width: 10vw;
+  height: 60vw;
+  align-self: center;
+}
+
+#slider-component {
+  margin-top: 4vw;
+  display: flex;
+  flex-direction: column;
+  height: 70vw;
+  width: 10vw;
+}
+
+@media screen and (min-width: 800px) {
+  #chart {
+    max-width: 800px;
+  }
+  input[type="range"] {
+    height: 5vw;
+  }
+  #enter-btn {
+    width: 5vw;
+
+    &:hover {
+      margin-top: 1vw;
+      width: 6vw;
+    }
+  }
+}
+</style>

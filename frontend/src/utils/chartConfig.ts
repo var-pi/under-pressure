@@ -24,7 +24,17 @@ export const getChartConfig = (): ChartConfiguration => {
     options: {
       responsive: true,
       maintainAspectRatio: true,
+      aspectRatio: 1.5,
       animation: false, // If true - TypeError: Cannot read properties of null (reading 'getContext')
+      scales: {
+        y: {
+          min: 0,
+          max: 100,
+          ticks: {
+            stepSize: 10
+          }
+        }
+      }
     },
   };
 };
@@ -48,15 +58,11 @@ export const updateChartData = (config: ChartConfiguration, newData: number): vo
   });
   const dataset: ChartDataset = config.data.datasets[0];
   
-  // If last 
   if (config.data.labels.slice(-1)[0] == currentDate) {
-    // Update the last data value to newData
-    console.log("siin");
-    
+    // Update the last data value to newData    
     dataset.data[dataset.data.length - 1] = newData;
   } else {
-    console.log("hoopis siin");
-    // Add newData to data values and currentDate to labels
+    // Add newData to data values and current date to labels
     config.data.labels.push(currentDate);
     dataset.data = [...dataset.data, newData];
   }  
@@ -68,8 +74,9 @@ export const initializeChart = (config: ChartConfiguration, subjectData: { subje
     if (!config.data) {
       config.data = { ...initialData };
     }
+    // Initialize labels if not already present
     if (!config.data.labels) {
-      config.data.labels = []; // Initialize labels if not already present
+      config.data.labels = [];
     }
     const dataset: ChartDataset = config.data.datasets[0];
     const labels = config.data.labels
@@ -79,11 +86,8 @@ export const initializeChart = (config: ChartConfiguration, subjectData: { subje
     dataset.data.length = 0;
   
     for (const entry of subjectData.data) {
-      // typeof entry.createdAt is undefined
-      console.log(typeof entry.creationDate);
       dataset.data.push(entry.stressLevel)
       labels.push(entry.creationDate)
     }
-
     console.log('Initialized chart with data:', dataset.data, 'and labels:', labels);
 }
