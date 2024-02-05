@@ -44,5 +44,13 @@ module.exports = {
       "singleline": "never",
       "multiline": "never",
     }],
+    "@typescript-eslint/ban-types": ["warn",
+    {
+        "types": {
+            "String": true,
+        },
+        "extendDefaults": true
+    }
+]
   }
 }

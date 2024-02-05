@@ -4,6 +4,18 @@
       canvas
     </canvas>
   </div>
+  <input 
+    id="slider" 
+    v-model="sliderValue"
+    type="range" 
+    :min="0" 
+    :max="100" />
+  <label for="slider">
+    {{ sliderValue }}
+  </label>
+  <button @click="addEntry()">
+    Sisesta
+  </button>
 </template>
 
 <script setup lang="ts">
@@ -14,15 +26,23 @@ import {
   initializeChart,
   updateChartData,
 } from "../utils/chartConfig";
+import { 
+  setEntry,
+  getEntries
+ } from "../api/api";
 import { ChartData } from "../interfaces/interfaces";
+
+const props = defineProps<{
+  newSelectedSubject: string,
+}>();
 
 const lineChartCanvas = ref<HTMLCanvasElement | null>(null);
 const newChart: Ref<Chart | null> = ref(null);
-
-const props = defineProps<{
-  newStressValue: number,
-  chartData: ChartData,
-}>();
+const sliderValue = ref<number>(50);
+let chartData: ChartData = {
+  subject: '',
+  data: [],
+}
 
 onMounted(() => {
   lineChartCanvas.value = document.querySelector("canvas");
@@ -34,9 +54,9 @@ onMounted(() => {
   }
 });
 
-watch(() => props.newStressValue, updateChartInfo);
-watch(() => props.chartData, initializeChartInfo);
+watch(() => props.newSelectedSubject, getSubjectEntries)
 
+// TODO: move to chartConfig.ts
 function updateChart() {
   const canvas = lineChartCanvas.value;
 
@@ -62,10 +82,9 @@ function updateChart() {
 }
 
 // Function to update the chart with new value
-function updateChartInfo() {
-  const newValue = props.newStressValue;
+function updateChartInfo(newValue: number) {
   if (!isNaN(newValue)) {
-    updateChartData(getChartConfig(), [newValue]);
+    updateChartData(getChartConfig(), newValue);
   } else {
     console.error("Invalid input value. Please enter a valid number.");
   }
@@ -74,14 +93,45 @@ function updateChartInfo() {
 
 // Function to update the chart with new chart value
 function initializeChartInfo() {
-  initializeChart(getChartConfig(), props.chartData);
+  // TODO: initialize chartData
+  initializeChart(getChartConfig(), chartData);
   updateChart();
 }
 
-// Call updateChart when the component is mounted
-onMounted(() => {
-  lineChartCanvas.value = document.querySelector("canvas"); // or use another method to get the canvas element
-  updateChart();
-});
+async function addEntry() {
+  try {
+    const newStressValue = sliderValue.value;
+    const result = await setEntry(3, props.newSelectedSubject, newStressValue);    
+    updateChartInfo(newStressValue);
+    /*if (result) {
+      // Updates after change. Needs to be fixed
+      console.log("Successfully added entry:", result.message);
+    } else {
+      console.log("Failed adding entry:", result);
+    }*/
+  } catch (error) {
+    console.error("Error adding entry:", error);
+  }
+}
+
+async function getSubjectEntries(subject: string) {
+  try {
+    // Fetch entries for the selected subject TODO: make dynamic
+    const result = await getEntries(3, subject);
+
+    if (result.status == "success") {
+      chartData.data = result.data;
+      console.log("Successfully fetched entries.", result.message);
+      chartData.subject = subject;
+      chartData.data = result.data;
+      initializeChart(getChartConfig(), chartData);
+      updateChart();
+    } else {
+      console.log("Failed to get entries.", result.message);
+    }
+  } catch (error) {
+    console.error("Error while fetching subject data:", error);
+  }
+}
 </script>
 
