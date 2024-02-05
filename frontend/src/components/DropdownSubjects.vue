@@ -13,11 +13,11 @@
         placeholder="Otsi" />
       <div class="scrollable-content">
         <button
-          v-for="subject in allSubjects"
-          :key="subject"
+          v-for="subjectItem in allSubjects"
+          :key="subjectItem"
           class="menubtn"
-          @click=addFollowedSubject(subject)>
-          {{ subject }}
+          @click="addFollowedSubject(subjectItem)">
+          {{ subjectItem }}
         </button>
       </div>
     </div>
@@ -31,11 +31,11 @@ import {
   getSubjects,
   followSubject,
 } from "@/api/api";
-import { ApiResponse, subject } from "@/api/types";
+import { ApiResponse, Subject } from "@/api/types";
 
 const filter = ref<string>("");
 const isDropdownVisible = ref(false);
-let allSubjects = ref([] as string[]);
+const allSubjects = ref([] as string[]);
 
 async function toggleMenu() {
   if (!isDropdownVisible.value) {
@@ -46,7 +46,7 @@ async function toggleMenu() {
 
 async function getAllSubjects() {
   try {
-    const apiResponse: ApiResponse<subject[]> = await getSubjects();
+    const apiResponse: ApiResponse<Subject[]> = await getSubjects();
     // Check if the ApiResponse is not null before extracting the value
     if (apiResponse) {
       // Extract the array of strings

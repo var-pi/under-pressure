@@ -3,7 +3,7 @@
     <LineGraph
       :new-selected-subject="newSelectedSubject" />
     <div id="dropdown-menus">
-      <DropdownSubjects id="all-subjects"/>
+      <DropdownSubjects id="all-subjects" />
       <DropdownPersonalSubjects
         id="personal-subjects"
         @handle-selected-subject-update="updateSelectedSubject" />

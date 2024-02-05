@@ -1,10 +1,11 @@
 import server from "./server";
-import { ApiResponse, Entry, subject, userId } from "./types";
+// userId can also be imported
+import { ApiResponse, Entry, Subject } from "./types";
 
-const getSubjects = (): Promise<ApiResponse<subject[]>> =>
+const getSubjects = (): Promise<ApiResponse<Subject[]>> =>
   server.get("/subjects");
 
-const getMySubjects = (): Promise<ApiResponse<subject[]>> =>
+const getMySubjects = (): Promise<ApiResponse<Subject[]>> =>
   server.authorized.post("/personal/subjects", {});
 
 const followSubject = (subjectName: string): Promise<ApiResponse<null>> =>

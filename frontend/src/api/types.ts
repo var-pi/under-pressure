@@ -9,7 +9,7 @@ export interface Entry {
   stressLevel: number;
 }
 
-export type subject = string;
+export type Subject = string;
 
-export type userId = number;
+export type UserId = number;
 

@@ -8,18 +8,17 @@
         id="search-bar"
         v-model="filter"
         type="text"
-        placeholder="Otsi"
-      />
+        placeholder="Otsi" />
       <div class="scrollable-content">
-        <div class="btn-line" v-for="subject in personalSubjects" :key="subject">
+        <div v-for="subjectItem in personalSubjects" :key="subjectItem" class="btn-line">
           <button
             class="menubtn"
-            @click="$emit('handleSelectedSubjectUpdate', subject)">
-            {{ subject }}
+            @click="emits('handleSelectedSubjectUpdate', subjectItem)">
+            {{ subjectItem }}
           </button>
           <button
             class="unfollow-btn"
-            @click=unfollowSubject(subject)>
+            @click="handleUnfollow(subjectItem)">
             Unfollow
           </button>
         </div>
@@ -35,7 +34,7 @@ import {
   getMySubjects,
   unfollowSubject,
 } from "@/api/api";
-import { ApiResponse, subject } from "@/api/types";
+import { ApiResponse, Subject } from "@/api/types";
 
 const emits = defineEmits(["handleSelectedSubjectUpdate"]);
 
@@ -52,7 +51,7 @@ async function toggleMenu() {
 
 async function getPersonalSubjects() {
   try {
-    const apiResponse: ApiResponse<subject[]> = await getMySubjects();
+    const apiResponse: ApiResponse<Subject[]> = await getMySubjects();
     // Check if the ApiResponse is not null before extracting the value
     if (apiResponse) {
       // Extract the array of strings
@@ -65,8 +64,10 @@ async function getPersonalSubjects() {
   }
 }
 
-// Ensure emits is used, even if it's not used explicitly in your component
-console.log(emits);
+async function handleUnfollow(subjectItem: string) {
+  await unfollowSubject(subjectItem);
+  await getPersonalSubjects;
+}
 </script>
 
 <style scoped>
