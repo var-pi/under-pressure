@@ -5,12 +5,7 @@
     <button id="fetch-subjects" @click="fetchSubjects">
       Fetch Subjects
     </button>
-    <button @click="addEntry()">
-      Sisesta
-    </button>
-    <button id="fetch-subjects" @click="fetchSubjects">Fetch Subjects</button>
     <button @click="getUserSubjects()">Fetch User Subjects</button>
-    <button @click="followAlgebraI('Algebra I')">Follow Algebr I</button>
     <DropdownSubjects
       :subjects="allSubjects"
       @new-selected-subject="followAlgebraI"
@@ -35,14 +30,14 @@ import LineGraph from "../components/LineGraph.vue";
 import { ApiResponse, subject } from "@/api/types";
 
 const allSubjects = ref<string[]>([]);
-const personalSubjects = ref<string[]>([]);
+const personalSubjects = ref<string[]>([])
 const newSelectedSubject = ref("")
 
 // Methods
-async function getAllSubjects() {
+async function getAllSubjects(userId: number) {
   try {
-    // Ideally should be type ApiResponse<string[]>
-    const apiResponse: ApiResponse<String[]> = await getSubjects();
+    // Ideally as type ApiResponse<string[]>
+      const apiResponse: ApiResponse<subject[]> = await getSubjects();
 
     // Check if the ApiResponse is not null before extracting the value
     if (apiResponse) {
@@ -60,10 +55,10 @@ async function getAllSubjects() {
   }
 }
 
-async function getUserSubjects(userId: number) {
+async function getUserSubjects() {
   try {
     // Ideally as type ApiResponse<string[]>
-    const apiResponse: ApiResponse<subject[]> = await getMySubjects();
+    const apiResponse: ApiResponse<subject[]> = await getMySubjects();    
 
     // Check if the ApiResponse is not null before extracting the value
     if (apiResponse) {
@@ -74,7 +69,7 @@ async function getUserSubjects(userId: number) {
       personalSubjects.value = subjectsArray;
     } else {
       // Handle the case when the API call is not successful
-      console.error("Failed to get subjects.");
+      console.error('Failed to get subjects.');
     }
   } catch (error) {
     console.error("Error:", error);
@@ -89,10 +84,30 @@ async function unfollowAlgebraI(subjectName: string) {
   await unfollowSubject(subjectName);
 }
 
+async function fetchSubjects() {
+  try {
+    // Ideally should be type ApiResponse<string[]>
+    const apiResponse: ApiResponse<string[]> = await getSubjects();
+
+    // Check if the ApiResponse was successful before extracting the value
+    if (apiResponse) {
+      // Extract the array of strings
+      const subjectsArray: string[] = apiResponse.data as string[];
+
+      // Assign the value to allSubjects
+      allSubjects.value = subjectsArray;
+    } else {
+      // Handle the case when the API call is not successful
+      console.error("Failed to get subjects.");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
 function updateSelectedSubject(subject: string) {
   newSelectedSubject.value = subject;
 }
-
 </script>
 
 ../api/api
