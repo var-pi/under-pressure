@@ -4,8 +4,8 @@ import { ApiResponse, Entry, subject, userId } from "./types";
 const getSubjects = (): Promise<ApiResponse<subject[]>> =>
   server.get("/subjects");
 
-const getMySubjects = (userId: userId): Promise<ApiResponse<subject[]>> =>
-  server.authorized.post("/personal/subjects", { userId });
+const getMySubjects = (): Promise<ApiResponse<subject[]>> =>
+  server.authorized.post("/personal/subjects", {});
 
 const followSubject = (subjectName: string): Promise<ApiResponse<null>> =>
   server.authorized.post("/personal/subjects/follow", { subjectName });

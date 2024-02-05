@@ -7,7 +7,7 @@
       {{ sliderValue }}
     </label>
     <button id="fetch-subjects" @click="fetchSubjects">Fetch Subjects</button>
-    <button @click="getUserSubjects(3)">Fetch User Subjects</button>
+    <button @click="getUserSubjects()">Fetch User Subjects</button>
     <button @click="followAlgebraI('Algebra I')">Follow Algebr I</button>
     <button @click="unfollowAlgebraI('Algebra I')">Unfollow Algebra I</button>
     <button @click="setEntryForAlgebraI()">Set Entry For Algebra I</button>
@@ -45,10 +45,10 @@ const personalSubjects = ref<string[]>([]);
 const chartData = ref(); // Will be changed with new interface
 
 // Methods
-async function getUserSubjects(userId: number) {
+async function getUserSubjects() {
   try {
     // Ideally as type ApiResponse<string[]>
-    const apiResponse: ApiResponse<subject[]> = await getMySubjects(userId);
+    const apiResponse: ApiResponse<subject[]> = await getMySubjects();
 
     if (apiResponse) {
       // Extract the array of strings
