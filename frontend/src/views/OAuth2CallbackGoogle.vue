@@ -9,6 +9,7 @@ onMounted(() => {
 
   if (code) {
     // Now you have the authorization code, and you can send it to your backend
+    // TODO use server
     axios
       .post("http://localhost:9091/auth", { code: code })
       .then((r) => sessionStorage.setItem("idTokenString", r.data.data))
