@@ -91,24 +91,11 @@ function updateChartInfo(newValue: number) {
   updateChart();
 }
 
-// Function to update the chart with new chart value
-function initializeChartInfo() {
-  // TODO: initialize chartData
-  initializeChart(getChartConfig(), chartData);
-  updateChart();
-}
-
 async function addEntry() {
   try {
     const newStressValue = sliderValue.value;
-    const result = await setEntry(props.newSelectedSubject, newStressValue);    
+    await setEntry(props.newSelectedSubject, newStressValue);    
     updateChartInfo(newStressValue);
-    /*if (result) {
-      // Updates after change. Needs to be fixed
-      console.log("Successfully added entry:", result.message);
-    } else {
-      console.log("Failed adding entry:", result);
-    }*/
   } catch (error) {
     console.error("Error adding entry:", error);
   }

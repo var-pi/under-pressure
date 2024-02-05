@@ -8,43 +8,61 @@
         id="search-bar"
         v-model="filter"
         type="text"
-        placeholder="Otsi" />
+        placeholder="Otsi"
+      />
       <div class="scrollable-content">
-        <button
-          v-for="subject in filteredSubjects"
-          :key="subject.text"
-          :style="{ display: subject.display }"
-          class="menubtn"
-          @click="$emit('handleSelectedSubjectUpdate', subject.text)">
-          {{ subject.text }}
-        </button>
+        <div class="btn-line" v-for="subject in personalSubjects" :key="subject">
+          <button
+            class="menubtn"
+            @click="$emit('handleSelectedSubjectUpdate', subject)">
+            {{ subject }}
+          </button>
+          <button
+            class="unfollow-btn"
+            @click=unfollowSubject(subject)>
+            Unfollow
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref, computed, defineProps, defineEmits } from "vue";
 
-const props = defineProps<{
-  personalSubjects: string[];
-}>();
+<script setup lang="ts">
+import { ref, defineEmits } from "vue";
+import {
+  getMySubjects,
+  unfollowSubject,
+} from "@/api/api";
+import { ApiResponse, subject } from "@/api/types";
 
 const emits = defineEmits(["handleSelectedSubjectUpdate"]);
 
 const filter = ref("");
 const isDropdownVisible = ref(false);
+const personalSubjects = ref([] as string[])
 
-const filteredSubjects = computed(() => {
-  const filterText = filter.value.toUpperCase();
-  return props.personalSubjects.map((subject) => ({
-    text: subject,
-    display: subject.toUpperCase().includes(filterText) ? "block" : "none",
-  }));
-});
-
-function toggleMenu() {
+async function toggleMenu() {
+  if (!isDropdownVisible.value) {
+    getPersonalSubjects();
+  }
   isDropdownVisible.value = !isDropdownVisible.value;
+}
+
+async function getPersonalSubjects() {
+  try {
+    const apiResponse: ApiResponse<subject[]> = await getMySubjects();
+    // Check if the ApiResponse is not null before extracting the value
+    if (apiResponse) {
+      // Extract the array of strings
+      personalSubjects.value = apiResponse.data as string[];
+    } else {
+      console.error("Failed to get subjects.");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }
 
 // Ensure emits is used, even if it's not used explicitly in your component
@@ -66,10 +84,19 @@ console.log(emits);
   align-content: center;
 }
 #dropbtn {
-  width: 100px;
-  align-self: center;
+  width: 200px;
 }
 #search-bar {
   width: 190px;
+}
+.menubtn {
+  width: 150px
+}
+.unfollow-btn {
+  width: 40px;
+  font-size: 8px;
+}
+.btn-line {
+  display: flex;
 }
 </style>

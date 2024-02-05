@@ -13,12 +13,11 @@
         placeholder="Otsi" />
       <div class="scrollable-content">
         <button
-          v-for="subject in filteredSubjects"
-          :key="subject.text"
-          :style="{ display: subject.display }"
+          v-for="subject in allSubjects"
+          :key="subject"
           class="menubtn"
-          @click="$emit('newSelectedSubject', subject.text)">
-          {{ subject.text }}
+          @click=addFollowedSubject(subject)>
+          {{ subject }}
         </button>
       </div>
     </div>
@@ -27,40 +26,42 @@
 
 <script setup lang="ts">
 // Script in Composition API
-import { ref, computed, defineProps, defineEmits } from "vue";
+import { ref } from "vue";
+import {
+  getSubjects,
+  followSubject,
+} from "@/api/api";
+import { ApiResponse, subject } from "@/api/types";
 
-// Prop definition for subjects array
-const props = defineProps<{
-  subjects: string[];
-}>();
-
-// Declare emitted event
-const emits = defineEmits(["newSelectedSubject"]);
-
-// Reactive reference for the filter text
 const filter = ref<string>("");
-// Reactive reference for dropdown visibility
 const isDropdownVisible = ref(false);
+let allSubjects = ref([] as string[]);
 
-// Computed property for filtered subjects based on the filter text
-const filteredSubjects = computed(function () {
-  const filterText = filter.value.toUpperCase();
-  // Map subjects to SubjectItem structure with text and display properties
-  return props.subjects.map(function (subject) {
-    return {
-      text: subject,
-      display: subject.toUpperCase().includes(filterText) ? "block" : "none",
-    };
-  });
-});
-
-// Method to toggle dropdown visibility
-function toggleMenu() {
+async function toggleMenu() {
+  if (!isDropdownVisible.value) {
+    getAllSubjects();
+  }
   isDropdownVisible.value = !isDropdownVisible.value;
 }
 
-// Ensure emits is used, even if it's not used explicitly in your component
-console.log(emits);
+async function getAllSubjects() {
+  try {
+    const apiResponse: ApiResponse<subject[]> = await getSubjects();
+    // Check if the ApiResponse is not null before extracting the value
+    if (apiResponse) {
+      // Extract the array of strings
+      allSubjects.value = apiResponse.data as string[];
+    } else {
+      console.error("Failed to get subjects.");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+async function addFollowedSubject(subjectName: string) {
+  await followSubject(subjectName);
+}
 </script>
 
 <style scoped>
@@ -78,8 +79,11 @@ console.log(emits);
   align-content: center;
 }
 #dropbtn {
-  width: 100px;
+  width: 200px;
   align-self: center;
+}
+.menubtn {
+  width: 180px;
 }
 #search-bar {
   width: 190px;
