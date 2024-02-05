@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import Chart from "chart.js/auto";
-import { onMounted, ref, Ref } from "vue";
+import { onMounted, ref, Ref, watch, defineProps } from "vue";
 import {
   getChartConfig,
   initializeChart,
@@ -32,10 +32,17 @@ import {
  } from "../api/api";
 import { ChartData } from "../interfaces/interfaces";
 
+const props = defineProps<{
+  newSelectedSubject: string,
+}>();
+
 const lineChartCanvas = ref<HTMLCanvasElement | null>(null);
 const newChart: Ref<Chart | null> = ref(null);
 const sliderValue = ref<number>(50);
-
+let chartData: ChartData = {
+  subject: '',
+  data: [],
+}
 
 onMounted(() => {
   lineChartCanvas.value = document.querySelector("canvas");
@@ -47,6 +54,9 @@ onMounted(() => {
   }
 });
 
+watch(() => props.newSelectedSubject, getSubjectEntries)
+
+// TODO: move to chartConfig.ts
 function updateChart() {
   const canvas = lineChartCanvas.value;
 
@@ -73,7 +83,6 @@ function updateChart() {
 
 // Function to update the chart with new value
 function updateChartInfo(newValue: number) {
-  console.log("siin olen");
   if (!isNaN(newValue)) {
     updateChartData(getChartConfig(), newValue);
   } else {
@@ -92,7 +101,7 @@ function initializeChartInfo() {
 async function addEntry() {
   try {
     const newStressValue = sliderValue.value;
-    const result = await setEntry(3, "Algebra I", newStressValue);    
+    const result = await setEntry(3, props.newSelectedSubject, newStressValue);    
     updateChartInfo(newStressValue);
     /*if (result) {
       // Updates after change. Needs to be fixed
@@ -111,8 +120,12 @@ async function getSubjectEntries(subject: string) {
     const result = await getEntries(3, subject);
 
     if (result.status == "success") {
-      chartData.value = result.data;
+      chartData.data = result.data;
       console.log("Successfully fetched entries.", result.message);
+      chartData.subject = subject;
+      chartData.data = result.data;
+      initializeChart(getChartConfig(), chartData);
+      updateChart();
     } else {
       console.log("Failed to get entries.", result.message);
     }
@@ -120,11 +133,5 @@ async function getSubjectEntries(subject: string) {
     console.error("Error while fetching subject data:", error);
   }
 }
-
-// Call updateChart when the component is mounted
-onMounted(() => {
-  lineChartCanvas.value = document.querySelector("canvas"); // or use another method to get the canvas element
-  updateChart();
-});
 </script>
 

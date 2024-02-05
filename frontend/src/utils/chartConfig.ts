@@ -1,15 +1,15 @@
 // chartConfig.ts
-import { ChartConfiguration, ChartDataset } from 'chart.js';
+import { ChartConfiguration, ChartDataset } from "chart.js";
 
 // Define the initial static data
 const initialData: ChartConfiguration['data'] = {
-  labels: ["02.02.2024"],
+  labels: [],
   datasets: [
     {
-      label: 'Stressitase',
+      label: '',
       backgroundColor: 'rgb(255, 99, 132)',
       borderColor: 'rgb(75, 192, 192)',
-      data: [13],
+      data: [],
       fill: false,
       tension: 0.2,
     },
@@ -39,13 +39,23 @@ export const updateChartData = (config: ChartConfiguration, newData: number): vo
     config.data.labels = []; // Initialize labels if not already present
   }
 
-  const currentDate: string = (new Date).toLocaleDateString()
+  // Create current date with the same format as in the database
+  // TODO: format date into 'et-EE'
+  const currentDate: string = new Date().toLocaleDateString('en-CA', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  });
   const dataset: ChartDataset = config.data.datasets[0];
   
+  // If last 
   if (config.data.labels.slice(-1)[0] == currentDate) {
     // Update the last data value to newData
+    console.log("siin");
+    
     dataset.data[dataset.data.length - 1] = newData;
   } else {
+    console.log("hoopis siin");
     // Add newData to data values and currentDate to labels
     config.data.labels.push(currentDate);
     dataset.data = [...dataset.data, newData];
@@ -53,7 +63,7 @@ export const updateChartData = (config: ChartConfiguration, newData: number): vo
   console.log('Updated data to', dataset.data);
 };
 
-export const initializeChart = (config: ChartConfiguration, subjectData: { subject: string, entries: number[], dates: string[] }): void => {
+export const initializeChart = (config: ChartConfiguration, subjectData: { subject: string, data: Entry[] }): void => {
     // Check if data is already initialized in the config
     if (!config.data) {
       config.data = { ...initialData };
@@ -61,18 +71,19 @@ export const initializeChart = (config: ChartConfiguration, subjectData: { subje
     if (!config.data.labels) {
       config.data.labels = []; // Initialize labels if not already present
     }
-
-    config.data.labels.length = 0;
-
-    for (const date in subjectData.dates) {
-      config.data.labels.push(date);
-    }
-
     const dataset: ChartDataset = config.data.datasets[0];
-
-    dataset.data = subjectData.entries;
+    const labels = config.data.labels
 
     dataset.label = subjectData.subject;
+    labels.length = 0;
+    dataset.data.length = 0;
+  
+    for (const entry of subjectData.data) {
+      // typeof entry.createdAt is undefined
+      console.log(typeof entry.creationDate);
+      dataset.data.push(entry.stressLevel)
+      labels.push(entry.creationDate)
+    }
 
-    console.log('Initialized chart with data:', dataset.data, 'and labels:', config.data.labels);
+    console.log('Initialized chart with data:', dataset.data, 'and labels:', labels);
 }

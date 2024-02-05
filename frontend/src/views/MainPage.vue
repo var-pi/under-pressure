@@ -1,6 +1,7 @@
 <template>
   <div id="contents">
-    <LineGraph/>
+    <LineGraph
+      :new-selected-subject="newSelectedSubject" />
     <button id="fetch-subjects" @click="getAllSubjects">
       Fetch Subjects
     </button>
@@ -15,7 +16,7 @@
       @new-selected-subject="addFollowedSubject" />
     <DropdownPersonalSubjects
       :personal-subjects="personalSubjects"
-      @handle-selected-subject-update="" />
+      @handle-selected-subject-update="updateSelectedSubject" />
   </div>
 </template>
 
@@ -34,7 +35,7 @@ import { ApiResponse } from "../interfaces/interfaces"
 
 const allSubjects = ref<string[]>([]);
 const personalSubjects = ref<string[]>([]);
-const lineGraphRef = ref();
+const newSelectedSubject = ref("")
 
 // Methods
 async function getAllSubjects() {
@@ -82,5 +83,9 @@ async function getUserSubjects(userId: number) {
 async function addFollowedSubject(subjectName: string) {
   const result = await followSubject(3, subjectName);
   console.log(result);
+}
+
+function updateSelectedSubject(subject: string) {
+  newSelectedSubject.value = subject;
 }
 </script>

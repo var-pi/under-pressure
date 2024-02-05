@@ -2,8 +2,7 @@
 
 export interface ChartData {
   subject: string;
-  entries: number[];
-  dates: string[];
+  data: Entry[];
 }
 
 export interface ApiResponse<T> {
