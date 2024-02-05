@@ -123,7 +123,7 @@ async function getSubjectEntries(subject: string) {
       chartData.data = result.data;
       console.log("Successfully fetched entries.", result.message);
       chartData.subject = subject;
-      chartData = result.data;
+      chartData.data = result.data;
       initializeChart(getChartConfig(), chartData);
       updateChart();
     } else {

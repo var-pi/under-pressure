@@ -5,7 +5,7 @@ export interface ApiResponse<T> {
 }
 
 export interface Entry {
-  createdAt: Date;
+  creationDate: Date;
   stressLevel: number;
 }
 
