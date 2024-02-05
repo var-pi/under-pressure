@@ -38,8 +38,7 @@ const newSelectedSubject = ref("")
 // Methods
 async function getAllSubjects() {
   try {
-    // Ideally as type ApiResponse<string[]>
-      const apiResponse: ApiResponse<subject[]> = await getSubjects();
+    const apiResponse: ApiResponse<subject[]> = await getSubjects();
 
     // Check if the ApiResponse is not null before extracting the value
     if (apiResponse) {
@@ -78,31 +77,9 @@ async function getUserSubjects() {
   }
 }
 
-
 async function addFollowedSubject(subjectName: string) {
   const result = await followSubject(subjectName);
   console.log(result);
-}
-
-async function fetchSubjects() {
-  try {
-    // Ideally should be type ApiResponse<string[]>
-    const apiResponse: ApiResponse<string[]> = await getSubjects();
-
-    // Check if the ApiResponse was successful before extracting the value
-    if (apiResponse) {
-      // Extract the array of strings
-      const subjectsArray: string[] = apiResponse.data as string[];
-
-      // Assign the value to allSubjects
-      allSubjects.value = subjectsArray;
-    } else {
-      // Handle the case when the API call is not successful
-      console.error("Failed to get subjects.");
-    }
-  } catch (error) {
-    console.error("Error:", error);
-  }
 }
 
 function updateSelectedSubject(subject: string) {
