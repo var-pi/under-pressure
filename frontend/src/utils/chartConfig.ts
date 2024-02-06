@@ -1,14 +1,16 @@
 // chartConfig.ts
 import { ChartConfiguration, ChartDataset } from "chart.js";
+import "@/styles/colors/colors.css";
 
+const color4 = getComputedStyle(document.documentElement).getPropertyValue('--col-4');
 // Define the initial static data
 const initialData: ChartConfiguration['data'] = {
-  labels: [],
+  labels: [''],
   datasets: [
     {
       label: '',
-      backgroundColor: 'rgb(255, 99, 132)',
-      borderColor: 'rgb(75, 192, 192)',
+      backgroundColor: color4,
+      borderColor: color4,
       data: [],
       fill: false,
       tension: 0.2,

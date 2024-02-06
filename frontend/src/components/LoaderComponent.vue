@@ -1,32 +1,18 @@
 Loader by greyby: https://github.com/greyby/vue-spinner.git
 <template>
   <div v-show="props.loading" class="v-spinner">
-    <div class="v-sync v-sync1" :style="[spinnerStyle, spinnerDelay1]"></div>
-    <div class="v-sync v-sync2" :style="[spinnerStyle, spinnerDelay2]"></div>
-    <div class="v-sync v-sync3" :style="[spinnerStyle, spinnerDelay3]"></div>
+    <div class="v-sync v-sync1" :style="[spinnerDelay1]"></div>
+    <div class="v-sync v-sync2" :style="[spinnerDelay2]"></div>
+    <div class="v-sync v-sync3" :style="[spinnerDelay3]"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, defineProps } from 'vue';
+import { computed, defineProps } from 'vue';
 
 const props = defineProps<{
   loading: boolean;
 }>();
-
-const spinnerStyle = ref({
-  backgroundColor: '#95B9C7',
-  height: '5px',
-  width: '5px',
-  margin: '2px',
-  borderRadius: '100%',
-  display: 'inline-block',
-  animationName: 'v-syncStretchDelay',
-  animationDuration: '0.6s',
-  animationIterationCount: 'infinite',
-  animationTimingFunction: 'ease-in-out',
-  animationFillMode: 'both',
-});
 
 const spinnerDelay1 = computed(() => ({
   animationDelay: '0.07s',
@@ -42,6 +28,22 @@ const spinnerDelay3 = computed(() => ({
 </script>
 
 <style>
+@import "@/styles/colors/colors.css";
+
+.v-sync {
+  background-color: var(--col-3);
+  height: 5px;
+  width: 5px;
+  margin: 2px;
+  border-radius: 100%;
+  display: inline-block;
+  animation-name: v-syncStretchDelay;
+  animation-duration: 0.6s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: both;
+}
+
 @-webkit-keyframes v-syncStretchDelay {
   33% {
     -webkit-transform: translateY(10px);
