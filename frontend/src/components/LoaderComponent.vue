@@ -1,0 +1,76 @@
+Loader by greyby: https://github.com/greyby/vue-spinner.git
+<template>
+  <div v-show="props.loading" class="v-spinner">
+    <div class="v-sync v-sync1" :style="[spinnerDelay1]"></div>
+    <div class="v-sync v-sync2" :style="[spinnerDelay2]"></div>
+    <div class="v-sync v-sync3" :style="[spinnerDelay3]"></div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed, defineProps } from 'vue';
+
+const props = defineProps<{
+  loading: boolean;
+}>();
+
+const spinnerDelay1 = computed(() => ({
+  animationDelay: '0.07s',
+}));
+
+const spinnerDelay2 = computed(() => ({
+  animationDelay: '0.14s',
+}));
+
+const spinnerDelay3 = computed(() => ({
+  animationDelay: '0.21s',
+}));
+</script>
+
+<style>
+@import "@/styles/colors/colors.css";
+
+.v-sync {
+  background-color: var(--col-3);
+  height: 5px;
+  width: 5px;
+  margin: 2px;
+  border-radius: 100%;
+  display: inline-block;
+  animation-name: v-syncStretchDelay;
+  animation-duration: 0.6s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes v-syncStretchDelay {
+  33% {
+    -webkit-transform: translateY(10px);
+    transform: translateY(10px);
+  }
+  66% {
+    -webkit-transform: translateY(-10px);
+    transform: translateY(-10px);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes v-syncStretchDelay {
+  33% {
+    -webkit-transform: translateY(10px);
+    transform: translateY(10px);
+  }
+  66% {
+    -webkit-transform: translateY(-10px);
+    transform: translateY(-10px);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+</style>

@@ -3,6 +3,8 @@
     <button id="dropbtn" @click="toggleMenu">
       Subjects
     </button>
+    <LoaderComponent 
+      :loading="isLoading" />
     <div
       v-if="isDropdownVisible"
       class="dropdown-content">
@@ -31,16 +33,20 @@ import {
   getSubjects,
   followSubject,
 } from "@/api/api";
+import LoaderComponent from "@/components/LoaderComponent.vue";
 import { ApiResponse, Subject } from "@/api/types";
 
 const filter = ref<string>("");
 const isDropdownVisible = ref(false);
 const allSubjects = ref([] as string[]);
+let isLoading = ref<boolean>(false);
 
 async function toggleMenu() {
   if (!isDropdownVisible.value) {
-    getAllSubjects();
+    isLoading.value = true;
+    await getAllSubjects();
   }
+  isLoading.value = false;
   isDropdownVisible.value = !isDropdownVisible.value;
 }
 
@@ -65,6 +71,8 @@ async function addFollowedSubject(subjectName: string) {
 </script>
 
 <style scoped>
+@import "@/styles/colors/colors.css";
+
 .dropdown-content {
   width: 200px;
   align-self: center;
@@ -80,7 +88,7 @@ async function addFollowedSubject(subjectName: string) {
 }
 #dropbtn {
   width: 200px;
-  align-self: center;
+  color: var(--col-1);
 }
 .menubtn {
   width: 180px;

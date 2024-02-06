@@ -1,17 +1,19 @@
 <template>
-  <RouterView />
+  <div id="app">
+    <RouterView />
+  </div>
 </template>
 
 <script setup lang="ts"></script>
 
-<style lang="scss">
+<style scoped>
+@import "@/styles/colors/colors.css";
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background-color: var(--col-1);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 </style>
-

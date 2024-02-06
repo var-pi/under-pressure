@@ -3,6 +3,8 @@
     <button id="dropbtn" @click="toggleMenu">
       My subjects
     </button>
+    <LoaderComponent 
+      :loading="isLoading" />
     <div v-if="isDropdownVisible" class="dropdown-content">
       <input
         id="search-bar"
@@ -34,18 +36,22 @@ import {
   getMySubjects,
   unfollowSubject,
 } from "@/api/api";
+import LoaderComponent from "@/components/LoaderComponent.vue";
 import { ApiResponse, Subject } from "@/api/types";
 
 const emits = defineEmits(["handleSelectedSubjectUpdate"]);
 
 const filter = ref("");
 const isDropdownVisible = ref(false);
-const personalSubjects = ref([] as string[])
+const personalSubjects = ref([] as string[]);
+let isLoading = ref<boolean>(false);
 
 async function toggleMenu() {
   if (!isDropdownVisible.value) {
-    getPersonalSubjects();
+    isLoading.value = true;
+    await getPersonalSubjects();
   }
+  isLoading.value = false;
   isDropdownVisible.value = !isDropdownVisible.value;
 }
 
@@ -71,6 +77,8 @@ async function handleUnfollow(subjectItem: string) {
 </script>
 
 <style scoped>
+@import "@/styles/colors/colors.css";
+
 .dropdown-content {
   width: 200px;
   align-self: center;
@@ -86,6 +94,7 @@ async function handleUnfollow(subjectItem: string) {
 }
 #dropbtn {
   width: 200px;
+  color: var(--col-1);
 }
 #search-bar {
   width: 190px;

@@ -25,6 +25,8 @@ function updateSelectedSubject(subject: string) {
 </script>
 
 <style scoped>
+@import "@/styles/colors/colors.css";
+
 #dropdown-menus {
   display: flex;
   justify-content: center;
