@@ -1,7 +1,13 @@
 <template>
-  <button id="settings-btn">
+  <button id="settings-btn" @click="openModal()">
     Settings
   </button>
+  <ModalMenu :isOpen="isModalOpened" @modal-close="closeModal" @submit="submitHandler" name="first-modal">
+    <template #header>Custom header</template>
+    <template #content>Custom content</template>
+    <template #footer>Custom content</template>
+  </ModalMenu>
+
   <div id="contents">
     <LineGraph
       :new-selected-subject="newSelectedSubject" />
@@ -19,11 +25,23 @@ import { ref } from "vue";
 import DropdownSubjects from "@/components/DropdownSubjects.vue";
 import DropdownPersonalSubjects from "@/components/DropdownPersonalSubjects.vue";
 import LineGraph from "@/components/LineGraph.vue";
+import ModalMenu from "../components/ModalMenu.vue";
 
 const newSelectedSubject = ref("")
+const isModalOpened = ref(false);
 
 function updateSelectedSubject(subject: string) {
   newSelectedSubject.value = subject;
+}
+const openModal = () => {
+  isModalOpened.value = true;
+};
+const closeModal = () => {
+  isModalOpened.value = false;
+};
+
+const submitHandler = ()=>{
+  //here you do whatever
 }
 </script>
 
