@@ -1,22 +1,32 @@
 <template>
   <div class="dropdown">
-    <button id="dropbtn" @click="toggleMenu">My subjects</button>
-    <LoaderComponent :loading="isLoading" />
+    <button 
+      id="dropbtn" 
+      :class="{ active: isDropdownVisible}"
+      @click="toggleMenu">
+      My subjects
+    </button>
+    <LoaderComponent 
+      :loading="isLoading" />
     <div v-if="isDropdownVisible" class="dropdown-content">
-      <input id="search-bar" v-model="filter" type="text" placeholder="Otsi" />
+      <input
+        id="search-bar"
+        v-model="filter"
+        type="text"
+        placeholder="🔍" />
       <div class="scrollable-content">
-        <div
-          v-for="subjectItem in personalSubjects"
-          :key="subjectItem"
-          class="btn-line"
-        >
+        <div v-for="subjectItem in filteredSubjects" :key="subjectItem.text" class="btn-line">
           <button
+            :key="subjectItem.text"
+            :style="{ display: subjectItem.display }"
             class="menubtn"
-            @click="emits('handleSelectedSubjectUpdate', subjectItem)"
-          >
-            {{ subjectItem }}
+            @click="emits('handleSelectedSubjectUpdate', subjectItem.text)">
+            {{ subjectItem.text }}
           </button>
-          <button class="unfollow-btn" @click="handleUnfollow(subjectItem)">
+          <button
+            class="unfollow-btn"
+            :style="{display: subjectItem.display}"
+            @click="handleUnfollow(subjectItem.text)">
             Unfollow
           </button>
         </div>
@@ -26,8 +36,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineEmits } from "vue";
+import { ref, computed, defineEmits } from "vue";
 import { api } from "@/api/api";
+
 import LoaderComponent from "@/components/LoaderComponent.vue";
 import { Subject } from "@/api/types";
 
@@ -37,10 +48,21 @@ const filter = ref("");
 const isDropdownVisible = ref(false);
 const personalSubjects = ref([] as string[]);
 let isLoading = ref<boolean>(false);
+// Filtering subjects according to search-bar input
+const filteredSubjects = computed(function() {
+  const filterText = filter.value.toUpperCase();
+  return personalSubjects.value.map(function(subject) {
+    return {
+      text: subject,
+      display: subject.toUpperCase().includes(filterText) ? "block" : "none",
+    };
+  });
+});
 
 async function toggleMenu() {
   if (!isDropdownVisible.value) {
     isLoading.value = true;
+    filter.value = "";
     await getPersonalSubjects();
   }
   isLoading.value = false;
@@ -70,36 +92,5 @@ async function handleUnfollow(subjectItem: string) {
 
 <style scoped>
 @import "@/styles/colors/colors.css";
-
-.dropdown-content {
-  width: 200px;
-  align-self: center;
-}
-.scrollable-content {
-  max-height: 200px;
-  overflow-y: scroll;
-}
-.dropdown {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-}
-#dropbtn {
-  width: 200px;
-  color: var(--col-1);
-}
-#search-bar {
-  width: 190px;
-}
-.menubtn {
-  width: 150px;
-}
-.unfollow-btn {
-  width: 40px;
-  font-size: 8px;
-}
-.btn-line {
-  display: flex;
-}
+@import "@/styles/DropdownStyles/dropdownBtnStyle.css";
 </style>
-
