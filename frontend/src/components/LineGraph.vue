@@ -1,7 +1,4 @@
 <template>
-  <button id="settings-btn">
-    Settings
-  </button>
   <div id="canvas">
     <canvas id="chart" ref="lineChartCanvas">
       canvas
@@ -185,18 +182,6 @@ label {
   opacity: .95;
   }
 }
-
-#settings-btn {
-    max-width: 70px;
-    max-height: 70px;
-    width: 10vw;
-    height: 10vw;
-    aspect-ratio: 1/1;
-    margin: 10px;
-    position: fixed;
-    top: 10px;
-    right: 10px;
-  }
 
 @media screen and (max-width: 1100px) {
   #canvas {

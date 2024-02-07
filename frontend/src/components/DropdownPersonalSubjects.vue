@@ -1,6 +1,9 @@
 <template>
   <div class="dropdown">
-    <button id="dropbtn" @click="toggleMenu">
+    <button 
+      id="dropbtn" 
+      :class="{ active: isDropdownVisible}"
+      @click="toggleMenu">
       My subjects
     </button>
     <LoaderComponent 
@@ -10,17 +13,20 @@
         id="search-bar"
         v-model="filter"
         type="text"
-        placeholder="Otsi" />
+        placeholder="🔍" />
       <div class="scrollable-content">
-        <div v-for="subjectItem in personalSubjects" :key="subjectItem" class="btn-line">
+        <div v-for="subjectItem in filteredSubjects" :key="subjectItem.text" class="btn-line">
           <button
+            :key="subjectItem.text"
+            :style="{ display: subjectItem.display }"
             class="menubtn"
-            @click="emits('handleSelectedSubjectUpdate', subjectItem)">
-            {{ subjectItem }}
+            @click="emits('handleSelectedSubjectUpdate', subjectItem.text)">
+            {{ subjectItem.text }}
           </button>
           <button
             class="unfollow-btn"
-            @click="handleUnfollow(subjectItem)">
+            :style="{display: subjectItem.display}"
+            @click="handleUnfollow(subjectItem.text)">
             Unfollow
           </button>
         </div>
@@ -31,7 +37,7 @@
 
 
 <script setup lang="ts">
-import { ref, defineEmits } from "vue";
+import { ref, computed, defineEmits } from "vue";
 import {
   getMySubjects,
   unfollowSubject,
@@ -45,10 +51,21 @@ const filter = ref("");
 const isDropdownVisible = ref(false);
 const personalSubjects = ref([] as string[]);
 let isLoading = ref<boolean>(false);
+// Filtering subjects according to search-bar input
+const filteredSubjects = computed(function() {
+  const filterText = filter.value.toUpperCase();
+  return personalSubjects.value.map(function(subject) {
+    return {
+      text: subject,
+      display: subject.toUpperCase().includes(filterText) ? "block" : "none",
+    };
+  });
+});
 
 async function toggleMenu() {
   if (!isDropdownVisible.value) {
     isLoading.value = true;
+    filter.value = "";
     await getPersonalSubjects();
   }
   isLoading.value = false;
@@ -79,21 +96,4 @@ async function handleUnfollow(subjectItem: string) {
 <style scoped>
 @import "@/styles/colors/colors.css";
 @import "@/styles/DropdownStyles/dropdownBtnStyle.css";
-
-.dropdown-content {
-  width: 200px;
-  align-self: center;
-}
-.scrollable-content {
-  max-height: 200px;
-  overflow-y: scroll;
-}
-.dropdown {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-}
-.btn-line {
-  display: flex;
-}
 </style>

@@ -1,4 +1,7 @@
 <template>
+  <button id="settings-btn">
+    Settings
+  </button>
   <div id="contents">
     <LineGraph
       :new-selected-subject="newSelectedSubject" />
@@ -36,5 +39,36 @@ function updateSelectedSubject(subject: string) {
 }
 #personal-subjects {
   margin: 1cap;
+}
+#settings-btn {
+    max-width: 70px;
+    max-height: 70px;
+    width: 10vw;
+    height: 10vw;
+    aspect-ratio: 1/1;
+    margin: 10px;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+}
+
+@media screen and (max-width: 550px) {
+
+  #settings-btn {
+    top: 0;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+
+  #settings-btn {
+    width: 20px;
+    height: 20px;
+    margin: 5px;
+  }
 }
 </style>
