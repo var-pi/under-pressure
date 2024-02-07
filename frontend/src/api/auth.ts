@@ -1,5 +1,3 @@
-import jwt from "jsonwebtoken";
-
 const clientId =
   "742753336008-k6lnuvq3m8h5v9bp35rq7d3050a847c5.apps.googleusercontent.com";
 
