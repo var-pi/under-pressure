@@ -131,6 +131,7 @@ Add slider styling to separate file
 <style scoped>
 @import "@/styles/colors/colors.css";
 @import "@/styles/LineGraphStyles/sliderStyle.css";
+@import "@/styles/fontStyles.css";
 
 #chart {
   background-color: var(--col-3);
@@ -138,7 +139,7 @@ Add slider styling to separate file
   border-radius: 10px;
 }
 #canvas {
-  margin-top: 100px;
+  margin-top: 20px;
   display: flex;
   width: 100%;
   max-height: 580px;
@@ -163,7 +164,7 @@ label {
 }
 
 #enter-btn {
-  background-color: var(--col-4);
+  background-color: var(--col-5);
   color: #fff;
   aspect-ratio: 1/1;
   border-radius: 50%;
@@ -172,12 +173,16 @@ label {
   border: none;
   cursor: pointer;
   font-size: 70%;
+  font-family: var(--font-family);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, .1),0 3px 6px rgba(0, 0, 0, .05);
   width: 8vw;
   height: 8vw;
   max-width: 80px;
   max-height: 80px;
+
   &:hover {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  box-shadow: rgba(0, 1, 0, .5) 0 2px 8px;
+  opacity: .95;
   }
 }
 
@@ -193,6 +198,11 @@ label {
     right: 10px;
   }
 
+@media screen and (max-width: 1100px) {
+  #canvas {
+    margin-top: 100px;
+  }
+}
 @media screen and (min-width: 900px) {
   #chart {
     max-width: 800px;

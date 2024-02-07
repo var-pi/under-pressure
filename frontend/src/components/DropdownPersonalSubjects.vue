@@ -78,6 +78,7 @@ async function handleUnfollow(subjectItem: string) {
 
 <style scoped>
 @import "@/styles/colors/colors.css";
+@import "@/styles/DropdownStyles/dropdownBtnStyle.css";
 
 .dropdown-content {
   width: 200px;
@@ -91,20 +92,6 @@ async function handleUnfollow(subjectItem: string) {
   display: flex;
   flex-direction: column;
   align-content: center;
-}
-#dropbtn {
-  width: 200px;
-  color: var(--col-1);
-}
-#search-bar {
-  width: 190px;
-}
-.menubtn {
-  width: 150px
-}
-.unfollow-btn {
-  width: 40px;
-  font-size: 8px;
 }
 .btn-line {
   display: flex;

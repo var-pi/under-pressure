@@ -72,6 +72,7 @@ async function addFollowedSubject(subjectName: string) {
 
 <style scoped>
 @import "@/styles/colors/colors.css";
+@import "@/styles/DropdownStyles/dropdownBtnStyle.css";
 
 .dropdown-content {
   width: 200px;
@@ -85,10 +86,6 @@ async function addFollowedSubject(subjectName: string) {
   display: flex;
   flex-direction: column;
   align-content: center;
-}
-#dropbtn {
-  width: 200px;
-  color: var(--col-1);
 }
 .menubtn {
   width: 180px;
