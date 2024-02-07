@@ -1,24 +1,16 @@
 <template>
   <div class="dropdown">
-    <button id="dropbtn" @click="toggleMenu">
-      Subjects
-    </button>
-    <LoaderComponent 
-      :loading="isLoading" />
-    <div
-      v-if="isDropdownVisible"
-      class="dropdown-content">
-      <input
-        id="search-bar"
-        v-model="filter"
-        type="text"
-        placeholder="Otsi" />
+    <button id="dropbtn" @click="toggleMenu">Subjects</button>
+    <LoaderComponent :loading="isLoading" />
+    <div v-if="isDropdownVisible" class="dropdown-content">
+      <input id="search-bar" v-model="filter" type="text" placeholder="Otsi" />
       <div class="scrollable-content">
         <button
           v-for="subjectItem in allSubjects"
           :key="subjectItem"
           class="menubtn"
-          @click="addFollowedSubject(subjectItem)">
+          @click="addFollowedSubject(subjectItem)"
+        >
           {{ subjectItem }}
         </button>
       </div>
@@ -29,12 +21,9 @@
 <script setup lang="ts">
 // Script in Composition API
 import { ref } from "vue";
-import {
-  getSubjects,
-  followSubject,
-} from "@/api/api";
+import { api } from "@/api/api";
 import LoaderComponent from "@/components/LoaderComponent.vue";
-import { ApiResponse, Subject } from "@/api/types";
+import { Subject } from "@/api/types";
 
 const filter = ref<string>("");
 const isDropdownVisible = ref(false);
@@ -52,11 +41,11 @@ async function toggleMenu() {
 
 async function getAllSubjects() {
   try {
-    const apiResponse: ApiResponse<Subject[]> = await getSubjects();
+    const subjects: Subject[] = await api.getSubjectsAll();
     // Check if the ApiResponse is not null before extracting the value
-    if (apiResponse) {
+    if (subjects) {
       // Extract the array of strings
-      allSubjects.value = apiResponse.data as string[];
+      allSubjects.value = subjects;
     } else {
       console.error("Failed to get subjects.");
     }
@@ -66,7 +55,7 @@ async function getAllSubjects() {
 }
 
 async function addFollowedSubject(subjectName: string) {
-  await followSubject(subjectName);
+  await api.followSubject(subjectName);
 }
 </script>
 
@@ -97,3 +86,4 @@ async function addFollowedSubject(subjectName: string) {
   width: 190px;
 }
 </style>
+

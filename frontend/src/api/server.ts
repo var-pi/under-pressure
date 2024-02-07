@@ -12,12 +12,26 @@ const server = {
     return await axios.post(url, body).then((r) => r.data);
   },
   authorized: {
+    get: async <T, U>(endpoint: string): Promise<U> => {
+      validateLogin();
+
+      const url = BASE_URL + endpoint;
+      const headers = { Authorization: `Bearer ${getIdTokenString()}` };
+      return await axios.get(url, { headers }).then((r) => r.data);
+    },
     post: async <T, U>(endpoint: string, body: T): Promise<U> => {
       validateLogin();
 
       const url = BASE_URL + endpoint;
       const headers = { Authorization: `Bearer ${getIdTokenString()}` };
       return await axios.post(url, body, { headers }).then((r) => r.data);
+    },
+    delete: async <T, U>(endpoint: string): Promise<U> => {
+      validateLogin();
+
+      const url = BASE_URL + endpoint;
+      const headers = { Authorization: `Bearer ${getIdTokenString()}` };
+      return await axios.delete(url, { headers }).then((r) => r.data);
     },
   },
 };
