@@ -27,23 +27,21 @@ import {
   initializeChart,
   updateChartData,
 } from "@/utils/chartConfig";
-import { 
-  setEntry,
-  getEntries
- } from "@/api/api";
+import { api } from "@/api/api";
+import { Entry } from "@/api/types";
 import { ChartData } from "@/interfaces/interfaces";
 
 const props = defineProps<{
-  newSelectedSubject: string,
+  newSelectedSubject: string;
 }>();
 
 const lineChartCanvas = ref<HTMLCanvasElement | null>(null);
 const newChart: Ref<Chart | null> = ref(null);
 const sliderValue = ref<number>(50);
 let chartData: ChartData = {
-  subject: '',
+  subject: "",
   data: [],
-}
+};
 
 onMounted(() => {
   lineChartCanvas.value = document.querySelector("canvas");
@@ -55,7 +53,7 @@ onMounted(() => {
   }
 });
 
-watch(() => props.newSelectedSubject, getSubjectEntries)
+watch(() => props.newSelectedSubject, getSubjectEntries);
 
 // TODO: move to chartConfig.ts
 function updateChart() {
@@ -72,8 +70,6 @@ function updateChart() {
       const chartConfig = getChartConfig();
       const chartInstance = new Chart(context, chartConfig);
       newChart.value = chartInstance as Chart;
-
-      console.log("Created chart");
     } else {
       console.error("Could not obtain 2D rendering context from canvas");
     }
@@ -95,7 +91,7 @@ function updateChartInfo(newValue: number) {
 async function addEntry() {
   try {
     const newStressValue = sliderValue.value;
-    await setEntry(props.newSelectedSubject, newStressValue);    
+    await api.updateEntry(props.newSelectedSubject, newStressValue);
     updateChartInfo(newStressValue);
   } catch (error) {
     console.error("Error adding entry:", error);
@@ -104,18 +100,11 @@ async function addEntry() {
 
 async function getSubjectEntries(subject: string) {
   try {
-    const result = await getEntries(subject);
-
-    if (result.status == "success") {
-      chartData.data = result.data;
-      console.log("Successfully fetched entries.", result.message);
-      chartData.subject = subject;
-      chartData.data = result.data;
-      initializeChart(getChartConfig(), chartData);
-      updateChart();
-    } else {
-      console.log("Failed to get entries.", result.message);
-    }
+    const entries: Entry[] = await api.getEntries(subject);
+    chartData.subject = subject;
+    chartData.data = entries;
+    initializeChart(getChartConfig(), chartData);
+    updateChart();
   } catch (error) {
     console.error("Error while fetching subject data:", error);
   }
@@ -129,7 +118,8 @@ async function getSubjectEntries(subject: string) {
 /* chart for expressing entries */
 #chart {
   background-color: var(--col-3);
-  box-shadow: 0 0 15rem var(--col-2), 0 0 10rem var(--col-3), 0 0 5rem var(--col-3);
+  box-shadow: 0 0 15rem var(--col-2), 0 0 10rem var(--col-3),
+    0 0 5rem var(--col-3);
   border-radius: 10px;
 }
 @media screen and (min-width: 900px) {
@@ -232,6 +222,7 @@ label {
   opacity: .95;
   }
 }
+
 @media screen and (max-width: 900px) {
   #enter-btn {
     margin: 10px;
@@ -318,3 +309,4 @@ input[type="range"] {
   }
 }
 </style>
+

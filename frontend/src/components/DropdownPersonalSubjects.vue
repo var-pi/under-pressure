@@ -35,15 +35,12 @@
   </div>
 </template>
 
-
 <script setup lang="ts">
 import { ref, computed, defineEmits } from "vue";
-import {
-  getMySubjects,
-  unfollowSubject,
-} from "@/api/api";
+import { api } from "@/api/api";
+
 import LoaderComponent from "@/components/LoaderComponent.vue";
-import { ApiResponse, Subject } from "@/api/types";
+import { Subject } from "@/api/types";
 
 const emits = defineEmits(["handleSelectedSubjectUpdate"]);
 
@@ -74,11 +71,11 @@ async function toggleMenu() {
 
 async function getPersonalSubjects() {
   try {
-    const apiResponse: ApiResponse<Subject[]> = await getMySubjects();
+    const subjects: Subject[] = await api.getSubjects();
     // Check if the ApiResponse is not null before extracting the value
-    if (apiResponse) {
+    if (subjects) {
       // Extract the array of strings
-      personalSubjects.value = apiResponse.data as string[];
+      personalSubjects.value = subjects;
     } else {
       console.error("Failed to get subjects.");
     }
@@ -88,7 +85,7 @@ async function getPersonalSubjects() {
 }
 
 async function handleUnfollow(subjectItem: string) {
-  await unfollowSubject(subjectItem);
+  await api.unfollowSubject(subjectItem);
   await getPersonalSubjects;
 }
 </script>

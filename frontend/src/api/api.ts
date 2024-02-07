@@ -1,41 +1,29 @@
 import server from "./server";
-// userId can also be imported
-import { ApiResponse, Entry, Subject } from "./types";
+import { Entry, Subject } from "./types";
 
-const getSubjects = (): Promise<ApiResponse<Subject[]>> =>
-  server.get("/subjects");
+const getSubjectsAll = (): Promise<Subject[]> => server.get("/subjects/all");
 
-const getMySubjects = (): Promise<ApiResponse<Subject[]>> =>
-  server.authorized.post("/personal/subjects", {});
+const getSubjects = (): Promise<Subject[]> =>
+  server.authorized.get("/subjects");
 
-const followSubject = (subjectName: string): Promise<ApiResponse<null>> =>
-  server.authorized.post("/personal/subjects/follow", { subjectName });
+const followSubject = (subjectName: string): Promise<null> =>
+  server.authorized.post(`/subjects/${subjectName}`, {});
 
-const unfollowSubject = (subjectName: string): Promise<ApiResponse<null>> =>
-  server.authorized.post("/personal/subjects/unfollow", {
-    subjectName,
-  });
+const unfollowSubject = (subjectName: string): Promise<null> =>
+  server.authorized.delete(`/subjects/${subjectName}`);
 
-const getEntries = (subjectName: string): Promise<ApiResponse<Entry[]>> =>
-  server.authorized.post("/personal/entries", {
-    subjectName,
-  });
+const getEntries = (subjectName: string): Promise<Entry[]> =>
+  server.authorized.get(`/subjects/${subjectName}/entries`);
 
-const setEntry = (
-  subjectName: string,
-  stressLevel: number
-): Promise<ApiResponse<null>> =>
-  server.authorized.post("/personal/entries/add", {
-    subjectName,
-    stressLevel,
-  });
+const updateEntry = (subjectName: string, stressLevel: number): Promise<null> =>
+  server.authorized.post(`/subjects/${subjectName}/entries`, { stressLevel });
 
-export {
+export const api = {
+  getSubjectsAll,
   getSubjects,
-  getMySubjects,
   followSubject,
   unfollowSubject,
   getEntries,
-  setEntry,
+  updateEntry,
 };
 
