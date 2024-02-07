@@ -12,7 +12,7 @@ const server = {
     return await axios.post(url, body).then((r) => r.data);
   },
   authorized: {
-    get: async <T, U>(endpoint: string): Promise<U> => {
+    get: async <T>(endpoint: string): Promise<T> => {
       validateLogin();
 
       const url = BASE_URL + endpoint;
@@ -26,7 +26,7 @@ const server = {
       const headers = { Authorization: `Bearer ${getIdTokenString()}` };
       return await axios.post(url, body, { headers }).then((r) => r.data);
     },
-    delete: async <T, U>(endpoint: string): Promise<U> => {
+    delete: async <T>(endpoint: string): Promise<T> => {
       validateLogin();
 
       const url = BASE_URL + endpoint;
