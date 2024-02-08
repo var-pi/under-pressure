@@ -1,26 +1,25 @@
 <template>
-  <button id="settings-btn" @click="openModal">
-    Settings
+  <button id="menu-btn" @click="openModal">
+    <span></span>
+    <span></span>
+    <span></span>
   </button>
-  <ModalMenu :is-open="isModalOpened" id="menuModal" @modal-close="closeModal" @submit="submitHandler">
+  <ModalMenu id="menuModal" :is-open="isModalOpened" @modal-close="closeModal">
   </ModalMenu>
   <div id="contents">
     <LineGraph
       :new-selected-subject="newSelectedSubject" />
-    <div id="dropdown-menus">
-      <DropdownPersonalSubjects
-        id="personal-subjects"
-        @handle-selected-subject-update="updateSelectedSubject" />
-    </div>
+    <DropdownPersonalSubjects
+      id="personal-subjects"
+      @handle-selected-subject-update="updateSelectedSubject" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import DropdownSubjects from "@/components/DropdownSubjects.vue";
 import DropdownPersonalSubjects from "@/components/DropdownPersonalSubjects.vue";
 import LineGraph from "@/components/LineGraph.vue";
-import ModalMenu from "../components/ModalMenu.vue";
+import ModalMenu from "@/components/ModalMenu.vue";
 
 const newSelectedSubject = ref("")
 let isModalOpened = ref(false);
@@ -35,49 +34,60 @@ const openModal = () => {
 const closeModal = () => {
   isModalOpened.value = false;
 };
-const submitHandler = ()=>{
-  //here you do whatever
-}
-
 </script>
 
 <style scoped>
 @import "@/styles/colors/colors.css";
 
-#dropdown-menus {
-  display: flex;
-  justify-content: center;
-}
 #personal-subjects {
   margin: 1cap;
 }
-#settings-btn {
-    max-width: 70px;
-    max-height: 70px;
-    width: 10vw;
-    height: 10vw;
-    aspect-ratio: 1/1;
-    margin: 10px;
-    position: fixed;
-    top: 10px;
-    right: 10px;
+#menu-btn {
+  position: absolute;
+  width: 35px;
+  height: 25px;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background-color: transparent;
 }
-
+#menu-btn > span {
+  display: block;
+  background-color: var(--col-3);
+  margin: 5px 0;
+  height: 5px;
+  width: 35px;
+  max-width: 49px;
+}
+#menu-btn > span:nth-child(1) {
+  margin-top: 0px;
+}
+#menu-btn > span:nth-child(3) {
+  margin-bottom: 0px;
+}
 @media screen and (max-width: 550px) {
-  #settings-btn {
+  #menu-btn {
     top: 0;
     right: 0;
     width: 30px;
     height: 30px;
     margin: 5px;
   }
+  #menu-btn > span {
+    margin: 6px 0;
+    height: 6px;
+    width: 30px;
+  }
 }
-
 @media screen and (max-width: 400px) {
-  #settings-btn {
+  #menu-btn {
     width: 20px;
     height: 20px;
-    margin: 5px;
+  }
+  #menu-btn > span {
+    margin: 4px 0;
+    height: 4px;
+    width: 20px;
   }
 }
 </style>

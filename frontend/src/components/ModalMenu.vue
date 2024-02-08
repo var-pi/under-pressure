@@ -3,9 +3,9 @@
     <div class="modal-wrapper">
       <div ref="target" class="modal-container">
         <div class="modal-header">
-          <slot name="header">
-            UnderPressure
-          </slot>
+          <button id="close-btn" @click.stop="emit('modal-close')">
+              X
+          </button>
         </div>
         <div class="modal-body">
           <LoaderComponent 
@@ -32,11 +32,6 @@
         </div>
         <div class="modal-footer">
           <slot name="footer">
-            <div>
-              <button @click.stop="emit('modal-close')">
-                Submit
-              </button>
-            </div>
           </slot>
         </div>
       </div>
@@ -125,7 +120,7 @@ watch(() => props.isOpen, toggleAllSubjects);
   margin: 20vh auto;
   padding: 20px 30px;
   background-color: var(--col-3);
-  border-radius: 2px;
+  border-radius: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
 }
 .modal-header {
@@ -156,5 +151,11 @@ watch(() => props.isOpen, toggleAllSubjects);
 }
 .menu-btn {
   width: 340px;
+}
+#close-btn {
+  margin-left: auto;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 </style>
