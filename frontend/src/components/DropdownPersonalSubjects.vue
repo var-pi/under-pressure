@@ -9,7 +9,7 @@
       My subjects
     </button>
     <LoaderComponent :loading="isLoading" />
-    <div v-if="isDropdownVisible" class="dropdown-content">
+    <div v-if="isDropdownVisible" class="dropdown-content default">
       <input id="search-bar" v-model="filter" type="text" placeholder="🔍" />
       <div class="scrollable-content">
         <div
@@ -20,13 +20,13 @@
           <button
             :key="subjectItem.text"
             :style="{ display: subjectItem.display }"
-            class="menubtn"
+            class="menubtn button default"
             @click="emits('handleSelectedSubjectUpdate', subjectItem.text)"
           >
             {{ subjectItem.text }}
           </button>
           <button
-            class="unfollow-btn"
+            class="unfollow-btn button default"
             :style="{ display: subjectItem.display }"
             @click="handleUnfollow(subjectItem.text)"
           >
@@ -96,5 +96,6 @@ async function handleUnfollow(subjectItem: string) {
 <style scoped>
 @import "@/styles/colors/colors.css";
 @import "@/styles/DropdownStyles/dropdownBtnStyle.css";
+@import "@/styles/button.css";
 </style>
 
