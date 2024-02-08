@@ -1,6 +1,6 @@
 <template>
   <div id="canvas">
-    <canvas id="chart" ref="lineChartCanvas"> canvas </canvas>
+    <canvas id="chart" class="default" ref="lineChartCanvas"> canvas </canvas>
     <div id="slider-and-button-container">
       <div class="slider-container">
         <input
@@ -114,11 +114,11 @@ async function getSubjectEntries(subject: string) {
 @import "@/styles/fontStyles.css";
 @import "@/styles/colors/colors.css";
 @import "@/styles/button.css";
+@import "@/styles/default.css";
 
 /* chart for expressing entries */
 #chart {
-  background-color: var(--col-3);
-  border-radius: 10px;
+  background-color: initial;
 }
 @media screen and (min-width: 900px) {
   #chart {
