@@ -28,8 +28,8 @@ export const getChartConfig = (): ChartConfiguration => {
     data: { ...initialData }, // Use a copy to avoid modifying the original
     options: {
       responsive: true,
-      maintainAspectRatio: true,
-      aspectRatio: 1.5,
+      maintainAspectRatio: false,
+      // aspectRatio: 1.5,
       animation: false, // If true - TypeError: Cannot read properties of null (reading 'getContext')
       scales: {
         y: {

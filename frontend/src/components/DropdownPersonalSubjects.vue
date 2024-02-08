@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown">
+  <div class="dropdown" id="personal-subjects">
     <div id="wrapper">
       <button
         id="dropbtn"
@@ -7,11 +7,16 @@
         :class="{ active: isDropdownVisible }"
         @click="toggleMenu"
       >
-        My subjects
+        Minu õppeained
       </button>
       <LoaderComponent :loading="isLoading" />
       <div v-if="isDropdownVisible" class="dropdown-content default">
-        <input id="search-bar" v-model="filter" type="text" placeholder="🔍" />
+        <input
+          id="search-bar"
+          v-model="filter"
+          type="text"
+          placeholder="Otsi..."
+        />
         <div class="scrollable-content">
           <div
             v-for="subjectItem in filteredSubjects"
@@ -31,7 +36,7 @@
               :style="{ display: subjectItem.display }"
               @click="handleUnfollow(subjectItem.text)"
             >
-              Unfollow
+              Eemalda
             </button>
           </div>
         </div>

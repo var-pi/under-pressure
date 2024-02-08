@@ -10,11 +10,11 @@
     @modal-close="closeModal"
   />
   <div id="contents">
-    <LineGraph :new-selected-subject="newSelectedSubject" />
-    <DropdownPersonalSubjects
-      id="personal-subjects"
-      @handle-selected-subject-update="updateSelectedSubject"
-    />
+    <LineGraph :new-selected-subject="newSelectedSubject">
+      <DropdownPersonalSubjects
+        @handle-selected-subject-update="updateSelectedSubject"
+      />
+    </LineGraph>
   </div>
 </template>
 
@@ -42,9 +42,6 @@ const closeModal = () => {
 <style scoped>
 @import "@/styles/colors/colors.css";
 
-#personal-subjects {
-  margin: 1cap;
-}
 #menu-btn {
   position: absolute;
   width: 35px;
