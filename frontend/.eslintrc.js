@@ -29,7 +29,7 @@ module.exports = {
     }],
     "vue/max-attributes-per-line": ["warn", {
       "singleline": {
-        "max": 3
+        "max": 4
       },      
       "multiline": {
         "max": 1

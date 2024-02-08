@@ -1,18 +1,13 @@
 <template>
-  <button id="settings-btn" @click="openModal()">
+  <button id="settings-btn" @click="openModal">
     Settings
   </button>
-  <ModalMenu :isOpen="isModalOpened" @modal-close="closeModal" @submit="submitHandler" name="first-modal">
-    <template #header>Custom header</template>
-    <template #content>Custom content</template>
-    <template #footer>Custom content</template>
+  <ModalMenu :is-open="isModalOpened" id="menuModal" @modal-close="closeModal" @submit="submitHandler">
   </ModalMenu>
-
   <div id="contents">
     <LineGraph
       :new-selected-subject="newSelectedSubject" />
     <div id="dropdown-menus">
-      <DropdownSubjects id="all-subjects" />
       <DropdownPersonalSubjects
         id="personal-subjects"
         @handle-selected-subject-update="updateSelectedSubject" />
@@ -28,21 +23,22 @@ import LineGraph from "@/components/LineGraph.vue";
 import ModalMenu from "../components/ModalMenu.vue";
 
 const newSelectedSubject = ref("")
-const isModalOpened = ref(false);
+let isModalOpened = ref(false);
 
 function updateSelectedSubject(subject: string) {
   newSelectedSubject.value = subject;
 }
-const openModal = () => {
+
+const openModal = () => {  
   isModalOpened.value = true;
 };
 const closeModal = () => {
   isModalOpened.value = false;
 };
-
 const submitHandler = ()=>{
   //here you do whatever
 }
+
 </script>
 
 <style scoped>
@@ -51,9 +47,6 @@ const submitHandler = ()=>{
 #dropdown-menus {
   display: flex;
   justify-content: center;
-}
-#all-subjects {
-  margin: 1cap;
 }
 #personal-subjects {
   margin: 1cap;
@@ -71,7 +64,6 @@ const submitHandler = ()=>{
 }
 
 @media screen and (max-width: 550px) {
-
   #settings-btn {
     top: 0;
     right: 0;
@@ -82,7 +74,6 @@ const submitHandler = ()=>{
 }
 
 @media screen and (max-width: 400px) {
-
   #settings-btn {
     width: 20px;
     height: 20px;
