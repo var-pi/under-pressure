@@ -32,8 +32,8 @@
 }
 
 #dropbtn.active {
-  border-radius: 8px 8px 0 0;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.55);
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
 .menubtn {
   width: var(--width-xl);
@@ -44,10 +44,15 @@
   font-size: 8px;
 }
 #search-bar {
-  width: var(--width-xl);
-  height: 30px;
-  background-color: var(--col-3);
+  text-indent: 16px;
+  padding: 0px;
+  border: none;
+  width: 100%;
+  height: 30px; /* TODO */
+  background-color: initial;
+  outline: 1px var(--col-border) solid;
   font-family: var(--font-family);
+  color: var(--col-fg-default);
 }
 .dropdown-content {
   width: var(--width-xl);
@@ -70,9 +75,7 @@
     width: var(--width-l);
     height: var(--height);
   }
-  #search-bar {
-    width: var(--width-l);
-  }
+
   .dropdown-content {
     width: var(--width-l);
   }
@@ -90,9 +93,6 @@
 
 @media screen and (max-width: 900px) {
   #dropbtn {
-    width: var(--width-m);
-  }
-  #search-bar {
     width: var(--width-m);
   }
   .dropdown-content {
@@ -115,7 +115,6 @@
     width: var(--width-s);
   }
   #search-bar {
-    width: var(--width-s);
     height: 20px;
   }
   .dropdown-content {
