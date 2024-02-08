@@ -1,15 +1,9 @@
 <template>
   <div id="canvas">
-    <canvas id="chart" ref="lineChartCanvas">
-      canvas
-    </canvas>
+    <canvas id="chart" ref="lineChartCanvas"> canvas </canvas>
     <div id="slider-and-button-container">
       <div class="slider-container">
-        <input 
-          v-model="sliderValue"
-          type="range" 
-          :min="0" 
-          :max="100" />
+        <input v-model="sliderValue" type="range" :min="0" :max="100" />
       </div>
       <button id="enter-btn" @click="addEntry()">
         Sisesta <br />
@@ -118,8 +112,6 @@ async function getSubjectEntries(subject: string) {
 /* chart for expressing entries */
 #chart {
   background-color: var(--col-3);
-  box-shadow: 0 0 15rem var(--col-2), 0 0 10rem var(--col-3),
-    0 0 5rem var(--col-3);
   border-radius: 10px;
 }
 @media screen and (min-width: 900px) {
@@ -211,15 +203,15 @@ label {
   cursor: pointer;
   font-size: 70%;
   font-family: var(--font-family);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, .1),0 3px 6px rgba(0, 0, 0, .05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.05);
   width: 8vw;
   height: 8vw;
   max-width: 80px;
   max-height: 80px;
 
   &:hover {
-  box-shadow: rgba(0, 1, 0, .5) 0 2px 8px;
-  opacity: .95;
+    box-shadow: rgba(0, 1, 0, 0.5) 0 2px 8px;
+    opacity: 0.95;
   }
 }
 

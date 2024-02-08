@@ -1,32 +1,35 @@
 <template>
   <div class="dropdown">
-    <button 
-      id="dropbtn" 
-      :class="{ active: isDropdownVisible}"
-      @click="toggleMenu">
+    <button
+      id="dropbtn"
+      class="button"
+      :class="{ active: isDropdownVisible }"
+      @click="toggleMenu"
+    >
       My subjects
     </button>
-    <LoaderComponent 
-      :loading="isLoading" />
+    <LoaderComponent :loading="isLoading" />
     <div v-if="isDropdownVisible" class="dropdown-content">
-      <input
-        id="search-bar"
-        v-model="filter"
-        type="text"
-        placeholder="🔍" />
+      <input id="search-bar" v-model="filter" type="text" placeholder="🔍" />
       <div class="scrollable-content">
-        <div v-for="subjectItem in filteredSubjects" :key="subjectItem.text" class="btn-line">
+        <div
+          v-for="subjectItem in filteredSubjects"
+          :key="subjectItem.text"
+          class="btn-line"
+        >
           <button
             :key="subjectItem.text"
             :style="{ display: subjectItem.display }"
             class="menubtn"
-            @click="emits('handleSelectedSubjectUpdate', subjectItem.text)">
+            @click="emits('handleSelectedSubjectUpdate', subjectItem.text)"
+          >
             {{ subjectItem.text }}
           </button>
           <button
             class="unfollow-btn"
-            :style="{display: subjectItem.display}"
-            @click="handleUnfollow(subjectItem.text)">
+            :style="{ display: subjectItem.display }"
+            @click="handleUnfollow(subjectItem.text)"
+          >
             Unfollow
           </button>
         </div>
@@ -49,9 +52,9 @@ const isDropdownVisible = ref(false);
 const personalSubjects = ref([] as string[]);
 let isLoading = ref<boolean>(false);
 // Filtering subjects according to search-bar input
-const filteredSubjects = computed(function() {
+const filteredSubjects = computed(function () {
   const filterText = filter.value.toUpperCase();
-  return personalSubjects.value.map(function(subject) {
+  return personalSubjects.value.map(function (subject) {
     return {
       text: subject,
       display: subject.toUpperCase().includes(filterText) ? "block" : "none",

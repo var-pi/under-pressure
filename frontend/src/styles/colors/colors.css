@@ -1,7 +1,14 @@
 :root {
-  --col-1: #5F5F5F;
-  --col-2: #7E7E7E;
+  --col-1: #5f5f5f;
+  --col-2: #7e7e7e;
   --col-3: #bebebe;
-  --col-4: #36588B;
+  --col-4: #36588b;
   --col-5: #173a6e;
+
+  --col-fg-default: #adbac7;
+  --col-fg-accent: #539bf5;
+  --col-bg-default: #22272e;
+  --col-bg-lighter: #2d333b;
+  --col-border: #444c56;
 }
+
