@@ -1,21 +1,7 @@
 const clientId =
   "742753336008-k6lnuvq3m8h5v9bp35rq7d3050a847c5.apps.googleusercontent.com";
 
-export const validateLogin: () => void = () => {
-  if (!ifLogedIn()) {
-    login();
-    throw new Error("The user is not logged in.");
-  }
-};
-
-const ifLogedIn: () => boolean = () => {
-  const idTokenString = sessionStorage.getItem("idTokenString");
-  if (idTokenString == null) return false;
-
-  return true;
-};
-
-const login: () => void = () => {
+export const login: () => void = () => {
   const redirectUri = "http://localhost:8080/oauth2/callback/google";
   const scope = "openid profile";
   window.location.href =
@@ -28,9 +14,8 @@ const login: () => void = () => {
     "&access_type=offline";
 };
 
-export const getIdTokenString: () => string = () => {
+export const getIdTokenString: () => string | null = () => {
   const idTokenString = sessionStorage.getItem("idTokenString");
-  if (idTokenString == null) throw new Error("The idTokenString is null");
   return idTokenString;
 };
 
