@@ -1,7 +1,15 @@
 :root {
+  /* Colors in HEX code */
   --col-1: #5F5F5F;
   --col-2: #7E7E7E;
   --col-3: #bebebe;
   --col-4: #36588B;
   --col-5: #173a6e;
+
+  /* Color rgb values */
+  --col-1-rgb: 95, 95, 95;
+  --col-2-rgb: 126, 126, 126;
+  --col-3-rgb: 190, 190, 190;
+  --col-4-rgb: 54, 88, 139;
+  --col-5-rgb: 23, 58, 110;
 }

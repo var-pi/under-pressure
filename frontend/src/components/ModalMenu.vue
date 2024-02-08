@@ -106,6 +106,7 @@ watch(() => props.isOpen, toggleAllSubjects);
 
 <style scoped>
 @import "@/styles/colors/colors.css";
+
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -150,7 +151,22 @@ watch(() => props.isOpen, toggleAllSubjects);
   width: 332px;
 }
 .menu-btn {
-  width: 340px;
+  width: var(--width-xl);
+  height: 30px;
+  border: 1px solid var(--col-2);
+  text-align: left;
+  overflow: hidden;
+  overflow-x: scroll;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  white-space: nowrap;
+  background-color: rgba(var(--col-2-rgb), 0.15);
+
+  &:hover {
+    background-color: var(--col-3);
+    opacity: 0.9;
+    transition: 350ms;
+  }
 }
 #close-btn {
   margin-left: auto;

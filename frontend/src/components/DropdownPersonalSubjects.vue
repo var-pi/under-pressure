@@ -92,5 +92,6 @@ async function handleUnfollow(subjectItem: string) {
 
 <style scoped>
 @import "@/styles/colors/colors.css";
-@import "@/styles/DropdownStyles/dropdownBtnStyle.css";
+@import "@/styles/fontStyles.css";
+@import "@/styles/dropdownStyles/dropdownStyle.css";
 </style>
