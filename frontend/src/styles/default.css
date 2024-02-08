@@ -1,7 +1,6 @@
 .default {
-  outline: 1px solid var(--col-border);
+  border: 1px solid var(--col-border);
   border-radius: 8px;
-  border: none;
   font-size: 16px;
   font-family: var(--font-family);
 }

@@ -1,37 +1,39 @@
 <template>
   <div class="dropdown">
-    <button
-      id="dropbtn"
-      class="default button"
-      :class="{ active: isDropdownVisible }"
-      @click="toggleMenu"
-    >
-      My subjects
-    </button>
-    <LoaderComponent :loading="isLoading" />
-    <div v-if="isDropdownVisible" class="dropdown-content default">
-      <input id="search-bar" v-model="filter" type="text" placeholder="🔍" />
-      <div class="scrollable-content">
-        <div
-          v-for="subjectItem in filteredSubjects"
-          :key="subjectItem.text"
-          class="btn-line"
-        >
-          <button
+    <div id="wrapper">
+      <button
+        id="dropbtn"
+        class="default button"
+        :class="{ active: isDropdownVisible }"
+        @click="toggleMenu"
+      >
+        My subjects
+      </button>
+      <LoaderComponent :loading="isLoading" />
+      <div v-if="isDropdownVisible" class="dropdown-content default">
+        <input id="search-bar" v-model="filter" type="text" placeholder="🔍" />
+        <div class="scrollable-content">
+          <div
+            v-for="subjectItem in filteredSubjects"
             :key="subjectItem.text"
-            :style="{ display: subjectItem.display }"
-            class="menubtn button default"
-            @click="emits('handleSelectedSubjectUpdate', subjectItem.text)"
+            class="btn-line"
           >
-            {{ subjectItem.text }}
-          </button>
-          <button
-            class="unfollow-btn button default"
-            :style="{ display: subjectItem.display }"
-            @click="handleUnfollow(subjectItem.text)"
-          >
-            Unfollow
-          </button>
+            <button
+              :key="subjectItem.text"
+              :style="{ display: subjectItem.display }"
+              class="menubtn button default"
+              @click="emits('handleSelectedSubjectUpdate', subjectItem.text)"
+            >
+              {{ subjectItem.text }}
+            </button>
+            <button
+              class="unfollow-btn button default"
+              :style="{ display: subjectItem.display }"
+              @click="handleUnfollow(subjectItem.text)"
+            >
+              Unfollow
+            </button>
+          </div>
         </div>
       </div>
     </div>
