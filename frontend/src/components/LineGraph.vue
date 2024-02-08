@@ -5,8 +5,7 @@
       <div class="slider-container">
         <input v-model="sliderValue" type="range" :min="0" :max="100" />
       </div>
-      <button id="enter-btn" @click="addEntry()">
-        Sisesta <br />
+      <button id="enter-btn" class="button" @click="addEntry()">
         {{ sliderValue }}
       </button>
     </div>
@@ -193,26 +192,12 @@ label {
 
 /* button for submitting slider value */
 #enter-btn {
-  background-color: var(--col-5);
-  color: #fff;
-  aspect-ratio: 1/1;
-  border-radius: 50%;
-  padding: 0.5rem 1rem;
+  padding: 1rem;
   margin-top: 20px;
-  border: none;
-  cursor: pointer;
-  font-size: 70%;
-  font-family: var(--font-family);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.05);
   width: 8vw;
   height: 8vw;
   max-width: 80px;
   max-height: 80px;
-
-  &:hover {
-    box-shadow: rgba(0, 1, 0, 0.5) 0 2px 8px;
-    opacity: 0.95;
-  }
 }
 
 @media screen and (max-width: 900px) {
