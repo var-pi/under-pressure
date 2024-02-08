@@ -1,4 +1,3 @@
-import { BASE_URL } from "./api.config";
 import axios, { HttpStatusCode } from "axios";
 import { getIdTokenString, login } from "./auth";
 import { RequestError } from "@/api/types";
@@ -17,6 +16,8 @@ function isRequestError(obj: any): obj is RequestError {
     obj.statusMessage != null && obj.statusCode != null && obj.message != null
   );
 }
+
+const BASE_URL = process.env.VUE_APP_BACKEND_BASE_URL;
 
 const server = {
   get: async <T>(endpoint: string): Promise<T> => {

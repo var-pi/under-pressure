@@ -1,15 +1,13 @@
 <template>
-  <button id="settings-btn">
-    Settings
-  </button>
+  <button id="settings-btn">Settings</button>
   <div id="contents">
-    <LineGraph
-      :new-selected-subject="newSelectedSubject" />
+    <LineGraph :new-selected-subject="newSelectedSubject" />
     <div id="dropdown-menus">
       <DropdownSubjects id="all-subjects" />
       <DropdownPersonalSubjects
         id="personal-subjects"
-        @handle-selected-subject-update="updateSelectedSubject" />
+        @handle-selected-subject-update="updateSelectedSubject"
+      />
     </div>
   </div>
 </template>
@@ -20,7 +18,7 @@ import DropdownSubjects from "@/components/DropdownSubjects.vue";
 import DropdownPersonalSubjects from "@/components/DropdownPersonalSubjects.vue";
 import LineGraph from "@/components/LineGraph.vue";
 
-const newSelectedSubject = ref("")
+const newSelectedSubject = ref("");
 
 function updateSelectedSubject(subject: string) {
   newSelectedSubject.value = subject;
@@ -41,19 +39,18 @@ function updateSelectedSubject(subject: string) {
   margin: 1cap;
 }
 #settings-btn {
-    max-width: 70px;
-    max-height: 70px;
-    width: 10vw;
-    height: 10vw;
-    aspect-ratio: 1/1;
-    margin: 10px;
-    position: fixed;
-    top: 10px;
-    right: 10px;
+  max-width: 70px;
+  max-height: 70px;
+  width: 10vw;
+  height: 10vw;
+  aspect-ratio: 1/1;
+  margin: 10px;
+  position: fixed;
+  top: 10px;
+  right: 10px;
 }
 
 @media screen and (max-width: 550px) {
-
   #settings-btn {
     top: 0;
     right: 0;
@@ -64,7 +61,6 @@ function updateSelectedSubject(subject: string) {
 }
 
 @media screen and (max-width: 400px) {
-
   #settings-btn {
     width: 20px;
     height: 20px;
@@ -72,3 +68,4 @@ function updateSelectedSubject(subject: string) {
   }
 }
 </style>
+
