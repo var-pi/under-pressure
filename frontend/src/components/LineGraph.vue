@@ -3,9 +3,15 @@
     <canvas id="chart" ref="lineChartCanvas"> canvas </canvas>
     <div id="slider-and-button-container">
       <div class="slider-container">
-        <input v-model="sliderValue" type="range" :min="0" :max="100" />
+        <input
+          v-model="sliderValue"
+          type="range"
+          class="default"
+          :min="0"
+          :max="100"
+        />
       </div>
-      <button id="enter-btn" class="button" @click="addEntry()">
+      <button id="enter-btn" class="default button" @click="addEntry()">
         {{ sliderValue }}
       </button>
     </div>
@@ -107,6 +113,7 @@ async function getSubjectEntries(subject: string) {
 <style scoped>
 @import "@/styles/fontStyles.css";
 @import "@/styles/colors/colors.css";
+@import "@/styles/button.css";
 
 /* chart for expressing entries */
 #chart {
@@ -218,26 +225,26 @@ label {
 /* slider element */
 input[type="range"] {
   appearance: none;
-  background-color: var(--col-4);
+  background-color: var(--col-bg-default);
   top: 50%;
   left: 50%;
   width: 60vw;
   height: 8vw;
   transform: translate(-50%, -50%) rotate(-90deg);
-  border-radius: 1rem;
   overflow: hidden;
   position: relative;
 
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 0;
-    box-shadow: -20rem 0 0 20rem rgba(255, 255, 255, 0.2);
+    /* box-shadow: -20rem 0 0 20rem rgba(255, 255, 255, 0.2); */
+    box-shadow: -20rem 0 0 20rem var(--col-bg-lighter);
   }
 
   &::-moz-range-thumb {
     border: none;
     width: 0;
-    box-shadow: -20rem 0 0 20rem rgba(255, 255, 255, 0.2);
+    box-shadow: -20rem 0 0 20rem var(--col-bg-lighter);
   }
 }
 @media screen and (min-width: 900px) {

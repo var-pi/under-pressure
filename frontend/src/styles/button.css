@@ -1,16 +1,11 @@
+@import "@/styles/default.css";
+
 .button {
   color: var(--col-fg-default);
   background-color: initial;
-  outline: 1px solid var(--col-border);
-  border-radius: 8px;
-  border: none;
   cursor: pointer;
-  font-size: 16px;
-  font-family: var(--font-family);
   justify-content: center;
   transition: background-color 200ms;
-  overflow: hidden;
-  text-overflow: ellipsis;
 
   &:hover {
     background-color: var(--col-bg-lighter);

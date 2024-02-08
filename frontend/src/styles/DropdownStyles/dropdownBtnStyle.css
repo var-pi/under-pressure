@@ -1,6 +1,6 @@
 @import "@/styles/colors/colors.css";
 @import "@/styles/fontStyles.css";
-@import "@/styles/buttonStyle.css";
+@import "@/styles/button.css";
 
 :root {
   --width-s: 45vw;

@@ -2,7 +2,7 @@
   <div class="dropdown">
     <button
       id="dropbtn"
-      class="button"
+      class="default button"
       :class="{ active: isDropdownVisible }"
       @click="toggleMenu"
     >
@@ -97,3 +97,4 @@ async function handleUnfollow(subjectItem: string) {
 @import "@/styles/colors/colors.css";
 @import "@/styles/DropdownStyles/dropdownBtnStyle.css";
 </style>
+
