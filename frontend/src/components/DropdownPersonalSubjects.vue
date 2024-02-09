@@ -60,11 +60,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, defineEmits } from "vue";
+import { ref, computed, watch, defineEmits, defineProps } from "vue";
 import { api } from "@/api/api";
 
 import LoaderComponent from "@/components/LoaderComponent.vue";
 import { Subject } from "@/api/types";
+
+const props = defineProps<{
+  modalOpen: boolean;
+}>();
 
 const emits = defineEmits(["handleSelectedSubjectUpdate"]);
 
@@ -112,7 +116,10 @@ async function handleUnfollow(subjectItem: string) {
   await api.unfollowSubject(subjectItem);
   await getPersonalSubjects;
 }
-</script>
+
+watch(() => props.modalOpen, () => {
+  isDropdownVisible.value = false;
+});</script>
 
 <style scoped>
 @import "@/styles/colors/colors.css";

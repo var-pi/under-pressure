@@ -3,8 +3,7 @@ export interface ChartData {
   data: Entry[];
 }
 
-// export interface ApiResponse<T> {
-//   //success: boolean;
-//   data: string[];
-//   //error?: string;
-// }
+export interface DropdownItem {
+  text: string;
+  display: string;
+}
