@@ -13,6 +13,7 @@
       </template>
       <template v-slot:fill-width>
         <DropdownPersonalSubjects
+          :modal-open="isModalOpened"
           @handle-selected-subject-update="updateSelectedSubject"
         />
       </template>

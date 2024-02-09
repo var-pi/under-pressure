@@ -3,9 +3,7 @@
     <div class="modal-wrapper">
       <div ref="target" class="modal-container">
         <div class="modal-header">
-          <button id="close-btn" @click.stop="emit('modal-close'); showScrollableSubjects = false">
-            X
-          </button>
+          <p>Vali õppeaineid</p>
         </div>
         <div class="modal-body">
           <div id="wrapper">
@@ -117,6 +115,11 @@ watch(() => props.isOpen, toggleAllSubjects);
 .modal-header {
   display: flex;
   justify-content: center;
+  font-family: var(--font-family);
+}
+.modal-header > p {
+  font-size: 18px;
+  color: var(--col-fg-default);
 }
 .modal-body {
   display: flex;
