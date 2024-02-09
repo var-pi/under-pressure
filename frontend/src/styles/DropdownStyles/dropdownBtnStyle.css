@@ -100,6 +100,11 @@
 .scrollable-content {
   max-height: var(--width-xl);
   overflow-y: scroll;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollable-content::-webkit-scrollbar {
+  display: none;
 }
 .dropdown {
   display: flex;
