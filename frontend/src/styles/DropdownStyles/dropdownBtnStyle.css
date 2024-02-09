@@ -93,9 +93,9 @@
 .dropdown-content {
   display: flex;
   flex-direction: column;
-  border-top: none;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
+  border-top: none !important;
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
 }
 .scrollable-content {
   max-height: var(--width-xl);
