@@ -148,18 +148,11 @@ async function getSubjectEntries(subject: string) {
   width: 100%;
 }
 
-/*  @media screen and (max-width: 900px) {
-    #graph-and-slider {
-      flex-direction: column;
-    }
-  } */
-
 /* wrapper for canvas */
 #canvas-wrapper {
   margin: var(--default-margin);
   flex-grow: 1;
   flex-shrink: 1;
-  width: max-content;
 }
 
 /* chart for expressing entries */
@@ -175,10 +168,9 @@ async function getSubjectEntries(subject: string) {
   margin: var(--default-margin);
   position: relative;
   display: flex;
-  flex-direction: column;
   flex-grow: 0;
   flex-shrink: 0;
-  width: 62px;
+  width: 62px; /* Not 64 because range input is acts weirdly */
 }
 
 /* stress value slider */
@@ -203,10 +195,6 @@ async function getSubjectEntries(subject: string) {
     box-shadow: 0 500px 0 500px var(--col-bg-lighter);
   }
 
-  &::-webkit-slider-runnable-track {
-    background-color: initial;
-  }
-
   &::-moz-range-thumb {
     border: 0;
     width: 0;
@@ -218,6 +206,27 @@ async function getSubjectEntries(subject: string) {
   #slider {
     background-color: var(--col-bg-lighter);
     transform: scaleY(-1); /* Firefox is weird */
+  }
+}
+
+@media screen and (max-width: 900px) {
+  /* TODO extract max-width to a variable */
+  #graph-and-slider {
+    flex-direction: column;
+  }
+  #slider-wrapper {
+    width: auto;
+    height: 62px; /* Not 64 because range input is acts weirdly */
+  }
+  #slider {
+    writing-mode: horizontal-tb;
+
+    &::-webkit-slider-thumb {
+      box-shadow: -500px 0 0 500px var(--col-bg-lighter);
+    }
+    &::-moz-range-thumb {
+      box-shadow: 500px 0 0 500px var(--col-bg-default);
+    }
   }
 }
 
