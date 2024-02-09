@@ -112,6 +112,17 @@ watch(() => props.isOpen, toggleAllSubjects);
   border-radius: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
 }
+@media only screen and (max-width: 500px) {
+  .modal-container {
+    max-width: 300px;
+  }
+}
+@media only screen and (max-width: 300px) {
+  .modal-container {
+    max-width: 200px;
+    padding: 5px 7px;
+  }
+}
 .modal-header {
   display: flex;
   justify-content: center;
@@ -127,6 +138,11 @@ watch(() => props.isOpen, toggleAllSubjects);
   justify-content: center;
   padding: 10px 30px 10px 30px;
 }
+@media only screen and (max-width: 500px) {
+  .modal-body {
+    padding: 0;
+  }
+}
 .scrollable-content {
   max-height: 450px;
   overflow-y: scroll;
@@ -135,7 +151,7 @@ watch(() => props.isOpen, toggleAllSubjects);
 }
 .dropdown-content {
   justify-content: center;
-  width: 340px;
+  max-width: 100%;
 }
 #close-btn {
   margin-left: auto;
