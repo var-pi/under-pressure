@@ -9,7 +9,10 @@
       >
         Minu õppeained
       </button>
-      <div class="dropdown-content default">
+      <div
+        class="dropdown-content default"
+        v-if="isDropdownVisible || isLoading"
+      >
         <LoaderComponent :loading="isLoading" />
         <div id="content-wrapper" v-if="isDropdownVisible">
           <div id="content-with-subjects" v-if="personalSubjects.length > 0">
