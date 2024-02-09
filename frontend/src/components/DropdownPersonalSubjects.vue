@@ -48,7 +48,7 @@
             </div>
           </div>
           <div v-else id="no-personal-subjects" class="default">
-            Jälgitavaid aineid saad lisada sätetes ⚙️.
+            Jälgitavaid aineid saad lisada sätetes. ⚙️
           </div>
         </div>
       </div>

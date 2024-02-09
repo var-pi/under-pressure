@@ -51,6 +51,7 @@
 #content-wrapper {
   display: flex;
   width: 100%;
+  justify-content: center;
 }
 #content-with-subjects {
   display: flex;
@@ -105,9 +106,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.btn-line {
-  display: flex;
 }
 
 .subject-line-wrapper {
