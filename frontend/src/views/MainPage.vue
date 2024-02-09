@@ -42,6 +42,7 @@ const closeModal = () => {
 <style scoped>
 @import "@/styles/colors/colors.css";
 
+/* Dropdown menu buttons */
 #menu-btn {
   position: absolute;
   width: 35px;

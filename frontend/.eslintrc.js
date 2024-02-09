@@ -42,7 +42,7 @@ module.exports = {
     }],
     "vue/html-closing-bracket-newline": ["warn", {
       "singleline": "never",
-      "multiline": "never",
+      "multiline": "always",
     }],
     "@typescript-eslint/ban-types": ["warn",
     {

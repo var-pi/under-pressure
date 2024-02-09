@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown" id="personal-subjects">
+  <div id="personal-subjects" class="dropdown">
     <div id="wrapper">
       <button
         id="dropbtn"

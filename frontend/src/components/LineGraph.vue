@@ -1,31 +1,16 @@
 <template>
   <div id="wrapper">
-    <!-- <canvas id="chart" class="default" ref="lineChartCanvas"> canvas </canvas>
-    <div id="slider-and-button-container">
-      <div class="slider-container">
-        <input
-          v-model="sliderValue"
-          type="range"
-          class="default"
-          :min="0"
-          :max="100"
-        />
-      </div>
-      <button id="enter-btn" class="default button" @click="addEntry()">
-        {{ sliderValue }}
-      </button>
-    </div> -->
     <div id="graph-and-slider">
-      <div id="canvasWrapper">
-        <canvas id="chart" class="default" ref="lineChartCanvas">
+      <div id="canvas-wrapper">
+        <canvas id="chart" ref="lineChartCanvas" class="default">
           canvas
         </canvas>
       </div>
-      <div id="sliderWrapper" class="default">
+      <div id="slider-wrapper" class="default">
         <input
-          type="range"
           id="slider"
           v-model="sliderValue"
+          type="range"
           class="default"
           :min="0"
           :max="100"
@@ -33,7 +18,7 @@
       </div>
     </div>
     <div id="slot-and-button">
-      <div id="slotWrapper">
+      <div id="slot-wrapper">
         <slot></slot>
       </div>
       <button id="enter-btn" class="default button" @click="addEntry()">
@@ -145,33 +130,16 @@ async function getSubjectEntries(subject: string) {
   --default-margin: 8px;
 }
 
-/* canvas for chart and related elements */
+/* wrapper for graph, slider and buttons */
 #wrapper {
-  /* margin-top: 20px; */
   width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  /* max-height: 580px; */
   justify-content: center;
-  /* aspect-ratio: 1/0.6; */
 }
-/* @media screen and (max-width: 1100px) {
-  #wrapper {
-    margin-top: 100px;
-  }
-}
-@media screen and (max-width: 550px) {
-  #wrapper {
-    margin-top: 50px;
-  }
-}
-@media screen and (max-width: 400px) {
-  #wrapper {
-    margin-top: 30px;
-  }
-} */
 
+/* container for slider and graph */
 #graph-and-slider {
   display: flex;
   flex: 1;
@@ -180,15 +148,18 @@ async function getSubjectEntries(subject: string) {
   width: 100%;
 }
 
-#canvasWrapper {
+/*  @media screen and (max-width: 900px) {
+    #graph-and-slider {
+      flex-direction: column;
+    }
+  } */
+
+/* wrapper for canvas */
+#canvas-wrapper {
   margin: var(--default-margin);
   flex-grow: 1;
   flex-shrink: 1;
   width: max-content;
-  /* flex-direction: row;
-  position: relative;
-  display: flex;
-  position: relative; */
 }
 
 /* chart for expressing entries */
@@ -198,30 +169,19 @@ async function getSubjectEntries(subject: string) {
   width: 100%;
   position: absolute;
 }
-/* @media screen and (min-width: 900px) {
-  #chart {
-    max-width: 800px;
-    max-height: 480px;
-  }
-}
-@media screen and (max-width: 900px) {
-  #chart {
-    margin: 0px 10px 0 10px;
-  }
-} */
 
-#sliderWrapper {
+/* wrapper fpr slider */
+#slider-wrapper {
   margin: var(--default-margin);
-  /* margin-left: 16px; */
   position: relative;
   display: flex;
   flex-direction: column;
   flex-grow: 0;
   flex-shrink: 0;
   width: 62px;
-  /* border: 1px solid red; */
 }
 
+/* stress value slider */
 #slider {
   background-color: initial;
   height: 100%;
@@ -261,42 +221,7 @@ async function getSubjectEntries(subject: string) {
   }
 }
 
-/* label for slider value */
-/* label {
-  color: #000000;
-  margin-top: 1rem;
-  font-size: 1rem;
-} */
-
-/* container for the slider and enter button */
-/* #slider-and-button-container {
-  display: flex;
-  flex-direction: column;
-  height: 70vw;
-  max-height: 580px;
-  max-width: 80px;
-  width: 10vw;
-  margin: 0 0 0 10px;
-}
-@media screen and (max-width: 900px) {
-  #slider-and-button-container {
-    flex-direction: row;
-    justify-content: start;
-    width: 70vw;
-    height: 10vw;
-    max-height: 80px;
-    max-width: 650px;
-    align-self: flex-end;
-    margin: 10px 10px 10px 30px;
-  }
-}
-@media screen and (max-width: 400px) {
-  #slider-and-button-container {
-    min-height: 13vw;
-    min-width: 70vw;
-  }
-} */
-
+/* submit value button and slot for dropdown menu */
 #slot-and-button {
   display: flex;
   flex-direction: row;
@@ -304,7 +229,6 @@ async function getSubjectEntries(subject: string) {
 }
 
 /* button for submitting slider value */
-
 #enter-btn {
   margin: var(--default-margin);
   flex-shrink: 0;
@@ -312,93 +236,9 @@ async function getSubjectEntries(subject: string) {
   width: 64px;
   height: 64px;
 }
-/*
-@media screen and (max-width: 900px) {
-  #enter-btn {
-    margin: 10px;
-    right: 30px;
-    margin: 0;
-  }
-}
-@media screen and (max-width: 400px) {
-  #enter-btn {
-    width: 10vw;
-    height: 10vw;
-    margin-left: 0;
-  }
-} */
 
-/* slider element */
-input[type="range"] {
-  /* appearance: none; */
-  /* background-color: var(--col-bg-default); */
-  /* top: 50%;
-  left: 50%; */
-  /* width: 60vw; */
-  /* height: 8vw; */
-  /* transform: translate(-50%, -50%) rotate(-90deg); */
-  /* overflow: hidden; */
-  /* position: relative; */
-
-  /* &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 0;
-    box-shadow: -20rem 0 0 20rem var(--col-bg-lighter);
-  }
-
-  &::-moz-range-thumb {
-    border: none;
-    width: 0;
-    box-shadow: -20rem 0 0 20rem var(--col-bg-lighter);
-  } */
-}
-/* @media screen and (min-width: 900px) {
-  input[type="range"] {
-    max-width: 480px;
-    max-height: 80px;
-  }
-}
-@media screen and (max-width: 900px) {
-  input[type="range"] {
-    transform: none;
-    top: 0;
-    left: 0;
-  }
-}
-@media screen and (max-width: 400px) {
-  input[type="range"] {
-    width: 55vw;
-    height: 10vw;
-  }
-} */
-
-/* slider container */
-/* .slider-container {
-  width: 10vw;
-  height: 70vw;
-  max-height: 480px;
-  max-width: 80px;
-  position: relative;
-}
-@media screen and (max-width: 900px) {
-  .slider-container {
-    width: 80vw;
-    height: 10vw;
-    max-height: 80px;
-    max-width: 580px;
-    align-items: flex-start;
-  }
-}
-@media screen and (max-width: 400px) {
-  .slider-container {
-    width: 90vw;
-    height: 13vw;
-    max-height: 80px;
-    max-width: 480px;
-  }
-} */
-
-#slotWrapper {
+/* slot for dropdown menu */
+#slot-wrapper {
   margin: var(--default-margin);
   display: flex;
   flex: 1;

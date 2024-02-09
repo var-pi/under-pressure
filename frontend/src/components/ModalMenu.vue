@@ -4,27 +4,31 @@
       <div ref="target" class="modal-container">
         <div class="modal-header">
           <button id="close-btn" @click.stop="emit('modal-close')">
-              X
+            X
           </button>
         </div>
         <div class="modal-body">
           <LoaderComponent 
-            :loading="isLoading" />
+            :loading="isLoading"
+          />
           <div
             v-if="!isLoading"
-            class="dropdown-content">
+            class="dropdown-content"
+          >
             <input
               id="search-bar"
               v-model="filter"
               type="text"
-              placeholder="🔍" />
+              placeholder="Otsi"
+            />
             <div class="scrollable-content">
               <button
                 v-for="subjectItem in filteredSubjects"
                 :key="subjectItem.text"
                 :style="{ display: subjectItem.display }"
                 class="menu-btn"
-                @click="addFollowedSubject(subjectItem.text)">
+                @click="addFollowedSubject(subjectItem.text)"
+              >
                 {{ subjectItem.text }}
               </button>
             </div>

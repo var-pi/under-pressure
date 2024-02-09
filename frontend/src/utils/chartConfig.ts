@@ -29,7 +29,6 @@ export const getChartConfig = (): ChartConfiguration => {
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      // aspectRatio: 1.5,
       animation: false, // If true - TypeError: Cannot read properties of null (reading 'getContext')
       scales: {
         y: {
@@ -100,6 +99,7 @@ export const initializeChart = (
     dataset.data.push(entry.stressLevel);
     labels.push(entry.creationDate);
   }
+
   console.log(
     "Initialized chart with data:",
     dataset.data,
@@ -107,4 +107,3 @@ export const initializeChart = (
     labels
   );
 };
-

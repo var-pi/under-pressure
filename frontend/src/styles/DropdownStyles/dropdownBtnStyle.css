@@ -16,7 +16,6 @@
 }
 
 #wrapper {
-  /* width: var(--width-xl); */
   width: 100%;
 }
 
@@ -82,7 +81,6 @@
 .dropdown-content {
   display: flex;
   flex-direction: column;
-  /* width: var(--width-xl); */
   border-top: none;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
