@@ -28,7 +28,7 @@
                 :key="subjectItem.text"
               >
                 <div
-                  class="subject-line-wrapper default"
+                  class="menu-line-wrapper default"
                   :style="{ display: subjectItem.display }"
                 >
                   <button
@@ -117,9 +117,13 @@ async function handleUnfollow(subjectItem: string) {
   await getPersonalSubjects;
 }
 
-watch(() => props.modalOpen, () => {
-  isDropdownVisible.value = false;
-});</script>
+watch(
+  () => props.modalOpen,
+  () => {
+    isDropdownVisible.value = false;
+  }
+);
+</script>
 
 <style scoped>
 @import "@/styles/colors/colors.css";

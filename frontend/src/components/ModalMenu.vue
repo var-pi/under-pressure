@@ -2,41 +2,43 @@
   <div v-if="props.isOpen" class="modal-mask">
     <div class="modal-wrapper">
       <div ref="target" class="modal-container">
-        <div class="modal-header">
+        <div class="modal-header default">
           <p>Vali õppeaineid</p>
         </div>
-        <div class="modal-body">
+        <div class="modal-body dropdown-content">
           <div id="wrapper">
-            <LoaderComponent 
-              :loading="!showScrollableSubjects"
-            />
-            <DropdownMenu 
+            <LoaderComponent :loading="!showScrollableSubjects" />
+            <DropdownMenu
               :is-dropdown-visible="showScrollableSubjects"
-              :menu-items="allSubjects">
+              :menu-items="allSubjects"
+            >
               <template v-slot="{ item }">
-                <button
+                <div
+                  class="menu-line-wrapper default"
                   :style="{ display: item.display }"
-                  class="menubtn button default"
-                  @click="addFollowedSubject(item.text)"
                 >
-                  {{ item.text }}
-                </button>
+                  <button
+                    class="menubtn button default"
+                    @click="addFollowedSubject(item.text)"
+                  >
+                    {{ item.text }}
+                  </button>
+                </div>
               </template>
             </DropdownMenu>
           </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <slot name="footer">
-          </slot>
         </div>
       </div>
+      <div class="modal-footer">
+        <slot name="footer"> </slot>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, defineProps, defineEmits, watch } from "vue";
-import { onClickOutside } from '@vueuse/core';
+import { onClickOutside } from "@vueuse/core";
 import { api } from "@/api/api";
 
 import LoaderComponent from "@/components/LoaderComponent.vue";
@@ -49,8 +51,8 @@ const props = defineProps({
 
 const emit = defineEmits(["modal-close"]);
 
-const target = ref(null)
-onClickOutside(target, ()=>emit('modal-close'))
+const target = ref(null);
+onClickOutside(target, () => emit("modal-close"));
 
 const filter = ref<string>("");
 const isDropdownVisible = ref(false);
@@ -61,6 +63,7 @@ async function toggleAllSubjects() {
   if (!isDropdownVisible.value) {
     showScrollableSubjects.value = false;
     filter.value = "";
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     await getAllSubjects();
   }
   showScrollableSubjects.value = true;
@@ -87,7 +90,6 @@ async function addFollowedSubject(subjectName: string) {
 }
 
 watch(() => props.isOpen, toggleAllSubjects);
-
 </script>
 
 <style scoped>
@@ -95,6 +97,8 @@ watch(() => props.isOpen, toggleAllSubjects);
 @import "@/styles/fontStyles.css";
 @import "@/styles/DropdownStyles/dropdownBtnStyle.css";
 @import "@/styles/button.css";
+@import "@/styles/default.css";
+
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -127,6 +131,8 @@ watch(() => props.isOpen, toggleAllSubjects);
   display: flex;
   justify-content: center;
   font-family: var(--font-family);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 .modal-header > p {
   font-size: 18px;
@@ -137,17 +143,13 @@ watch(() => props.isOpen, toggleAllSubjects);
   flex-direction: column;
   justify-content: center;
   padding: 10px 30px 10px 30px;
-}
-@media only screen and (max-width: 500px) {
-  .modal-body {
-    padding: 0;
-  }
+  padding: 0px;
 }
 .scrollable-content {
   max-height: 450px;
   overflow-y: scroll;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 .dropdown-content {
   justify-content: center;
@@ -164,6 +166,9 @@ watch(() => props.isOpen, toggleAllSubjects);
   height: var(--row-height);
   border-radius: 0px;
   text-indent: 16px;
-  border: none;
+  border-left: none !important;
+  border-bottom: none !important;
+  border-right: none !important;
 }
 </style>
+

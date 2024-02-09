@@ -67,7 +67,7 @@
   border: none !important;
   opacity: 0;
 }
-.subject-line-wrapper:hover .unfollow-btn {
+.menu-line-wrapper:hover .unfollow-btn {
   opacity: 1;
 }
 
@@ -100,8 +100,8 @@
 .scrollable-content {
   max-height: var(--width-xl);
   overflow-y: scroll;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 .scrollable-content::-webkit-scrollbar {
   display: none;
@@ -112,7 +112,7 @@
   align-items: center;
 }
 
-.subject-line-wrapper {
+.menu-line-wrapper {
   display: flex;
   flex: 1;
   position: relative;
