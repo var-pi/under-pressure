@@ -4,14 +4,17 @@
     <span></span>
     <span></span>
   </button>
-  <ModalMenu id="menuModal" :is-open="isModalOpened" @modal-close="closeModal">
-  </ModalMenu>
+  <ModalMenu
+    id="menuModal"
+    :is-open="isModalOpened"
+    @modal-close="closeModal"
+  />
   <div id="contents">
-    <LineGraph
-      :new-selected-subject="newSelectedSubject" />
-    <DropdownPersonalSubjects
-      id="personal-subjects"
-      @handle-selected-subject-update="updateSelectedSubject" />
+    <LineGraph :new-selected-subject="newSelectedSubject">
+      <DropdownPersonalSubjects
+        @handle-selected-subject-update="updateSelectedSubject"
+      />
+    </LineGraph>
   </div>
 </template>
 
@@ -21,14 +24,14 @@ import DropdownPersonalSubjects from "@/components/DropdownPersonalSubjects.vue"
 import LineGraph from "@/components/LineGraph.vue";
 import ModalMenu from "@/components/ModalMenu.vue";
 
-const newSelectedSubject = ref("")
+const newSelectedSubject = ref("");
 let isModalOpened = ref(false);
 
 function updateSelectedSubject(subject: string) {
   newSelectedSubject.value = subject;
 }
 
-const openModal = () => {  
+const openModal = () => {
   isModalOpened.value = true;
 };
 const closeModal = () => {
@@ -39,9 +42,7 @@ const closeModal = () => {
 <style scoped>
 @import "@/styles/colors/colors.css";
 
-#personal-subjects {
-  margin: 1cap;
-}
+/* Dropdown menu buttons */
 #menu-btn {
   position: absolute;
   width: 35px;

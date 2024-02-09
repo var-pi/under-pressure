@@ -1,18 +1,27 @@
 <template>
-  <div id="canvas">
-    <canvas id="chart" ref="lineChartCanvas">
-      canvas
-    </canvas>
-    <div id="slider-and-button-container">
-      <div class="slider-container">
-        <input 
-          v-model="sliderValue"
-          type="range" 
-          :min="0" 
-          :max="100" />
+  <div id="wrapper">
+    <div id="graph-and-slider">
+      <div id="canvas-wrapper">
+        <canvas id="chart" ref="lineChartCanvas" class="default">
+          canvas
+        </canvas>
       </div>
-      <button id="enter-btn" @click="addEntry()">
-        Sisesta <br />
+      <div id="slider-wrapper" class="default">
+        <input
+          id="slider"
+          v-model="sliderValue"
+          type="range"
+          class="default"
+          :min="0"
+          :max="100"
+        />
+      </div>
+    </div>
+    <div id="slot-and-button">
+      <div id="slot-wrapper">
+        <slot></slot>
+      </div>
+      <button id="enter-btn" class="default button" @click="addEntry()">
         {{ sliderValue }}
       </button>
     </div>
@@ -114,199 +123,125 @@ async function getSubjectEntries(subject: string) {
 <style scoped>
 @import "@/styles/fontStyles.css";
 @import "@/styles/colors/colors.css";
+@import "@/styles/button.css";
+@import "@/styles/default.css";
+
+#wrapper {
+  --default-margin: 8px;
+}
+
+/* wrapper for graph, slider and buttons */
+#wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* container for slider and graph */
+#graph-and-slider {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+/*  @media screen and (max-width: 900px) {
+    #graph-and-slider {
+      flex-direction: column;
+    }
+  } */
+
+/* wrapper for canvas */
+#canvas-wrapper {
+  margin: var(--default-margin);
+  flex-grow: 1;
+  flex-shrink: 1;
+  width: max-content;
+}
 
 /* chart for expressing entries */
 #chart {
-  background-color: var(--col-3);
-  box-shadow: 0 0 15rem var(--col-2), 0 0 10rem var(--col-3),
-    0 0 5rem var(--col-3);
-  border-radius: 10px;
-}
-@media screen and (min-width: 900px) {
-  #chart {
-    max-width: 800px;
-    max-height: 480px;
-  }
-}
-@media screen and (max-width: 900px) {
-  #chart {
-    margin: 0px 10px 0 10px;
-  }
-}
-/* canvas for chart and related elements */
-#canvas {
-  margin-top: 20px;
-  display: flex;
+  background-color: initial;
+  height: 100%;
   width: 100%;
-  max-height: 580px;
-  justify-content: center;
-  aspect-ratio: 1/0.6;
-}
-@media screen and (max-width: 1100px) {
-  #canvas {
-    margin-top: 100px;
-  }
-}
-@media screen and (max-width: 900px) {
-  #canvas {
-    flex-direction: column;
-  }
-}
-@media screen and (max-width: 550px) {
-  #canvas {
-    margin-top: 50px;
-  }
-}
-@media screen and (max-width: 400px) {
-  #canvas {
-    margin-top: 30px;
-  }
+  position: absolute;
 }
 
-/* label for slider value */
-label {
-  color: #000000;
-  margin-top: 1rem;
-  font-size: 1rem;
-}
-
-/* container for the slider and enter button */
-#slider-and-button-container {
+/* wrapper fpr slider */
+#slider-wrapper {
+  margin: var(--default-margin);
+  position: relative;
   display: flex;
   flex-direction: column;
-  height: 70vw;
-  max-height: 580px;
-  max-width: 80px;
-  width: 10vw;
-  margin: 0 0 0 10px;
-}
-@media screen and (max-width: 900px) {
-  #slider-and-button-container {
-    flex-direction: row;
-    justify-content: start;
-    width: 70vw;
-    height: 10vw;
-    max-height: 80px;
-    max-width: 650px;
-    align-self: flex-end;
-    margin: 10px 10px 10px 30px;
-  }
-}
-@media screen and (max-width: 400px) {
-  #slider-and-button-container {
-    min-height: 13vw;
-    min-width: 70vw;
-  }
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 62px;
 }
 
-/* button for submitting slider value */
-#enter-btn {
-  background-color: var(--col-5);
-  color: #fff;
-  aspect-ratio: 1/1;
-  border-radius: 50%;
-  padding: 0.5rem 1rem;
-  margin-top: 20px;
-  border: none;
-  cursor: pointer;
-  font-size: 70%;
-  font-family: var(--font-family);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, .1),0 3px 6px rgba(0, 0, 0, .05);
-  width: 8vw;
-  height: 8vw;
-  max-width: 80px;
-  max-height: 80px;
-
-  &:hover {
-  box-shadow: rgba(0, 1, 0, .5) 0 2px 8px;
-  opacity: .95;
-  }
-}
-
-@media screen and (max-width: 900px) {
-  #enter-btn {
-    margin: 10px;
-    right: 30px;
-    margin: 0;
-  }
-}
-@media screen and (max-width: 400px) {
-  #enter-btn {
-    width: 10vw;
-    height: 10vw;
-    margin-left: 0;
-  }
-}
-
-/* slider element */
-input[type="range"] {
-  appearance: none;
-  background-color: var(--col-4);
-  top: 50%;
-  left: 50%;
-  width: 60vw;
-  height: 8vw;
-  transform: translate(-50%, -50%) rotate(-90deg);
-  border-radius: 1rem;
+/* stress value slider */
+#slider {
+  background-color: initial;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
   overflow: hidden;
-  position: relative;
+  margin: 0;
+  border: 0 !important;
+  writing-mode: vertical-lr;
+  -webkit-appearance: none;
+  appearance: none;
 
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 0;
-    box-shadow: -20rem 0 0 20rem rgba(255, 255, 255, 0.2);
+    height: 0;
+    box-shadow: 0 500px 0 500px var(--col-bg-lighter);
+  }
+
+  &::-webkit-slider-runnable-track {
+    background-color: initial;
   }
 
   &::-moz-range-thumb {
-    border: none;
+    border: 0;
     width: 0;
-    box-shadow: -20rem 0 0 20rem rgba(255, 255, 255, 0.2);
-  }
-}
-@media screen and (min-width: 900px) {
-  input[type="range"] {
-    max-width: 480px;
-    max-height: 80px;
-  }
-}
-@media screen and (max-width: 900px) {
-  input[type="range"] {
-    transform: none;
-    top: 0;
-    left: 0;
-  }
-}
-@media screen and (max-width: 400px) {
-  input[type="range"] {
-    width: 55vw;
-    height: 10vw;
+    box-shadow: 0 500px 0 500px var(--col-bg-default);
   }
 }
 
-/* slider container */
-.slider-container {
-  width: 10vw;
-  height: 70vw;
-  max-height: 480px;
-  max-width: 80px;
-  position: relative;
-}
-@media screen and (max-width: 900px) {
-  .slider-container {
-    width: 80vw;
-    height: 10vw;
-    max-height: 80px;
-    max-width: 580px;
-    align-items: flex-start;
+@-moz-document url-prefix() {
+  #slider {
+    background-color: var(--col-bg-lighter);
+    transform: scaleY(-1); /* Firefox is weird */
   }
 }
-@media screen and (max-width: 400px) {
-  .slider-container {
-    width: 90vw;
-    height: 13vw;
-    max-height: 80px;
-    max-width: 480px;
-  }
+
+/* submit value button and slot for dropdown menu */
+#slot-and-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/* button for submitting slider value */
+#enter-btn {
+  margin: var(--default-margin);
+  flex-shrink: 0;
+  flex-grow: 0;
+  width: 64px;
+  height: 64px;
+}
+
+/* slot for dropdown menu */
+#slot-wrapper {
+  margin: var(--default-margin);
+  display: flex;
+  flex: 1;
 }
 </style>
 

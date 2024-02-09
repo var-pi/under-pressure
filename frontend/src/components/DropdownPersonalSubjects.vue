@@ -1,34 +1,44 @@
 <template>
-  <div class="dropdown">
-    <button 
-      id="dropbtn" 
-      :class="{ active: isDropdownVisible}"
-      @click="toggleMenu">
-      My subjects
-    </button>
-    <LoaderComponent 
-      :loading="isLoading" />
-    <div v-if="isDropdownVisible" class="dropdown-content">
-      <input
-        id="search-bar"
-        v-model="filter"
-        type="text"
-        placeholder="🔍" />
-      <div class="scrollable-content">
-        <div v-for="subjectItem in filteredSubjects" :key="subjectItem.text" class="btn-line">
-          <button
+  <div id="personal-subjects" class="dropdown">
+    <div id="wrapper">
+      <button
+        id="dropbtn"
+        class="default button"
+        :class="{ active: isDropdownVisible }"
+        @click="toggleMenu"
+      >
+        Minu õppeained
+      </button>
+      <LoaderComponent :loading="isLoading" />
+      <div v-if="isDropdownVisible" class="dropdown-content default">
+        <input
+          id="search-bar"
+          v-model="filter"
+          type="text"
+          placeholder="Otsi..."
+        />
+        <div class="scrollable-content">
+          <div
+            v-for="subjectItem in filteredSubjects"
             :key="subjectItem.text"
-            :style="{ display: subjectItem.display }"
-            class="menubtn"
-            @click="emits('handleSelectedSubjectUpdate', subjectItem.text)">
-            {{ subjectItem.text }}
-          </button>
-          <button
-            class="unfollow-btn"
-            :style="{display: subjectItem.display}"
-            @click="handleUnfollow(subjectItem.text)">
-            Unfollow
-          </button>
+            class="btn-line"
+          >
+            <button
+              :key="subjectItem.text"
+              :style="{ display: subjectItem.display }"
+              class="menubtn button default"
+              @click="emits('handleSelectedSubjectUpdate', subjectItem.text)"
+            >
+              {{ subjectItem.text }}
+            </button>
+            <button
+              class="unfollow-btn button default"
+              :style="{ display: subjectItem.display }"
+              @click="handleUnfollow(subjectItem.text)"
+            >
+              Eemalda
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -49,9 +59,9 @@ const isDropdownVisible = ref(false);
 const personalSubjects = ref([] as string[]);
 let isLoading = ref<boolean>(false);
 // Filtering subjects according to search-bar input
-const filteredSubjects = computed(function() {
+const filteredSubjects = computed(function () {
   const filterText = filter.value.toUpperCase();
-  return personalSubjects.value.map(function(subject) {
+  return personalSubjects.value.map(function (subject) {
     return {
       text: subject,
       display: subject.toUpperCase().includes(filterText) ? "block" : "none",
@@ -93,4 +103,6 @@ async function handleUnfollow(subjectItem: string) {
 <style scoped>
 @import "@/styles/colors/colors.css";
 @import "@/styles/DropdownStyles/dropdownBtnStyle.css";
+@import "@/styles/button.css";
 </style>
+

@@ -1,0 +1,14 @@
+@import "@/styles/default.css";
+
+.button {
+  color: var(--col-fg-default);
+  background-color: initial;
+  cursor: pointer;
+  justify-content: center;
+  transition: background-color 200ms;
+
+  &:hover {
+    background-color: var(--col-bg-lighter);
+  }
+}
+

@@ -11,6 +11,7 @@ const handleError = (error: unknown): void => {
   throw data;
 };
 
+// eslint-disable-next-line
 function isRequestError(obj: any): obj is RequestError {
   return (
     obj.statusMessage != null && obj.statusCode != null && obj.message != null
