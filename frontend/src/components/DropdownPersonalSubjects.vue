@@ -4,40 +4,49 @@
       <button
         id="dropbtn"
         class="default button"
-        :class="{ active: isDropdownVisible }"
+        :class="{ open: isDropdownVisible || isLoading }"
         @click="toggleMenu"
       >
         Minu õppeained
       </button>
-      <LoaderComponent :loading="isLoading" />
-      <div v-if="isDropdownVisible" class="dropdown-content default">
-        <input
-          id="search-bar"
-          v-model="filter"
-          type="text"
-          placeholder="Otsi..."
-        />
-        <div class="scrollable-content">
-          <div
-            v-for="subjectItem in filteredSubjects"
-            :key="subjectItem.text"
-            class="btn-line"
-          >
-            <button
-              :key="subjectItem.text"
-              :style="{ display: subjectItem.display }"
-              class="menubtn button default"
-              @click="emits('handleSelectedSubjectUpdate', subjectItem.text)"
-            >
-              {{ subjectItem.text }}
-            </button>
-            <button
-              class="unfollow-btn button default"
-              :style="{ display: subjectItem.display }"
-              @click="handleUnfollow(subjectItem.text)"
-            >
-              Eemalda
-            </button>
+      <div class="dropdown-content default">
+        <LoaderComponent :loading="isLoading" />
+        <div id="content-wrapper" v-if="isDropdownVisible">
+          <div id="content-with-subjects" v-if="personalSubjects.length > 0">
+            <input
+              id="search-bar"
+              v-model="filter"
+              type="text"
+              placeholder="Otsi..."
+            />
+            <div class="scrollable-content">
+              <div
+                v-for="subjectItem in filteredSubjects"
+                :key="subjectItem.text"
+                class="btn-line"
+              >
+                <button
+                  :key="subjectItem.text"
+                  :style="{ display: subjectItem.display }"
+                  class="menubtn button default"
+                  @click="
+                    emits('handleSelectedSubjectUpdate', subjectItem.text)
+                  "
+                >
+                  {{ subjectItem.text }}
+                </button>
+                <button
+                  class="unfollow-btn button default emoji"
+                  :style="{ display: subjectItem.display }"
+                  @click="handleUnfollow(subjectItem.text)"
+                >
+                  🗑️
+                </button>
+              </div>
+            </div>
+          </div>
+          <div v-else id="no-personal-subjects" class="default">
+            Jälgitavaid aineid saad lisada sätetes ⚙️.
           </div>
         </div>
       </div>
@@ -74,8 +83,8 @@ async function toggleMenu() {
     isLoading.value = true;
     filter.value = "";
     await getPersonalSubjects();
+    isLoading.value = false;
   }
-  isLoading.value = false;
   isDropdownVisible.value = !isDropdownVisible.value;
 }
 
