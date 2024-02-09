@@ -23,25 +23,27 @@
               <div
                 v-for="subjectItem in filteredSubjects"
                 :key="subjectItem.text"
-                class="btn-line"
               >
-                <button
-                  :key="subjectItem.text"
+                <div
+                  class="subject-line-wrapper default"
                   :style="{ display: subjectItem.display }"
-                  class="menubtn button default"
-                  @click="
-                    emits('handleSelectedSubjectUpdate', subjectItem.text)
-                  "
                 >
-                  {{ subjectItem.text }}
-                </button>
-                <button
-                  class="unfollow-btn button default emoji"
-                  :style="{ display: subjectItem.display }"
-                  @click="handleUnfollow(subjectItem.text)"
-                >
-                  🗑️
-                </button>
+                  <button
+                    :key="subjectItem.text"
+                    class="menubtn button default"
+                    @click="
+                      emits('handleSelectedSubjectUpdate', subjectItem.text)
+                    "
+                  >
+                    {{ subjectItem.text }}
+                  </button>
+                  <button
+                    class="unfollow-btn button default emoji"
+                    @click="handleUnfollow(subjectItem.text)"
+                  >
+                    🗑️
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -73,7 +75,7 @@ const filteredSubjects = computed(function () {
   return personalSubjects.value.map(function (subject) {
     return {
       text: subject,
-      display: subject.toUpperCase().includes(filterText) ? "block" : "none",
+      display: subject.toUpperCase().includes(filterText) ? "flex" : "none",
     };
   });
 });

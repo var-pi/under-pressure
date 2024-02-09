@@ -8,9 +8,6 @@
     <LineGraph :new-selected-subject="newSelectedSubject">
       <template v-slot:square>
         <button id="menu-btn" class="default button emoji" @click="openModal">
-          <!-- <span></span>
-          <span></span>
-          <span></span> -->
           ⚙️
         </button>
       </template>
@@ -54,44 +51,5 @@ const closeModal = () => {
   width: 100%;
   height: 100%;
 }
-/* #menu-btn > span {
-  display: block;
-  background-color: var(--col-3);
-  margin: 5px 0;
-  height: 5px;
-  width: 35px;
-  max-width: 49px;
-}
-#menu-btn > span:nth-child(1) {
-  margin-top: 0px;
-}
-#menu-btn > span:nth-child(3) {
-  margin-bottom: 0px;
-}
-@media screen and (max-width: 550px) {
-  #menu-btn {
-    top: 0;
-    right: 0;
-    width: 30px;
-    height: 30px;
-    margin: 5px;
-  }
-  #menu-btn > span {
-    margin: 6px 0;
-    height: 6px;
-    width: 30px;
-  }
-}
-@media screen and (max-width: 400px) {
-  #menu-btn {
-    width: 20px;
-    height: 20px;
-  }
-  #menu-btn > span {
-    margin: 4px 0;
-    height: 4px;
-    width: 20px;
-  }
-} */
 </style>
 
