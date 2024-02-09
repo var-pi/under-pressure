@@ -18,8 +18,11 @@
       </div>
     </div>
     <div id="slot-and-button">
-      <div id="slot-wrapper">
-        <slot></slot>
+      <div id="square-slot-wrapper">
+        <slot name="square"></slot>
+      </div>
+      <div id="fill-width-slot-wrapper">
+        <slot name="fill-width"></slot>
       </div>
       <button id="enter-btn" class="default button" @click="addEntry()">
         {{ sliderValue }}
@@ -246,8 +249,14 @@ async function getSubjectEntries(subject: string) {
   height: 64px;
 }
 
+#square-slot-wrapper {
+  margin: var(--default-margin);
+  width: 64px;
+  height: 64px;
+}
+
 /* slot for dropdown menu */
-#slot-wrapper {
+#fill-width-slot-wrapper {
   margin: var(--default-margin);
   display: flex;
   flex: 1;

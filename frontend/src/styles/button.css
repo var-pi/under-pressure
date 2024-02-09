@@ -10,5 +10,9 @@
   &:hover {
     background-color: var(--col-bg-lighter);
   }
+  &.emoji {
+    color: transparent;
+    text-shadow: 0 0 0 var(--col-fg-default);
+  }
 }
 
