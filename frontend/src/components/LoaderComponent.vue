@@ -1,6 +1,6 @@
-Loader by greyby: https://github.com/greyby/vue-spinner.git
+<!-- Loader by greyby: https://github.com/greyby/vue-spinner.git -->
 <template>
-  <div v-show="props.loading" class="v-spinner">
+  <div v-show="props.loading" class="v-spinner" id="v-spinner">
     <div class="v-sync v-sync1" :style="[spinnerDelay1]"></div>
     <div class="v-sync v-sync2" :style="[spinnerDelay2]"></div>
     <div class="v-sync v-sync3" :style="[spinnerDelay3]"></div>
@@ -8,32 +8,39 @@ Loader by greyby: https://github.com/greyby/vue-spinner.git
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps } from 'vue';
+import { computed, defineProps } from "vue";
 
 const props = defineProps<{
   loading: boolean;
 }>();
 
 const spinnerDelay1 = computed(() => ({
-  animationDelay: '0.07s',
+  animationDelay: "0.07s",
 }));
 
 const spinnerDelay2 = computed(() => ({
-  animationDelay: '0.14s',
+  animationDelay: "0.14s",
 }));
 
 const spinnerDelay3 = computed(() => ({
-  animationDelay: '0.21s',
+  animationDelay: "0.21s",
 }));
 </script>
 
 <style>
 @import "@/styles/colors/colors.css";
 
+#v-spinner {
+  display: flex;
+  height: 64px;
+  justify-content: center;
+  align-items: center;
+}
+
 .v-sync {
-  background-color: var(--col-3);
-  height: 5px;
-  width: 5px;
+  background-color: var(--col-fg-default);
+  height: 6px;
+  width: 6px;
   margin: 2px;
   border-radius: 100%;
   display: inline-block;
@@ -74,3 +81,4 @@ const spinnerDelay3 = computed(() => ({
   }
 }
 </style>
+

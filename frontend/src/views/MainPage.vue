@@ -1,9 +1,4 @@
 <template>
-  <button id="menu-btn" @click="openModal">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
   <ModalMenu
     id="menuModal"
     :is-open="isModalOpened"
@@ -11,9 +6,19 @@
   />
   <div id="contents">
     <LineGraph :new-selected-subject="newSelectedSubject">
-      <DropdownPersonalSubjects
-        @handle-selected-subject-update="updateSelectedSubject"
-      />
+      <template v-slot:square>
+        <button id="menu-btn" class="default button emoji" @click="openModal">
+          <!-- <span></span>
+          <span></span>
+          <span></span> -->
+          ⚙️
+        </button>
+      </template>
+      <template v-slot:fill-width>
+        <DropdownPersonalSubjects
+          @handle-selected-subject-update="updateSelectedSubject"
+        />
+      </template>
     </LineGraph>
   </div>
 </template>
@@ -41,18 +46,15 @@ const closeModal = () => {
 
 <style scoped>
 @import "@/styles/colors/colors.css";
+@import "@/styles/default.css";
+@import "@/styles/button.css";
 
 /* Dropdown menu buttons */
 #menu-btn {
-  position: absolute;
-  width: 35px;
-  height: 25px;
-  top: 10px;
-  right: 10px;
-  border: none;
-  background-color: transparent;
+  width: 100%;
+  height: 100%;
 }
-#menu-btn > span {
+/* #menu-btn > span {
   display: block;
   background-color: var(--col-3);
   margin: 5px 0;
@@ -90,6 +92,6 @@ const closeModal = () => {
     height: 4px;
     width: 20px;
   }
-}
+} */
 </style>
 
