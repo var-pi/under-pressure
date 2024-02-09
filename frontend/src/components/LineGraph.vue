@@ -177,8 +177,8 @@ async function getSubjectEntries(subject: string) {
 }
 
 /* stress value slider */
-#slider {
-  background-color: initial;
+input[type="range"] {
+  background-color: initial !important;
   height: 100%;
   width: 100%;
   position: absolute;
@@ -188,21 +188,23 @@ async function getSubjectEntries(subject: string) {
   margin: 0;
   border: 0 !important;
   writing-mode: vertical-lr;
-  -webkit-appearance: none;
   appearance: none;
+}
 
-  &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 0;
-    height: 0;
-    box-shadow: 0 500px 0 500px var(--col-bg-lighter);
-  }
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 0px;
+  height: 0px;
+  box-shadow: 0 500px 0 500px var(--col-bg-lighter);
+}
 
-  &::-moz-range-thumb {
-    border: 0;
-    width: 0;
-    box-shadow: 0 500px 0 500px var(--col-bg-default);
-  }
+input[type="range"]::-moz-range-thumb {
+  appearance: none;
+  width: 0px;
+  height: 0px;
+  display: none;
+  border: none;
+  box-shadow: 0 -500px 0 500px var(--col-bg-lighter);
 }
 
 @-moz-document url-prefix() {
@@ -221,15 +223,22 @@ async function getSubjectEntries(subject: string) {
     width: auto;
     height: 62px; /* Not 64 because range input is acts weirdly */
   }
-  #slider {
+  input[type="range"] {
+    writing-mode: horizontal-tb;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
     writing-mode: horizontal-tb;
 
-    &::-webkit-slider-thumb {
-      box-shadow: -500px 0 0 500px var(--col-bg-lighter);
-    }
-    &::-moz-range-thumb {
-      box-shadow: 500px 0 0 500px var(--col-bg-default);
-    }
+    appearance: none;
+    box-shadow: -500px 0 0 500px var(--col-bg-lighter);
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    writing-mode: horizontal-tb;
+
+    appearance: none;
+    box-shadow: -500px 0 0 500px var(--col-bg-lighter);
   }
 }
 
