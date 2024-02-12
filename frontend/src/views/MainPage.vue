@@ -6,12 +6,12 @@
   />
   <div id="contents">
     <LineGraph :new-selected-subject="newSelectedSubject">
-      <template v-slot:square>
+      <template #square>
         <button id="menu-btn" class="default button emoji" @click="openModal">
           ⚙️
         </button>
       </template>
-      <template v-slot:fill-width>
+      <template #fill-width>
         <DropdownPersonalSubjects
           :modal-open="isModalOpened"
           @handle-selected-subject-update="updateSelectedSubject"

@@ -1,32 +1,30 @@
 <template>
   <div v-if="props.isOpen" class="modal-mask">
-    <div class="modal-wrapper">
-      <div ref="target" class="modal-container">
-        <div class="modal-header default">
-          <p>Vali õppeaineid</p>
-        </div>
-        <div class="modal-body dropdown-content">
-          <div id="wrapper">
-            <LoaderComponent :loading="!showScrollableSubjects" />
-            <DropdownMenu
-              :is-dropdown-visible="showScrollableSubjects"
-              :menu-items="allSubjects"
-            >
-              <template v-slot="{ item }">
-                <div
-                  class="menu-line-wrapper default"
-                  :style="{ display: item.display }"
+    <div ref="target" class="modal-container">
+      <div class="modal-header default">
+        <p>Vali õppeaineid</p>
+      </div>
+      <div class="modal-body dropdown-content">
+        <div id="modal-wrapper">
+          <LoaderComponent :loading="!showScrollableSubjects" />
+          <DropdownMenu
+            :is-dropdown-visible="showScrollableSubjects"
+            :menu-items="allSubjects"
+          >
+            <template #default="{ item }">
+              <div
+                class="menu-line-wrapper default"
+                :style="{ display: item.display }"
+              >
+                <button
+                  class="menubtn button default"
+                  @click="addFollowedSubject(item.text)"
                 >
-                  <button
-                    class="menubtn button default"
-                    @click="addFollowedSubject(item.text)"
-                  >
-                    {{ item.text }}
-                  </button>
-                </div>
-              </template>
-            </DropdownMenu>
-          </div>
+                  {{ item.text }}
+                </button>
+              </div>
+            </template>
+          </DropdownMenu>
         </div>
       </div>
       <div class="modal-footer">
@@ -54,7 +52,6 @@ const emit = defineEmits(["modal-close"]);
 const target = ref(null);
 onClickOutside(target, () => emit("modal-close"));
 
-const filter = ref<string>("");
 const isDropdownVisible = ref(false);
 const allSubjects = ref([] as string[]);
 let showScrollableSubjects = ref<boolean>(false);
@@ -62,7 +59,6 @@ let showScrollableSubjects = ref<boolean>(false);
 async function toggleAllSubjects() {
   if (!isDropdownVisible.value) {
     showScrollableSubjects.value = false;
-    filter.value = "";
     await new Promise((resolve) => setTimeout(resolve, 3000));
     await getAllSubjects();
   }
@@ -99,6 +95,10 @@ watch(() => props.isOpen, toggleAllSubjects);
 @import "@/styles/button.css";
 @import "@/styles/default.css";
 
+#modal-wrapper {
+  width: 100%;
+  --row-height: 48px;
+}
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -142,7 +142,6 @@ watch(() => props.isOpen, toggleAllSubjects);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 10px 30px 10px 30px;
   padding: 0px;
 }
 .scrollable-content {
