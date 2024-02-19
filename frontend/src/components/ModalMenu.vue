@@ -91,7 +91,6 @@ watch(() => props.isOpen, toggleAllSubjects);
 <style scoped>
 @import "@/styles/colors/colors.css";
 @import "@/styles/fontStyles.css";
-@import "@/styles/DropdownStyles/dropdownBtnStyle.css";
 @import "@/styles/button.css";
 @import "@/styles/default.css";
 
@@ -150,9 +149,32 @@ watch(() => props.isOpen, toggleAllSubjects);
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+.scrollable-content::-webkit-scrollbar {
+  display: none;
+}
 .dropdown-content {
-  justify-content: center;
-  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-top: none !important;
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+}
+@media screen and (max-width: 2200px) {
+  .scrollable-content {
+    max-height: var(--width-l); /* TODO */
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .scrollable-content {
+    max-height: var(--width-m);
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .scrollable-content {
+    max-height: var(--width-s);
+  }
 }
 #close-btn {
   margin-left: auto;
@@ -168,6 +190,19 @@ watch(() => props.isOpen, toggleAllSubjects);
   border-left: none !important;
   border-bottom: none !important;
   border-right: none !important;
+}
+.menu-line-wrapper {
+  display: flex;
+  flex: 1;
+  position: relative;
+  height: var(--row-height);
+  border-radius: 0 !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: none !important;
+}
+.menu-line-wrapper:hover .unfollow-btn {
+  opacity: 1;
 }
 </style>
 
