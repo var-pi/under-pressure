@@ -3,7 +3,8 @@
     <input id="search-bar" v-model="filter" type="text" placeholder="Otsi..." />
     <div class="scrollable-content">
       <div v-for="item in filteredItems" :key="item.text">
-        <slot :item="item"> </slot>
+        <slot :item="item">
+        </slot>
       </div>
     </div>
   </div>

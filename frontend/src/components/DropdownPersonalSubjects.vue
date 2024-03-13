@@ -10,12 +10,12 @@
         Minu õppeained
       </button>
       <div
-        class="dropdown-content default"
         v-if="isDropdownVisible || isLoading"
+        class="dropdown-content default"
       >
         <LoaderComponent :loading="isLoading" />
-        <div id="content-wrapper" v-if="isDropdownVisible">
-          <div id="content-with-subjects" v-if="personalSubjects.length > 0">
+        <div v-if="isDropdownVisible" id="content-wrapper">
+          <div v-if="personalSubjects.length" id="content-with-subjects">
             <input
               id="search-bar"
               v-model="filter"
