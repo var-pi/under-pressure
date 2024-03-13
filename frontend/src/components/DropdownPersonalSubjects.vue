@@ -168,6 +168,7 @@ watch(
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
 }
+
 .menubtn {
   width: 100%;
   height: 100%;
@@ -175,16 +176,19 @@ watch(
   text-indent: 16px;
   border: none !important;
 }
+
 #content-wrapper {
   display: flex;
   width: 100%;
   justify-content: center;
 }
+
 #content-with-subjects {
   display: flex;
   flex-direction: column;
   flex: 1;
 }
+
 .unfollow-btn {
   position: absolute;
   right: 0;
@@ -194,6 +198,7 @@ watch(
   border: none !important;
   opacity: 0;
 }
+
 .menu-line-wrapper:hover .unfollow-btn {
   opacity: 1;
 }
@@ -217,6 +222,7 @@ watch(
     background-color: var(--col-bg-lighter);
   }
 }
+
 .dropdown-content {
   display: flex;
   flex-direction: column;
@@ -224,15 +230,18 @@ watch(
   border-top-left-radius: 0px !important;
   border-top-right-radius: 0px !important;
 }
+
 .scrollable-content {
   max-height: var(--width-xl);
   overflow-y: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
 .scrollable-content::-webkit-scrollbar {
   display: none;
 }
+
 .dropdown {
   display: flex;
   flex-direction: column;

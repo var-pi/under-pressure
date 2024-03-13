@@ -1,6 +1,6 @@
 <template>
   <div v-if="isDropdownVisible" class="dropdown-content">
-    <input id="search-bar" v-model="filter" type="text" placeholder="Otsi..." />
+    <SearchBarComponent :menu-items="menuItems" @handle-filtered-items="updateFilteredItems" />
     <div class="scrollable-content">
       <div v-for="item in filteredItems" :key="item.text">
         <slot :item="item">
@@ -8,57 +8,30 @@
       </div>
     </div>
   </div>
+  <div v-else>
+    <LoaderComponent :loading="true" />
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, defineProps } from "vue";
-import { DropdownItem } from "@/interfaces/interfaces";
+import { ref, defineProps } from "vue";
+import LoaderComponent from "@/components/LoaderComponent.vue";
+import SearchBarComponent from "@/components/SearchBarComponent.vue";
+import { DropdownItem } from "@/interfaces";
 
-const props = defineProps<{
+defineProps<{
   isDropdownVisible: boolean;
   menuItems: string[];
 }>();
 
-const filter = ref("");
-const filteredItems = computed(function () {
-  const filterText = filter.value.toUpperCase();
-  return props.menuItems.map(function (item: string): DropdownItem {
-    console.log(filteredItems);
-    return {
-      text: item,
-      display: item.toUpperCase().includes(filterText) ? "block" : "none",
-    };
-  });
-});
+const filteredItems = ref<DropdownItem[]>();
 
-watch(
-  () => props.isDropdownVisible,
-  () => {
-    filter.value = "";
-  }
-);
+function updateFilteredItems(items: DropdownItem[]) {
+  filteredItems.value = items;
+}
 </script>
 
 <style>
-#search-bar {
-  text-indent: 16px;
-  text-align: center;
-  padding: 0px;
-  border: none;
-  width: 100%;
-  height: var(--row-height);
-  background-color: initial;
-  font-family: var(--font-family);
-  color: var(--col-fg-default);
-
-  &:focus {
-    outline: none;
-  }
-
-  &:hover {
-    background-color: var(--col-bg-lighter);
-  }
-}
 .dropdown-content {
   display: flex;
   flex-direction: column;

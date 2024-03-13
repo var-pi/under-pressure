@@ -6,7 +6,6 @@
       </div>
       <div class="modal-body dropdown-content">
         <div id="modal-wrapper">
-          <LoaderComponent :loading="!showScrollableSubjects" />
           <DropdownMenu
             :is-dropdown-visible="showScrollableSubjects"
             :menu-items="allSubjects"
@@ -40,7 +39,6 @@ import { ref, defineProps, defineEmits, watch } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import { api } from "@/api/api";
 
-import LoaderComponent from "@/components/LoaderComponent.vue";
 import DropdownMenu from "@/components/DropdownMenu.vue";
 import { Subject } from "@/api/types";
 
