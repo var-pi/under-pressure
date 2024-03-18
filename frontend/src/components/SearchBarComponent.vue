@@ -16,12 +16,17 @@ const filter = ref("");
 
 const filteredItems = computed(function () {
   const filterText = filter.value.toUpperCase();
-  return props.menuItems.map(function (item: string): DropdownItem {
-    return {
-      text: item,
-      display: item.toUpperCase().includes(filterText) ? "block" : "none",
-    };
-  });
+  return props.menuItems
+    .filter(function (item: string) {
+      return item.toUpperCase().includes(filterText)
+    })
+    .map(function (item: string): DropdownItem {
+      console.log(item)
+      return {
+        text: item,
+        display: "block",
+      };
+    });
 });
 
 onMounted(() => {
