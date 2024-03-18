@@ -1,6 +1,6 @@
 <!-- Loader by greyby: https://github.com/greyby/vue-spinner.git -->
 <template>
-  <div v-show="props.loading" class="v-spinner" id="v-spinner">
+  <div v-show="props.loading" id="v-spinner" class="v-spinner">
     <div class="v-sync v-sync1" :style="[spinnerDelay1]"></div>
     <div class="v-sync v-sync2" :style="[spinnerDelay2]"></div>
     <div class="v-sync v-sync3" :style="[spinnerDelay3]"></div>

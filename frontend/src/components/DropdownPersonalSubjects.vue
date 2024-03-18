@@ -10,12 +10,12 @@
         Minu õppeained
       </button>
       <div
-        class="dropdown-content default"
         v-if="isDropdownVisible || isLoading"
+        class="dropdown-content default"
       >
         <LoaderComponent :loading="isLoading" />
-        <div id="content-wrapper" v-if="isDropdownVisible">
-          <div id="content-with-subjects" v-if="personalSubjects.length > 0">
+        <div v-if="isDropdownVisible" id="content-wrapper">
+          <div v-if="personalSubjects.length" id="content-with-subjects">
             <input
               id="search-bar"
               v-model="filter"
@@ -127,7 +127,160 @@ watch(
 
 <style scoped>
 @import "@/styles/colors/colors.css";
-@import "@/styles/DropdownStyles/dropdownBtnStyle.css";
 @import "@/styles/button.css";
+
+#personal-subjects {
+  width: 100%;
+}
+
+:root {
+  --width-s: 45vw;
+  --width-m: 35vw;
+  --width-l: 25vw;
+  --width-xl: 440px;
+  --height: 5vw;
+  --height-xl: 66px;
+}
+
+#wrapper {
+  width: 100%;
+  --row-height: 48px;
+}
+
+#dropbtn {
+  padding: 0;
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 64px;
+  text-decoration: none;
+  transform: translate3d(0, 0, 0);
+  vertical-align: baseline;
+  white-space: nowrap;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#dropbtn.open {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.menubtn {
+  width: 100%;
+  height: 100%;
+  border-radius: 0px !important;
+  text-indent: 16px;
+  border: none !important;
+}
+
+#content-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+#content-with-subjects {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.unfollow-btn {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  width: 48px;
+  border-radius: 0px !important;
+  border: none !important;
+  opacity: 0;
+}
+
+.menu-line-wrapper:hover .unfollow-btn {
+  opacity: 1;
+}
+
+#search-bar {
+  text-indent: 16px;
+  text-align: center;
+  padding: 0px;
+  border: none;
+  width: 100%;
+  height: var(--row-height);
+  background-color: initial;
+  font-family: var(--font-family);
+  color: var(--col-fg-default);
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    background-color: var(--col-bg-lighter);
+  }
+}
+
+.dropdown-content {
+  display: flex;
+  flex-direction: column;
+  border-top: none !important;
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+}
+
+.scrollable-content {
+  max-height: var(--width-xl);
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollable-content::-webkit-scrollbar {
+  display: none;
+}
+
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menu-line-wrapper {
+  display: flex;
+  flex: 1;
+  position: relative;
+  height: var(--row-height);
+  border-radius: 0 !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: none !important;
+}
+
+@media screen and (max-width: 2200px) {
+  .scrollable-content {
+    max-height: var(--width-l); /* TODO */
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .scrollable-content {
+    max-height: var(--width-m);
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .scrollable-content {
+    max-height: var(--width-s);
+  }
+}
+
+#no-personal-subjects {
+  height: 64px;
+  border: 0;
+  color: var(--col-fg-accent);
+}
 </style>
 
