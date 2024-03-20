@@ -6,31 +6,12 @@
 import { computed, ref, watch, defineEmits, defineProps, onMounted } from "vue"
 import { DropdownItem } from "@/interfaces/interfaces";
 
-const props = defineProps<{
-  menuItems: string[];
-}>();
-
-const emits = defineEmits(["handle-filtered-items"])
+const emits = defineEmits(["update:filterValue"])
 
 const filter = ref("");
 
-const filteredItems = computed(function () {
-  const filterText = filter.value.toUpperCase();
-  return props.menuItems.map(function (item: string): DropdownItem {
-    return {
-      text: item,
-      display: item.toUpperCase().includes(filterText) ? "block" : "none",
-    };
-  });
-});
-
-onMounted(() => {
-  emits("handle-filtered-items", filteredItems.value);
-});
-
 watch(filter, () => {
-  // Emitting 'filtered-items' custom event with the filtered items
-  emits("handle-filtered-items", filteredItems.value);
+  emits("update:filterValue", filter.value);
 });
 </script>
 

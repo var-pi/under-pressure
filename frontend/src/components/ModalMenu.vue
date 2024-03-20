@@ -13,13 +13,25 @@
             <template #default="{ item }">
               <div
                 class="menu-line-wrapper default"
-                :style="{ display: item.display }"
               >
                 <button
                   class="menubtn button default"
-                  @click="addFollowedSubject(item.text)"
+                  @click="toggleFollowStatus(item.text)"
                 >
                   {{ item.text }}
+                </button>
+                <button
+                  v-if="personalSubjects.has(item.text)"
+                  class="optional-menu-btn button default emoji"
+                  content="item in followed Subjects"
+                >
+                  ✔
+                </button>
+                <button
+                  v-else
+                  class="optional-menu-btn button default emoji"
+                >
+                  ✖
                 </button>
               </div>
             </template>
@@ -53,6 +65,7 @@ onClickOutside(target, () => emit("modal-close"));
 
 const isDropdownVisible = ref(false);
 const allSubjects = ref([] as string[]);
+const personalSubjects = ref(new Set())
 let showScrollableSubjects = ref<boolean>(false);
 
 async function toggleAllSubjects() {
@@ -60,6 +73,7 @@ async function toggleAllSubjects() {
     showScrollableSubjects.value = false;
     await new Promise((resolve) => setTimeout(resolve, 3000));
     await getAllSubjects();
+    await getPersonalSubjects();
   }
   showScrollableSubjects.value = true;
   isDropdownVisible.value = !isDropdownVisible.value;
@@ -80,8 +94,39 @@ async function getAllSubjects() {
   }
 }
 
+async function getPersonalSubjects() {
+  try {
+    const subjects: Subject[] = await api.getSubjects();
+    // Check if the ApiResponse is not null before extracting the value
+    if (subjects) {
+      // Extract the array of strings
+      personalSubjects.value = new Set(subjects);
+      console.log(personalSubjects);
+    } else {
+      console.error("Failed to get subjects.");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+const toggleFollowStatus = (text: string) => {
+  if (personalSubjects.value.has(text)) {
+    handleUnfollow(text);
+    personalSubjects.value.delete(text);
+  } else {
+    addFollowedSubject(text);
+    personalSubjects.value.add(text);
+  }
+};
+
 async function addFollowedSubject(subjectName: string) {
   await api.followSubject(subjectName);
+}
+
+async function handleUnfollow(subjectItem: string) {
+  await api.unfollowSubject(subjectItem);
+  await getPersonalSubjects;
 }
 
 watch(() => props.isOpen, toggleAllSubjects);
@@ -181,15 +226,6 @@ watch(() => props.isOpen, toggleAllSubjects);
   border: none;
   cursor: pointer;
 }
-.menubtn {
-  width: 100%;
-  height: var(--row-height);
-  border-radius: 0px;
-  text-indent: 16px;
-  border-left: none !important;
-  border-bottom: none !important;
-  border-right: none !important;
-}
 .menu-line-wrapper {
   display: flex;
   flex: 1;
@@ -200,7 +236,20 @@ watch(() => props.isOpen, toggleAllSubjects);
   border-right: none !important;
   border-bottom: none !important;
 }
-.menu-line-wrapper:hover .unfollow-btn {
+.menubtn {
+  width: 100%;
+  height: 100%;
+  border-radius: 0px !important;
+  text-indent: 16px;
+  border: none !important;
+}
+.optional-menu-btn {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  width: 48px;
+  border-radius: 0px !important;
+  border: none !important;
   opacity: 1;
 }
 </style>

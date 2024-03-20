@@ -32,7 +32,6 @@
                   :style="{ display: subjectItem.display }"
                 >
                   <button
-                    :key="subjectItem.text"
                     class="menubtn button default"
                     @click="
                       emits('handleSelectedSubjectUpdate', subjectItem.text)
@@ -196,7 +195,7 @@ watch(
   width: 48px;
   border-radius: 0px !important;
   border: none !important;
-  opacity: 0;
+  opacity: 1;
 }
 
 .menu-line-wrapper:hover .unfollow-btn {
@@ -237,7 +236,6 @@ watch(
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
-
 .scrollable-content::-webkit-scrollbar {
   display: none;
 }
