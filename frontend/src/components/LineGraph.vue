@@ -2,9 +2,7 @@
   <div id="wrapper">
     <div id="graph-and-slider">
       <div id="canvas-wrapper">
-        <canvas id="chart" ref="lineChartCanvas" class="default">
-          canvas
-        </canvas>
+        <canvas id="chart" ref="lineChartCanvas"> canvas </canvas>
       </div>
       <div id="slider-wrapper" class="default">
         <input
@@ -123,11 +121,11 @@ async function getSubjectEntries(subject: string) {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 @import "@/styles/fontStyles.css";
 @import "@/styles/colors/colors.css";
 @import "@/styles/button.css";
-@import "@/styles/default.css";
+@import "@/styles/default";
 
 #wrapper {
   --default-margin: 8px;
@@ -160,6 +158,7 @@ async function getSubjectEntries(subject: string) {
 
 /* chart for expressing entries */
 #chart {
+  @include default;
   background-color: initial;
   height: 100%;
   width: 100%;
