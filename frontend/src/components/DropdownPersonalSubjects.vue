@@ -1,14 +1,13 @@
 <template>
   <div id="personal-subjects" class="dropdown">
     <div id="wrapper">
-      <button
+      <DefaultButton
         id="dropbtn"
-        class="default button"
         :class="{ open: isDropdownVisible || isLoading }"
         @click="toggleMenu"
       >
         Minu õppeained
-      </button>
+      </DefaultButton>
       <div
         v-if="isDropdownVisible || isLoading"
         class="dropdown-content default"
@@ -31,20 +30,20 @@
                   class="menu-line-wrapper default"
                   :style="{ display: subjectItem.display }"
                 >
-                  <button
-                    class="menubtn button default"
+                  <DefaultButton
+                    class="menubtn"
                     @click="
                       emits('handleSelectedSubjectUpdate', subjectItem.text)
                     "
                   >
                     {{ subjectItem.text }}
-                  </button>
-                  <button
-                    class="unfollow-btn button default emoji"
+                  </DefaultButton>
+                  <DefaultButton
+                    class="unfollow-btn emoji"
                     @click="handleUnfollow(subjectItem.text)"
                   >
                     🗑️
-                  </button>
+                  </DefaultButton>
                 </div>
               </div>
             </div>
@@ -64,6 +63,7 @@ import { api } from "@/api/api";
 
 import LoaderComponent from "@/components/LoaderComponent.vue";
 import { Subject } from "@/api/types";
+import DefaultButton from "@/components/buttons/DefaultButton.vue";
 
 const props = defineProps<{
   modalOpen: boolean;
@@ -126,7 +126,6 @@ watch(
 
 <style scoped>
 @import "@/styles/colors/colors.css";
-@import "@/styles/button.css";
 
 #personal-subjects {
   width: 100%;
