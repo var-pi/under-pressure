@@ -45,7 +45,6 @@ const closeModal = () => {
 
 <style scoped>
 @import "@/styles/colors/colors.css";
-@import "@/styles/default.css";
 
 /* Dropdown menu buttons */
 #menu-btn {

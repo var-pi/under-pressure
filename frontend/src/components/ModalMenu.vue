@@ -127,7 +127,6 @@ watch(() => props.isOpen, toggleAllSubjects);
 <style scoped lang="scss">
 @import "@/styles/colors/colors.css";
 @import "@/styles/fontStyles.css";
-@import "@/styles/default.css";
 @import "@/styles/default";
 
 .modal-mask {
