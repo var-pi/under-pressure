@@ -18,7 +18,6 @@
 import { ref, defineProps, computed } from "vue";
 import LoaderComponent from "@/components/LoaderComponent.vue";
 import SearchBarComponent from "@/components/SearchBarComponent.vue";
-import { DropdownItem } from "@/interfaces";
 
 const props = defineProps<{
   isLoading: boolean;

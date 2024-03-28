@@ -3,10 +3,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, defineEmits, defineProps, onMounted } from "vue"
-import { DropdownItem } from "@/interfaces/interfaces";
+import { computed, ref, watch, defineEmits, defineProps, onMounted } from "vue";
 
-const emits = defineEmits(["update:filterValue"])
+const emits = defineEmits(["update:filterValue"]);
 
 const filter = ref("");
 

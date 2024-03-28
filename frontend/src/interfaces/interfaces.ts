@@ -3,7 +3,3 @@ export interface ChartData {
   data: Entry[];
 }
 
-export interface DropdownItem {
-  text: string;
-  display: string;
-}
