@@ -1,15 +1,15 @@
 <template>
-  <div class="dropdown-content">
-    <div v-if="isDropdownVisible">
+  <div class="dropdown-content" v-if="isLoading || isDropdownVisible">
+    <div v-if="isLoading">
+      <LoaderComponent :loading="true" />
+    </div>
+    <div v-else-if="isDropdownVisible">
       <SearchBarComponent v-model="filter" />
       <div class="scrollable-content">
         <div v-for="item in filteredItems" :key="item.text">
           <slot :item="item"> </slot>
         </div>
       </div>
-    </div>
-    <div v-else>
-      <LoaderComponent :loading="true" />
     </div>
   </div>
 </template>
@@ -21,6 +21,7 @@ import SearchBarComponent from "@/components/SearchBarComponent.vue";
 import { DropdownItem } from "@/interfaces";
 
 const props = defineProps<{
+  isLoading: boolean;
   isDropdownVisible: boolean;
   menuItems: string[];
 }>();

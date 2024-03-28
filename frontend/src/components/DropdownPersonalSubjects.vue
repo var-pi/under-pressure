@@ -8,49 +8,30 @@
       >
         Minu õppeained
       </DefaultButton>
-      <div v-if="isDropdownVisible || isLoading" class="dropdown-content">
-        <LoaderComponent :loading="isLoading" />
-        <div v-if="isDropdownVisible" id="content-wrapper">
-          <div v-if="personalSubjects.length" id="content-with-subjects">
-            <input
-              id="search-bar"
-              v-model="filter"
-              type="text"
-              placeholder="Otsi..."
-            />
-            <div class="scrollable-content">
-              <div
-                v-for="subjectItem in filteredSubjects"
-                :key="subjectItem.text"
-              >
-                <div
-                  class="menu-line-wrapper"
-                  :style="{ display: subjectItem.display }"
-                >
-                  <DefaultButton
-                    class="menubtn"
-                    @click="
-                      emits('handleSelectedSubjectUpdate', subjectItem.text)
-                    "
-                  >
-                    {{ subjectItem.text }}
-                  </DefaultButton>
-                  <DefaultButton
-                    class="unfollow-btn"
-                    emoji
-                    @click="handleUnfollow(subjectItem.text)"
-                  >
-                    🗑️
-                  </DefaultButton>
-                </div>
-              </div>
-            </div>
+      <DropdownMenu
+        :is-loading="isLoading"
+        :is-dropdown-visible="isDropdownVisible || isLoading"
+        :menu-items="personalSubjects"
+        class="dropdown-content"
+      >
+        <template #default="{ item }">
+          <div class="menu-line-wrapper">
+            <DefaultButton
+              class="menubtn"
+              @click="emits('handleSelectedSubjectUpdate', item.text)"
+            >
+              {{ item.text }}
+            </DefaultButton>
+            <DefaultButton
+              class="unfollow-btn"
+              emoji
+              @click="handleUnfollow(item.text)"
+            >
+              🗑️
+            </DefaultButton>
           </div>
-          <div v-else id="no-personal-subjects">
-            Jälgitavaid aineid saad lisada sätetes. ⚙️
-          </div>
-        </div>
-      </div>
+        </template>
+      </DropdownMenu>
     </div>
   </div>
 </template>
@@ -59,9 +40,9 @@
 import { ref, computed, watch, defineEmits, defineProps } from "vue";
 import { api } from "@/api/api";
 
-import LoaderComponent from "@/components/LoaderComponent.vue";
 import { Subject } from "@/api/types";
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
+import DropdownMenu from "@/components/DropdownMenu.vue";
 
 const props = defineProps<{
   modalOpen: boolean;

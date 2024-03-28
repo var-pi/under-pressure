@@ -5,6 +5,7 @@
         <p>Vali õppeaineid</p>
       </div>
       <DropdownMenu
+        :is-loading="!showScrollableSubjects"
         :is-dropdown-visible="showScrollableSubjects"
         :menu-items="allSubjects"
         class="modal-body"
