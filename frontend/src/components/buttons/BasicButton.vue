@@ -1,8 +1,19 @@
 <template>
-  <button class="basic-button">
+  <button class="basic-button" :class="{ emoji }">
     <slot />
   </button>
 </template>
+
+<script setup lang="ts">
+import { defineProps, withDefaults } from "vue";
+
+interface Props {
+  emoji?: boolean;
+}
+const props = withDefaults(defineProps<Props>(), {
+  emoji: false,
+});
+</script>
 
 <style scoped>
 .basic-button {

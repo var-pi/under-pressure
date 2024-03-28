@@ -36,7 +36,8 @@
                     {{ subjectItem.text }}
                   </DefaultButton>
                   <DefaultButton
-                    class="unfollow-btn emoji"
+                    class="unfollow-btn"
+                    emoji
                     @click="handleUnfollow(subjectItem.text)"
                   >
                     🗑️

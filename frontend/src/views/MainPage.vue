@@ -7,7 +7,7 @@
   <div id="contents">
     <LineGraph :new-selected-subject="newSelectedSubject">
       <template #square>
-        <DefaultButton id="menu-btn" class="emoji" @click="openModal">
+        <DefaultButton id="menu-btn" emoji @click="openModal">
           ⚙️
         </DefaultButton>
       </template>
