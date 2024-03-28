@@ -1,38 +1,35 @@
 <template>
   <div v-if="props.isOpen" class="modal-mask">
     <div ref="target" class="modal-container">
-      <div class="modal-header default">
+      <div class="modal-header">
         <p>Vali õppeaineid</p>
       </div>
-      <div class="modal-body dropdown-content">
-        <div id="modal-wrapper">
-          <DropdownMenu
-            :is-dropdown-visible="showScrollableSubjects"
-            :menu-items="allSubjects"
-          >
-            <template #default="{ item }">
-              <div class="menu-line-wrapper default">
-                <DefaultButton
-                  class="menubtn"
-                  @click="toggleFollowStatus(item.text)"
-                >
-                  {{ item.text }}
-                </DefaultButton>
-                <DefaultButton
-                  v-if="personalSubjects.has(item.text)"
-                  class="optional-menu-btn emoji"
-                  content="item in followed Subjects"
-                >
-                  ✔
-                </DefaultButton>
-                <DefaultButton v-else class="optional-menu-btn emoji">
-                  ✖
-                </DefaultButton>
-              </div>
-            </template>
-          </DropdownMenu>
-        </div>
-      </div>
+      <DropdownMenu
+        :is-dropdown-visible="showScrollableSubjects"
+        :menu-items="allSubjects"
+        class="modal-body"
+      >
+        <template #default="{ item }">
+          <div class="menu-line-wrapper">
+            <DefaultButton
+              class="menubtn"
+              @click="toggleFollowStatus(item.text)"
+            >
+              {{ item.text }}
+            </DefaultButton>
+            <DefaultButton
+              v-if="personalSubjects.has(item.text)"
+              class="optional-menu-btn emoji"
+              content="item in followed Subjects"
+            >
+              ✔
+            </DefaultButton>
+            <DefaultButton v-else class="optional-menu-btn emoji">
+              ✖
+            </DefaultButton>
+          </div>
+        </template>
+      </DropdownMenu>
       <div class="modal-footer">
         <slot name="footer"> </slot>
       </div>
@@ -127,15 +124,12 @@ async function handleUnfollow(subjectItem: string) {
 watch(() => props.isOpen, toggleAllSubjects);
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 @import "@/styles/colors/colors.css";
 @import "@/styles/fontStyles.css";
 @import "@/styles/default.css";
+@import "@/styles/default";
 
-#modal-wrapper {
-  width: 100%;
-  --row-height: 48px;
-}
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -165,9 +159,7 @@ watch(() => props.isOpen, toggleAllSubjects);
   }
 }
 .modal-header {
-  display: flex;
-  justify-content: center;
-  font-family: var(--font-family);
+  @include default;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -176,10 +168,7 @@ watch(() => props.isOpen, toggleAllSubjects);
   color: var(--col-fg-default);
 }
 .modal-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0px;
+  --row-height: 48px;
 }
 .scrollable-content {
   max-height: 450px;
@@ -190,13 +179,7 @@ watch(() => props.isOpen, toggleAllSubjects);
 .scrollable-content::-webkit-scrollbar {
   display: none;
 }
-.dropdown-content {
-  display: flex;
-  flex-direction: column;
-  border-top: none !important;
-  border-top-left-radius: 0px !important;
-  border-top-right-radius: 0px !important;
-}
+
 @media screen and (max-width: 2200px) {
   .scrollable-content {
     max-height: var(--width-l); /* TODO */
@@ -221,8 +204,7 @@ watch(() => props.isOpen, toggleAllSubjects);
   cursor: pointer;
 }
 .menu-line-wrapper {
-  display: flex;
-  flex: 1;
+  @include default;
   position: relative;
   height: var(--row-height);
   border-radius: 0 !important;

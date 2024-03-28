@@ -1,15 +1,16 @@
 <template>
-  <div v-if="isDropdownVisible" class="dropdown-content">
-    <SearchBarComponent v-model="filter"/>
-    <div class="scrollable-content">
-      <div v-for="item in filteredItems" :key="item.text">
-        <slot :item="item">
-        </slot>
+  <div class="dropdown-content">
+    <div v-if="isDropdownVisible">
+      <SearchBarComponent v-model="filter" />
+      <div class="scrollable-content">
+        <div v-for="item in filteredItems" :key="item.text">
+          <slot :item="item"> </slot>
+        </div>
       </div>
     </div>
-  </div>
-  <div v-else>
-    <LoaderComponent :loading="true" />
+    <div v-else>
+      <LoaderComponent :loading="true" />
+    </div>
   </div>
 </template>
 
@@ -30,7 +31,7 @@ const filteredItems = computed(function () {
   const filterText = filter.value.toUpperCase();
   return props.menuItems
     .filter(function (item: string) {
-      return item.toUpperCase().includes(filterText)
+      return item.toUpperCase().includes(filterText);
     })
     .map(function (item: string): DropdownItem {
       return {
@@ -41,15 +42,15 @@ const filteredItems = computed(function () {
 });
 </script>
 
-<style>
+<style scoped>
 .dropdown-content {
   display: flex;
   flex-direction: column;
-  border-top: none;
+  border-radius: 8px;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
   border: 1px solid var(--col-border);
-  border-radius: 8px;
+  border-top: none;
   font-size: 18px;
   font-family: var(--font-family);
   color: var(--col-fg-default);
@@ -60,7 +61,6 @@ const filteredItems = computed(function () {
   overflow-y: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-
 }
 .scrollable-content::-webkit-scrollbar {
   display: none;

@@ -8,10 +8,7 @@
       >
         Minu õppeained
       </DefaultButton>
-      <div
-        v-if="isDropdownVisible || isLoading"
-        class="dropdown-content default"
-      >
+      <div v-if="isDropdownVisible || isLoading" class="dropdown-content">
         <LoaderComponent :loading="isLoading" />
         <div v-if="isDropdownVisible" id="content-wrapper">
           <div v-if="personalSubjects.length" id="content-with-subjects">
@@ -27,7 +24,7 @@
                 :key="subjectItem.text"
               >
                 <div
-                  class="menu-line-wrapper default"
+                  class="menu-line-wrapper"
                   :style="{ display: subjectItem.display }"
                 >
                   <DefaultButton
@@ -48,7 +45,7 @@
               </div>
             </div>
           </div>
-          <div v-else id="no-personal-subjects" class="default">
+          <div v-else id="no-personal-subjects">
             Jälgitavaid aineid saad lisada sätetes. ⚙️
           </div>
         </div>
@@ -124,8 +121,9 @@ watch(
 );
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 @import "@/styles/colors/colors.css";
+@import "@/styles/default";
 
 #personal-subjects {
   width: 100%;
@@ -222,8 +220,6 @@ watch(
 }
 
 .dropdown-content {
-  display: flex;
-  flex-direction: column;
   border-top: none !important;
   border-top-left-radius: 0px !important;
   border-top-right-radius: 0px !important;
@@ -246,8 +242,7 @@ watch(
 }
 
 .menu-line-wrapper {
-  display: flex;
-  flex: 1;
+  @include default;
   position: relative;
   height: var(--row-height);
   border-radius: 0 !important;
@@ -275,6 +270,7 @@ watch(
 }
 
 #no-personal-subjects {
+  @include default;
   height: 64px;
   border: 0;
   color: var(--col-fg-accent);

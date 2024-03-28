@@ -4,12 +4,11 @@
       <div id="canvas-wrapper">
         <canvas id="chart" ref="lineChartCanvas"> canvas </canvas>
       </div>
-      <div id="slider-wrapper" class="default">
+      <div id="slider-wrapper">
         <input
           id="slider"
           v-model="sliderValue"
           type="range"
-          class="default"
           :min="0"
           :max="100"
         />
@@ -167,6 +166,7 @@ async function getSubjectEntries(subject: string) {
 
 /* wrapper fpr slider */
 #slider-wrapper {
+  @include default;
   margin: var(--default-margin);
   position: relative;
   display: flex;
