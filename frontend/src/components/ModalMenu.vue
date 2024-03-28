@@ -11,36 +11,30 @@
             :menu-items="allSubjects"
           >
             <template #default="{ item }">
-              <div
-                class="menu-line-wrapper default"
-              >
-                <button
-                  class="menubtn button default"
+              <div class="menu-line-wrapper default">
+                <DefaultButton
+                  class="menubtn"
                   @click="toggleFollowStatus(item.text)"
                 >
                   {{ item.text }}
-                </button>
-                <button
+                </DefaultButton>
+                <DefaultButton
                   v-if="personalSubjects.has(item.text)"
-                  class="optional-menu-btn button default emoji"
+                  class="optional-menu-btn emoji"
                   content="item in followed Subjects"
                 >
                   ✔
-                </button>
-                <button
-                  v-else
-                  class="optional-menu-btn button default emoji"
-                >
+                </DefaultButton>
+                <DefaultButton v-else class="optional-menu-btn emoji">
                   ✖
-                </button>
+                </DefaultButton>
               </div>
             </template>
           </DropdownMenu>
         </div>
       </div>
       <div class="modal-footer">
-        <slot name="footer"> 
-        </slot>
+        <slot name="footer"> </slot>
       </div>
     </div>
   </div>
@@ -53,6 +47,7 @@ import { api } from "@/api/api";
 
 import DropdownMenu from "@/components/DropdownMenu.vue";
 import { Subject } from "@/api/types";
+import DefaultButton from "@/components/buttons/DefaultButton.vue";
 
 const props = defineProps({
   isOpen: Boolean,
@@ -65,7 +60,7 @@ onClickOutside(target, () => emit("modal-close"));
 
 const isDropdownVisible = ref(false);
 const allSubjects = ref([] as string[]);
-const personalSubjects = ref(new Set())
+const personalSubjects = ref(new Set());
 let showScrollableSubjects = ref<boolean>(false);
 
 async function toggleAllSubjects() {
@@ -135,7 +130,6 @@ watch(() => props.isOpen, toggleAllSubjects);
 <style scoped>
 @import "@/styles/colors/colors.css";
 @import "@/styles/fontStyles.css";
-@import "@/styles/button.css";
 @import "@/styles/default.css";
 
 #modal-wrapper {

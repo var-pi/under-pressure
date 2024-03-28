@@ -22,9 +22,9 @@
       <div id="fill-width-slot-wrapper">
         <slot name="fill-width"></slot>
       </div>
-      <button id="enter-btn" class="default button" @click="addEntry()">
+      <DefaultButton id="enter-btn" class="" @click="addEntry()">
         {{ sliderValue }}
-      </button>
+      </DefaultButton>
     </div>
   </div>
 </template>
@@ -40,6 +40,7 @@ import {
 import { api } from "@/api/api";
 import { Entry } from "@/api/types";
 import { ChartData } from "@/interfaces/interfaces";
+import DefaultButton from "@/components/buttons/DefaultButton.vue";
 
 const props = defineProps<{
   newSelectedSubject: string;
@@ -124,7 +125,6 @@ async function getSubjectEntries(subject: string) {
 <style lang="scss" scoped>
 @import "@/styles/fontStyles.css";
 @import "@/styles/colors/colors.css";
-@import "@/styles/button.css";
 @import "@/styles/default";
 
 #wrapper {
