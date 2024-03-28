@@ -6,7 +6,7 @@
     <div v-else-if="isDropdownVisible">
       <SearchBarComponent v-model="filter" />
       <div class="scrollable-content">
-        <div v-for="item in filteredItems" :key="item.text">
+        <div v-for="item in filteredItems" :key="item">
           <slot :item="item"> </slot>
         </div>
       </div>
@@ -30,16 +30,9 @@ const filter = ref("");
 
 const filteredItems = computed(function () {
   const filterText = filter.value.toUpperCase();
-  return props.menuItems
-    .filter(function (item: string) {
-      return item.toUpperCase().includes(filterText);
-    })
-    .map(function (item: string): DropdownItem {
-      return {
-        text: item,
-        display: "block",
-      };
-    });
+  return props.menuItems.filter(function (item: string) {
+    return item.toUpperCase().includes(filterText);
+  });
 });
 </script>
 

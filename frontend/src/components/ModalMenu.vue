@@ -12,14 +12,11 @@
       >
         <template #default="{ item }">
           <div class="menu-line-wrapper">
-            <DefaultButton
-              class="menubtn"
-              @click="toggleFollowStatus(item.text)"
-            >
-              {{ item.text }}
+            <DefaultButton class="menubtn" @click="toggleFollowStatus(item)">
+              {{ item }}
             </DefaultButton>
             <DefaultButton
-              v-if="personalSubjects.has(item.text)"
+              v-if="personalSubjects.has(item)"
               class="optional-menu-btn emoji"
               content="item in followed Subjects"
             >

@@ -18,14 +18,14 @@
           <div class="menu-line-wrapper">
             <DefaultButton
               class="menubtn"
-              @click="emits('handleSelectedSubjectUpdate', item.text)"
+              @click="emits('handleSelectedSubjectUpdate', item)"
             >
-              {{ item.text }}
+              {{ item }}
             </DefaultButton>
             <DefaultButton
               class="unfollow-btn"
               emoji
-              @click="handleUnfollow(item.text)"
+              @click="handleUnfollow(item)"
             >
               🗑️
             </DefaultButton>
@@ -54,16 +54,6 @@ const filter = ref("");
 const isDropdownVisible = ref(false);
 const personalSubjects = ref([] as string[]);
 let isLoading = ref<boolean>(false);
-// Filtering subjects according to search-bar input
-const filteredSubjects = computed(function () {
-  const filterText = filter.value.toUpperCase();
-  return personalSubjects.value.map(function (subject) {
-    return {
-      text: subject,
-      display: subject.toUpperCase().includes(filterText) ? "flex" : "none",
-    };
-  });
-});
 
 async function toggleMenu() {
   if (!isDropdownVisible.value) {
