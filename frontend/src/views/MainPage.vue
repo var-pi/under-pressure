@@ -7,9 +7,9 @@
   <div id="contents">
     <LineGraph :new-selected-subject="newSelectedSubject">
       <template #square>
-        <button id="menu-btn" class="default button emoji" @click="openModal">
+        <DefaultButton id="menu-btn" emoji @click="openModal">
           ⚙️
-        </button>
+        </DefaultButton>
       </template>
       <template #fill-width>
         <DropdownPersonalSubjects
@@ -26,6 +26,7 @@ import { ref } from "vue";
 import DropdownPersonalSubjects from "@/components/DropdownPersonalSubjects.vue";
 import LineGraph from "@/components/LineGraph.vue";
 import ModalMenu from "@/components/ModalMenu.vue";
+import DefaultButton from "@/components/buttons/DefaultButton.vue";
 
 const newSelectedSubject = ref("");
 let isModalOpened = ref(false);
@@ -44,8 +45,6 @@ const closeModal = () => {
 
 <style scoped>
 @import "@/styles/colors/colors.css";
-@import "@/styles/default.css";
-@import "@/styles/button.css";
 
 /* Dropdown menu buttons */
 #menu-btn {

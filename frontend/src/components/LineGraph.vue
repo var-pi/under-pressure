@@ -4,12 +4,11 @@
       <div id="canvas-wrapper">
         <canvas id="chart" ref="lineChartCanvas"> canvas </canvas>
       </div>
-      <div id="slider-wrapper" class="default">
+      <div id="slider-wrapper">
         <input
           id="slider"
           v-model="sliderValue"
           type="range"
-          class="default"
           :min="0"
           :max="100"
         />
@@ -22,9 +21,9 @@
       <div id="fill-width-slot-wrapper">
         <slot name="fill-width"></slot>
       </div>
-      <button id="enter-btn" class="default button" @click="addEntry()">
+      <DefaultButton id="enter-btn" class="" @click="addEntry()">
         {{ sliderValue }}
-      </button>
+      </DefaultButton>
     </div>
   </div>
 </template>
@@ -40,6 +39,7 @@ import {
 import { api } from "@/api/api";
 import { Entry } from "@/api/types";
 import { ChartData } from "@/interfaces/interfaces";
+import DefaultButton from "@/components/buttons/DefaultButton.vue";
 
 const props = defineProps<{
   newSelectedSubject: string;
@@ -124,7 +124,6 @@ async function getSubjectEntries(subject: string) {
 <style lang="scss" scoped>
 @import "@/styles/fontStyles.css";
 @import "@/styles/colors/colors.css";
-@import "@/styles/button.css";
 @import "@/styles/default";
 
 #wrapper {
@@ -167,6 +166,7 @@ async function getSubjectEntries(subject: string) {
 
 /* wrapper fpr slider */
 #slider-wrapper {
+  @include default;
   margin: var(--default-margin);
   position: relative;
   display: flex;
