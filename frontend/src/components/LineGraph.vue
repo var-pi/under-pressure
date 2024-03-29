@@ -1,18 +1,10 @@
 <template>
   <div id="wrapper">
-    <div id="graph-and-slider">
+    <div id="graph-and-slider" :class="{ mobile: isMobile }">
       <div id="canvas-wrapper">
         <canvas id="chart" ref="lineChartCanvas"> canvas </canvas>
       </div>
-      <div id="slider-wrapper">
-        <input
-          id="slider"
-          v-model="sliderValue"
-          type="range"
-          :min="0"
-          :max="100"
-        />
-      </div>
+      <SliderInput :is-vertical="!isMobile" v-model="sliderValue" />
     </div>
     <div id="slot-and-button">
       <div id="square-slot-wrapper">
@@ -40,6 +32,7 @@ import { api } from "@/api/api";
 import { Entry } from "@/api/types";
 import { ChartData } from "@/interfaces/interfaces";
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
+import SliderInput from "@/components/SliderInput.vue";
 
 const props = defineProps<{
   newSelectedSubject: string;
@@ -52,6 +45,8 @@ let chartData: ChartData = {
   subject: "",
   data: [],
 };
+const mobileMaxWidth = 900;
+let isMobile = ref(false);
 
 onMounted(() => {
   lineChartCanvas.value = document.querySelector("canvas");
@@ -61,9 +56,16 @@ onMounted(() => {
   } else {
     console.error("Canvas element not found");
   }
+
+  window.addEventListener("resize", setIfVertical);
+  setIfVertical();
 });
 
 watch(() => props.newSelectedSubject, getSubjectEntries);
+
+function setIfVertical() {
+  isMobile.value = window.innerWidth < mobileMaxWidth;
+}
 
 // TODO: move to chartConfig.ts
 function updateChart() {
@@ -146,6 +148,10 @@ async function getSubjectEntries(subject: string) {
   flex-direction: row;
   justify-content: center;
   width: 100%;
+
+  &.mobile {
+    flex-direction: column;
+  }
 }
 
 /* wrapper for canvas */
@@ -162,83 +168,6 @@ async function getSubjectEntries(subject: string) {
   height: 100%;
   width: 100%;
   position: absolute;
-}
-
-/* wrapper fpr slider */
-#slider-wrapper {
-  @include default;
-  margin: var(--default-margin);
-  position: relative;
-  display: flex;
-  flex-grow: 0;
-  flex-shrink: 0;
-  width: 62px; /* Not 64 because range input is acts weirdly */
-}
-
-/* stress value slider */
-input[type="range"] {
-  background-color: initial !important;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-  margin: 0;
-  border: 0 !important;
-  writing-mode: vertical-lr;
-  appearance: none;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  appearance: none;
-  width: 0px;
-  height: 0px;
-  box-shadow: 0 500px 0 500px var(--col-bg-lighter);
-}
-
-input[type="range"]::-moz-range-thumb {
-  appearance: none;
-  width: 0px;
-  height: 0px;
-  display: none;
-  border: none;
-  box-shadow: 0 -500px 0 500px var(--col-bg-lighter);
-}
-
-@-moz-document url-prefix() {
-  #slider {
-    background-color: var(--col-bg-lighter);
-    transform: scaleY(-1); /* Firefox is weird */
-  }
-}
-
-@media screen and (max-width: 900px) {
-  /* TODO extract max-width to a variable */
-  #graph-and-slider {
-    flex-direction: column;
-  }
-  #slider-wrapper {
-    width: auto;
-    height: 62px; /* Not 64 because range input is acts weirdly */
-  }
-  input[type="range"] {
-    writing-mode: horizontal-tb;
-  }
-
-  input[type="range"]::-webkit-slider-thumb {
-    writing-mode: horizontal-tb;
-
-    appearance: none;
-    box-shadow: -500px 0 0 500px var(--col-bg-lighter);
-  }
-
-  input[type="range"]::-moz-range-thumb {
-    writing-mode: horizontal-tb;
-
-    appearance: none;
-    box-shadow: -500px 0 0 500px var(--col-bg-lighter);
-  }
 }
 
 /* submit value button and slot for dropdown menu */
