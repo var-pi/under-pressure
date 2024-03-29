@@ -22,13 +22,6 @@
             >
               {{ item }}
             </DefaultButton>
-            <DefaultButton
-              class="unfollow-btn"
-              emoji
-              @click="handleUnfollow(item)"
-            >
-              🗑️
-            </DefaultButton>
           </div>
         </template>
       </DropdownMenu>
@@ -78,11 +71,6 @@ async function getPersonalSubjects() {
   } catch (error) {
     console.error("Error:", error);
   }
-}
-
-async function handleUnfollow(subjectItem: string) {
-  await api.unfollowSubject(subjectItem);
-  await getPersonalSubjects;
 }
 
 watch(
@@ -155,20 +143,6 @@ watch(
   display: flex;
   flex-direction: column;
   flex: 1;
-}
-
-.unfollow-btn {
-  position: absolute;
-  right: 0;
-  height: 100%;
-  width: 48px;
-  border-radius: 0px !important;
-  border: none !important;
-  opacity: 1;
-}
-
-.menu-line-wrapper:hover .unfollow-btn {
-  opacity: 1;
 }
 
 #search-bar {
