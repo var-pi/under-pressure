@@ -59,7 +59,6 @@ let showScrollableSubjects = ref<boolean>(false);
 async function toggleAllSubjects() {
   if (!isDropdownVisible.value) {
     showScrollableSubjects.value = false;
-    await new Promise((resolve) => setTimeout(resolve, 3000));
     await getAllSubjects();
     await getPersonalSubjects();
   }
