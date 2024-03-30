@@ -1,19 +1,10 @@
 <template>
-  <button class="basic-button" :class="{ emoji }">
+  <button class="basic-button">
     <slot />
   </button>
 </template>
 
-<script setup lang="ts">
-import { defineProps, withDefaults } from "vue";
-
-interface Props {
-  emoji?: boolean;
-}
-const props = withDefaults(defineProps<Props>(), {
-  emoji: false,
-});
-</script>
+<script setup lang="ts"></script>
 
 <style scoped>
 .basic-button {
@@ -23,10 +14,6 @@ const props = withDefaults(defineProps<Props>(), {
 
   &:hover {
     background-color: var(--col-bg-lighter);
-  }
-  &.emoji {
-    color: transparent;
-    text-shadow: 0 0 0 var(--col-fg-default);
   }
 }
 </style>

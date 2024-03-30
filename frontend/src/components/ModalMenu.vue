@@ -17,13 +17,10 @@
             </DefaultButton>
             <DefaultButton
               v-if="personalSubjects.has(item)"
-              class="optional-menu-btn emoji"
+              class="optional-menu-btn"
               content="item in followed Subjects"
             >
-              ✔
-            </DefaultButton>
-            <DefaultButton v-else class="optional-menu-btn emoji">
-              ✖
+              <BasicIcon name="check.png" alt="✔" />
             </DefaultButton>
           </div>
         </template>
@@ -43,6 +40,7 @@ import { api } from "@/api/api";
 import DropdownMenu from "@/components/DropdownMenu.vue";
 import { Subject } from "@/api/types";
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
+import BasicIcon from "@/components/BasicIcon.vue";
 
 const props = defineProps({
   isOpen: Boolean,
