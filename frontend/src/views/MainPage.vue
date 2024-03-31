@@ -1,6 +1,6 @@
 <template>
   <ModalMenu :is-open="isModalOpened" @modal-close="isModalOpened = false" />
-  <LineGraph :new-selected-subject="selectedSubject">
+  <LineGraph :selected-subject="selectedSubject">
     <template #square>
       <DefaultButton id="modal-open-btn" @click="isModalOpened = true">
         <BasicIcon name="settings.png" alt="⚙️" />

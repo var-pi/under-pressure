@@ -1,22 +1,21 @@
-<template>
-  <div id="wrapper">
-    <div id="graph-and-slider" :class="{ mobile: isMobile }">
-      <div id="canvas-wrapper">
-        <canvas id="chart" ref="lineChartCanvas"> canvas </canvas>
-      </div>
-      <SliderInput :is-vertical="!isMobile" v-model="sliderValue" />
+<template id="wrapper">
+  <div id="graph-and-slider" :class="{ mobile: isMobile }">
+    <div id="canvas-wrapper">
+      <canvas />
     </div>
-    <div id="slot-and-button">
-      <div id="square-slot-wrapper">
-        <slot name="square"></slot>
-      </div>
-      <div id="fill-width-slot-wrapper">
-        <slot name="fill-width"></slot>
-      </div>
-      <DefaultButton id="enter-btn" class="" @click="addEntry()">
-        {{ sliderValue }}
-      </DefaultButton>
+    <SliderInput :is-vertical="!isMobile" v-model="sliderValue" />
+  </div>
+
+  <div id="slots-and-button">
+    <div id="square-slot-wrapper">
+      <slot name="square" />
     </div>
+    <div id="fill-width-slot-wrapper">
+      <slot name="fill-width" />
+    </div>
+    <DefaultButton id="enter-btn" @click="updateEntry">
+      {{ sliderValue }}
+    </DefaultButton>
   </div>
 </template>
 
@@ -34,103 +33,64 @@ import { ChartData } from "@/interfaces/interfaces";
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
 import SliderInput from "@/components/SliderInput.vue";
 
-const props = defineProps<{
-  newSelectedSubject: string;
-}>();
+const props = defineProps<{ selectedSubject: string }>();
 
-const lineChartCanvas = ref<HTMLCanvasElement | null>(null);
-const newChart: Ref<Chart | null> = ref(null);
+let canvas: HTMLCanvasElement | null = null;
+let chart: Chart | null = null;
 const sliderValue = ref<number>(50);
-let chartData: ChartData = {
-  subject: "",
-  data: [],
-};
+const chartData: ChartData = { subject: "", data: [] };
 const mobileMaxWidth = 900;
 let isMobile = ref(false);
 
+const canvasMissing: Error = new Error("Canvas element is not initialized.");
+const contextMissing: Error = new Error("Failed to obtain canvas context.");
+
 onMounted(() => {
-  lineChartCanvas.value = document.querySelector("canvas");
-
-  if (lineChartCanvas.value) {
-    updateChart();
-  } else {
-    console.error("Canvas element not found");
-  }
-
-  window.addEventListener("resize", setIfVertical);
   setIfVertical();
+  window.addEventListener("resize", setIfVertical);
+
+  canvas = document.querySelector("canvas");
+  updateChart();
 });
-
-watch(() => props.newSelectedSubject, getSubjectEntries);
-
-function setIfVertical() {
-  isMobile.value = window.innerWidth < mobileMaxWidth;
-}
 
 // TODO: move to chartConfig.ts
 function updateChart() {
-  const canvas = lineChartCanvas.value;
+  if (!canvas) throw canvasMissing;
 
-  if (canvas) {
-    const context = canvas.getContext("2d");
+  const context = canvas.getContext("2d");
+  if (!context) throw contextMissing;
 
-    if (context) {
-      if (newChart.value) {
-        newChart.value.destroy();
-      }
-
-      const chartConfig = getChartConfig();
-      const chartInstance = new Chart(context, chartConfig);
-      newChart.value = chartInstance as Chart;
-    } else {
-      console.error("Could not obtain 2D rendering context from canvas");
-    }
-  } else {
-    console.error("Canvas element not found");
-  }
+  if (chart) chart.destroy();
+  chart = new Chart(context, getChartConfig());
 }
 
 // Function to update the chart with new value
 function updateChartInfo(newValue: number) {
-  if (!isNaN(newValue)) {
-    updateChartData(getChartConfig(), newValue);
-  } else {
-    console.error("Invalid input value. Please enter a valid number.");
-  }
+  updateChartData(getChartConfig(), newValue);
   updateChart();
 }
 
-async function addEntry() {
-  try {
-    const newStressValue = sliderValue.value;
-    await api.updateEntry(props.newSelectedSubject, newStressValue);
-    updateChartInfo(newStressValue);
-  } catch (error) {
-    console.error("Error adding entry:", error);
-  }
+function updateEntry() {
+  api.updateEntry(props.selectedSubject, sliderValue.value);
+  updateChartInfo(sliderValue.value);
 }
 
+watch(() => props.selectedSubject, getSubjectEntries);
+
 async function getSubjectEntries(subject: string) {
-  try {
-    const entries: Entry[] = await api.getEntries(subject);
-    chartData.subject = subject;
-    chartData.data = entries;
-    initializeChart(getChartConfig(), chartData);
-    updateChart();
-  } catch (error) {
-    console.error("Error while fetching subject data:", error);
-  }
+  chartData.subject = subject;
+  chartData.data = await api.getEntries(subject);
+  initializeChart(getChartConfig(), chartData);
+  updateChart();
+}
+
+function setIfVertical() {
+  isMobile.value = window.innerWidth < mobileMaxWidth;
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/styles/fontStyles.css";
-@import "@/styles/colors/colors.css";
 @import "@/styles/default";
-
-#wrapper {
-  --default-margin: 8px;
-}
 
 /* wrapper for graph, slider and buttons */
 #wrapper {
@@ -141,13 +101,16 @@ async function getSubjectEntries(subject: string) {
   justify-content: center;
 }
 
-/* container for slider and graph */
-#graph-and-slider {
+#graph-and-slider,
+#slots-and-button {
   display: flex;
-  flex: 1;
   flex-direction: row;
   justify-content: center;
-  width: 100%;
+}
+
+/* container for slider and graph */
+#graph-and-slider {
+  flex: 1;
 
   &.mobile {
     flex-direction: column;
@@ -156,46 +119,28 @@ async function getSubjectEntries(subject: string) {
 
 /* wrapper for canvas */
 #canvas-wrapper {
-  margin: var(--default-margin);
-  flex-grow: 1;
-  flex-shrink: 1;
-}
-
-/* chart for expressing entries */
-#chart {
   @include default;
-  background-color: initial;
-  height: 100%;
-  width: 100%;
-  position: absolute;
+  margin: var(--default-margin);
+  flex: 1;
+
+  /* chart for expressing entries */
+  canvas {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
 }
 
-/* submit value button and slot for dropdown menu */
-#slot-and-button {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-/* button for submitting slider value */
+#square-slot-wrapper,
 #enter-btn {
   margin: var(--default-margin);
-  flex-shrink: 0;
-  flex-grow: 0;
-  width: 64px;
-  height: 64px;
-}
-
-#square-slot-wrapper {
-  margin: var(--default-margin);
-  width: 64px;
-  height: 64px;
+  width: var(--default-size);
+  height: var(--default-size);
 }
 
 /* slot for dropdown menu */
 #fill-width-slot-wrapper {
   margin: var(--default-margin);
-  display: flex;
   flex: 1;
 }
 </style>
