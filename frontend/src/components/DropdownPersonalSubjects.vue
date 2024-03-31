@@ -61,7 +61,7 @@ async function toggleMenu() {
 async function getPersonalSubjects() {
   try {
     const subjects: Subject[] = await api.getSubjects();
-    // Check if the ApiResponse is not null before extracting the value
+    // Check if is not null before extracting the value
     if (subjects) {
       // Extract the array of strings
       personalSubjects.value = subjects;
