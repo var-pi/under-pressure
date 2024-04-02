@@ -145,26 +145,6 @@ watch(
   flex: 1;
 }
 
-#search-bar {
-  text-indent: 16px;
-  text-align: center;
-  padding: 0px;
-  border: none;
-  width: 100%;
-  height: var(--row-height);
-  background-color: initial;
-  font-family: var(--font-family);
-  color: var(--col-fg-default);
-
-  &:focus {
-    outline: none;
-  }
-
-  &:hover {
-    background-color: var(--col-bg-lighter);
-  }
-}
-
 .dropdown-content {
   border-top: none !important;
   border-top-left-radius: 0px !important;
@@ -199,7 +179,7 @@ watch(
 
 @media screen and (max-width: 2200px) {
   .scrollable-content {
-    max-height: var(--width-l); /* TODO */
+    max-height: var(--width-l);
   }
 }
 
@@ -213,13 +193,6 @@ watch(
   .scrollable-content {
     max-height: var(--width-s);
   }
-}
-
-#no-personal-subjects {
-  @include default;
-  height: 64px;
-  border: 0;
-  color: var(--col-fg-accent);
 }
 </style>
 
