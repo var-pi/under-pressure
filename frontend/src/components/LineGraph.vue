@@ -56,7 +56,6 @@ onMounted(() => {
   updateChart();
 });
 
-// TODO: move to chartConfig.ts
 function updateChart() {
   if (!canvas) throw canvasMissing;
 
@@ -86,13 +85,29 @@ watch(() => props.selectedSubject, getSubjectEntries);
 
 async function getSubjectEntries(subject: string) {
   chartData.subject = subject;
-  chartData.data = await api.getEntries(subject);
+  chartData.data = await api.getEntries(subject) as Entry[];
+  console.log(chartData.data);
+  chartData.data.sort(compareEntryDates);
+  console.log(chartData.data);
   initializeChart(getChartConfig(), chartData);
   updateChart();
 }
 
 function setIfVertical() {
   isMobile.value = window.innerWidth < mobileMaxWidth;
+}
+
+function compareEntryDates(entry1: Entry, entry2: Entry): number {
+  const date1 = new Date(entry1.creationDate);
+  const date2 = new Date(entry2.creationDate);
+  
+  if (date1 < date2) {
+    return -1;
+  } else if (date1 > date2) {
+    return 1;
+  } else {
+    return 0;
+  }
 }
 </script>
 

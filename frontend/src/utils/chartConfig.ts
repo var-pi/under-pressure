@@ -58,16 +58,19 @@ export const updateChartData = (
     config.data.labels = []; // Initialize labels if not already present
   }
 
-  const currentDate: string = new Date().toLocaleDateString("et-EE", dateFormatOptions);
   const dataset: ChartDataset = config.data.datasets[0];
-  const lastEntryDate: string = config.data.labels.slice(-1)[0] as string;
-
-  if (lastEntryDate == currentDate) {
+  const labels: string[] = config.data.labels as string[];
+  const currentDate: Date = new Date();
+  const previousDate: Date = new Date(config.data.labels.slice(-1)[0] as string);
+  console.log("Previous" + previousDate);
+  console.log("Current" + currentDate);
+  if (previousDate == currentDate) {
     // Update the last data value to newData
     dataset.data[dataset.data.length - 1] = newData;
   } else {
-    // Add newData to data values and current date to labels
-    config.data.labels.push(currentDate);
+    previousDate.setDate(previousDate.getDate() + 1);
+    evaluateDatesBetween(previousDate, currentDate, dataset, labels);
+    labels.push(currentDate.toLocaleDateString("et-EE", dateFormatOptions));
     dataset.data = [...dataset.data, newData];
   }
   console.log("Updated data to", dataset.data);
@@ -86,7 +89,7 @@ export const initializeChart = (
     config.data.labels = [];
   }
   const dataset: ChartDataset = config.data.datasets[0];
-  const labels = config.data.labels;
+  const labels: string[] = config.data.labels as string[];
 
   dataset.label = subjectData.subject;
   labels.length = 0;
@@ -101,11 +104,7 @@ export const initializeChart = (
     if (previousDate !== null) {
       const previousDay: Date = new Date(previousDate);
       previousDay.setDate(previousDay.getDate() + 1);
-      while (previousDay < currentDate) {
-        dataset.data.push(null);
-        labels.push(previousDay.toLocaleDateString("et-EE", dateFormatOptions));
-        previousDay.setDate(previousDay.getDate() + 1);
-      }
+      evaluateDatesBetween(previousDay, currentDate, dataset, labels);
     }
     dataset.data.push(entry.stressLevel);
     labels.push(currentDateString);
@@ -119,3 +118,11 @@ export const initializeChart = (
     labels
   );
 };
+
+function evaluateDatesBetween(previousDate: Date, currentDate: Date, dataset: ChartDataset, labels: string[]) {
+  while (previousDate < currentDate) {
+    dataset.data.push(null);
+    labels.push(previousDate.toLocaleDateString("et-EE", dateFormatOptions));
+    previousDate.setDate(previousDate.getDate() + 1)
+  }
+}
