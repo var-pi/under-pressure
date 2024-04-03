@@ -1,5 +1,6 @@
 // chartConfig.ts
 import { ChartConfiguration, ChartDataset } from "chart.js";
+import { dateFormatOptions  } from "@/utils/dateFormatOptions";
 import "@/styles/colors/colors.css";
 
 // Define the initial static data
@@ -17,6 +18,7 @@ const initialData: ChartConfiguration["data"] = {
       data: [],
       fill: false,
       tension: 0.4,
+      spanGaps: true,
     },
   ],
 };
@@ -56,16 +58,11 @@ export const updateChartData = (
     config.data.labels = []; // Initialize labels if not already present
   }
 
-  // Create current date with the same format as in the database
-  // TODO: format date into 'et-EE'
-  const currentDate: string = new Date().toLocaleDateString("en-CA", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
+  const currentDate: string = new Date().toLocaleDateString("et-EE", dateFormatOptions);
   const dataset: ChartDataset = config.data.datasets[0];
+  const lastEntryDate: string = config.data.labels.slice(-1)[0] as string;
 
-  if (config.data.labels.slice(-1)[0] == currentDate) {
+  if (lastEntryDate == currentDate) {
     // Update the last data value to newData
     dataset.data[dataset.data.length - 1] = newData;
   } else {
@@ -95,9 +92,24 @@ export const initializeChart = (
   labels.length = 0;
   dataset.data.length = 0;
 
+  let previousDate = null;
+
   for (const entry of subjectData.data) {
+    const currentDate: Date = new Date(entry.creationDate);
+    const currentDateString: string = currentDate.toLocaleDateString("et-EE", dateFormatOptions);
+
+    if (previousDate !== null) {
+      const previousDay: Date = new Date(previousDate);
+      previousDay.setDate(previousDay.getDate() + 1);
+      while (previousDay < currentDate) {
+        dataset.data.push(null);
+        labels.push(previousDay.toLocaleDateString("et-EE", dateFormatOptions));
+        previousDay.setDate(previousDay.getDate() + 1);
+      }
+    }
     dataset.data.push(entry.stressLevel);
-    labels.push(entry.creationDate);
+    labels.push(currentDateString);
+    previousDate = entry.creationDate;
   }
 
   console.log(
