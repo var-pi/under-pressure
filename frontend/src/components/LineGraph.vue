@@ -86,9 +86,7 @@ watch(() => props.selectedSubject, getSubjectEntries);
 async function getSubjectEntries(subject: string) {
   chartData.subject = subject;
   chartData.data = await api.getEntries(subject) as Entry[];
-  console.log(chartData.data);
   chartData.data.sort(compareEntryDates);
-  console.log(chartData.data);
   initializeChart(getChartConfig(), chartData);
   updateChart();
 }
