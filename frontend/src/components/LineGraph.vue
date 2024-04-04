@@ -70,19 +70,17 @@ function updateChartInfo(newValue: number) {
 }
 
 function updateEntry() {
-  if (props.selectedSubject != "") {
-    api.updateEntry(props.selectedSubject, sliderValue.value);
-    updateChartInfo(sliderValue.value);
-  } else {
-    alert("Please select a subject.");
-  }
+  if (props.selectedSubject == "") return alert("Please select a subject.");
+
+  api.updateEntry(props.selectedSubject, sliderValue.value);
+  updateChartInfo(sliderValue.value);
 }
 
 watch(() => props.selectedSubject, getSubjectEntries);
 
 async function getSubjectEntries(subject: string) {
   chartData.subject = subject;
-  chartData.data = (await api.getEntries(subject)) as Entry[];
+  chartData.data = await api.getEntries(subject);
   chartData.data.sort(compareEntryDates);
   initializeChart(getChartConfig(), chartData);
   updateChart();
@@ -96,13 +94,7 @@ function compareEntryDates(entry1: Entry, entry2: Entry): number {
   const date1 = new Date(entry1.creationDate);
   const date2 = new Date(entry2.creationDate);
 
-  if (date1 < date2) {
-    return -1;
-  } else if (date1 > date2) {
-    return 1;
-  } else {
-    return 0;
-  }
+  return date1 < date2 ? -1 : date1 > date2 ? 1 : 0;
 }
 </script>
 
