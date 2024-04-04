@@ -1,5 +1,6 @@
 // chartConfig.ts
 import { ChartConfiguration, ChartDataset } from "chart.js";
+import { dateFormatOptions, dateStringFormat} from "@/utils/dateFormatOptions";
 import "@/styles/colors/colors.css";
 
 // Define the initial static data
@@ -17,6 +18,7 @@ const initialData: ChartConfiguration["data"] = {
       data: [],
       fill: false,
       tension: 0.4,
+      spanGaps: true,
     },
   ],
 };
@@ -56,21 +58,18 @@ export const updateChartData = (
     config.data.labels = []; // Initialize labels if not already present
   }
 
-  // Create current date with the same format as in the database
-  // TODO: format date into 'et-EE'
-  const currentDate: string = new Date().toLocaleDateString("en-CA", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
   const dataset: ChartDataset = config.data.datasets[0];
+  const labels: string[] = config.data.labels as string[];
+  const currentDate: Date = new Date();
+  const previousDate: Date = parseDate(config.data.labels.slice(-1)[0] as string, dateStringFormat as string);
 
-  if (config.data.labels.slice(-1)[0] == currentDate) {
+  if (previousDate.getDate == currentDate.getDate) {
     // Update the last data value to newData
     dataset.data[dataset.data.length - 1] = newData;
   } else {
-    // Add newData to data values and current date to labels
-    config.data.labels.push(currentDate);
+    previousDate.setDate(previousDate.getDate() + 1);
+    evaluateDatesBetween(previousDate, currentDate, dataset, labels);
+    labels.push(currentDate.toLocaleDateString("et-EE", dateFormatOptions));
     dataset.data = [...dataset.data, newData];
   }
   console.log("Updated data to", dataset.data);
@@ -80,24 +79,35 @@ export const initializeChart = (
   config: ChartConfiguration,
   subjectData: { subject: string; data: Entry[] }
 ): void => {
-  // Check if data is already initialized in the config
+
   if (!config.data) {
     config.data = { ...initialData };
   }
-  // Initialize labels if not already present
+
   if (!config.data.labels) {
     config.data.labels = [];
   }
   const dataset: ChartDataset = config.data.datasets[0];
-  const labels = config.data.labels;
+  const labels: string[] = config.data.labels as string[];
 
   dataset.label = subjectData.subject;
   labels.length = 0;
   dataset.data.length = 0;
 
+  let previousDate = null;
+
   for (const entry of subjectData.data) {
+    const currentDate: Date = new Date(entry.creationDate);
+    const currentDateString: string = currentDate.toLocaleDateString("et-EE", dateFormatOptions);
+
+    if (previousDate !== null) {
+      const previousDay: Date = new Date(previousDate);
+      previousDay.setDate(previousDay.getDate() + 1);
+      evaluateDatesBetween(previousDay, currentDate, dataset, labels);
+    }
     dataset.data.push(entry.stressLevel);
-    labels.push(entry.creationDate);
+    labels.push(currentDateString);
+    previousDate = entry.creationDate;
   }
 
   console.log(
@@ -107,3 +117,27 @@ export const initializeChart = (
     labels
   );
 };
+
+function evaluateDatesBetween(previousDate: Date, currentDate: Date, dataset: ChartDataset, labels: string[]) {
+  while (previousDate < currentDate) {
+    dataset.data.push(null);
+    labels.push(previousDate.toLocaleDateString("et-EE", dateFormatOptions));
+    previousDate.setDate(previousDate.getDate() + 1)
+  }
+}
+
+function parseDate(dateString: string, format: string): Date {
+  if (typeof format !== "string" || !format.includes("DD") || !format.includes("MM") || !format.includes("YYYY")) {
+    throw new Error("Invalid date format");
+  }
+
+  const dayIndex = format.indexOf("DD");
+  const monthIndex = format.indexOf("MM");
+  const yearIndex = format.indexOf("YYYY");
+
+  const day = parseInt(dateString.substring(dayIndex, dayIndex + 2), 10);
+  const month = parseInt(dateString.substring(monthIndex, monthIndex + 2), 10) - 1;
+  const year = parseInt(dateString.substring(yearIndex, yearIndex + 4), 10);
+
+  return new Date(year, month, day);
+}
