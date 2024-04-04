@@ -28,8 +28,6 @@ const spinnerDelay3 = computed(() => ({
 </script>
 
 <style>
-@import "@/styles/colors/colors.css";
-
 #v-spinner {
   display: flex;
   height: 64px;

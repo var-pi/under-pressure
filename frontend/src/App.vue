@@ -8,6 +8,7 @@
 
 <style scoped>
 @import "@/styles/colors/colors.css";
+@import "@/styles/fontStyles.css";
 
 #app {
   -webkit-font-smoothing: antialiased;
