@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, defineEmits, defineProps, onMounted } from "vue";
+import { ref, watch, defineEmits, defineProps, onMounted } from "vue";
 
 const emits = defineEmits(["update:filterValue"]);
 
@@ -21,7 +21,7 @@ watch(filter, () => {
   padding: 0px;
   border: none;
   width: 100%;
-  height: var(--row-height);
+  height: var(--default-size);
   background-color: initial;
   font-family: var(--font-family);
   color: var(--col-fg-default);
@@ -35,3 +35,4 @@ watch(filter, () => {
   }
 }
 </style>
+

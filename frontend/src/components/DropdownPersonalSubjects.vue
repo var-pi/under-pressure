@@ -82,7 +82,6 @@ watch(
 </script>
 
 <style scoped lang="scss">
-@import "@/styles/colors/colors.css";
 @import "@/styles/default";
 
 #personal-subjects {
