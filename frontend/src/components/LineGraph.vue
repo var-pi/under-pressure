@@ -1,20 +1,17 @@
 <template id="wrapper">
   <div id="graph-and-slider" :class="{ mobile: isMobile }">
     <div id="canvas-wrapper">
-      <canvas>
-      </canvas>
+      <canvas> </canvas>
     </div>
     <SliderInput :is-vertical="!isMobile" v-model="sliderValue" />
   </div>
 
   <div id="slots-and-button">
     <div id="square-slot-wrapper">
-      <slot name="square">
-      </slot>
+      <slot name="square"> </slot>
     </div>
     <div id="fill-width-slot-wrapper">
-      <slot name="fill-width">
-      </slot>
+      <slot name="fill-width"> </slot>
     </div>
     <DefaultButton id="enter-btn" @click="updateEntry">
       {{ sliderValue }}
@@ -36,7 +33,7 @@ import { ChartData } from "@/interfaces/interfaces";
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
 import SliderInput from "@/components/SliderInput.vue";
 
-const props = defineProps<{ selectedSubject?: string }>();
+const props = defineProps<{ selectedSubject: string }>();
 
 let canvas: HTMLCanvasElement | null = null;
 let chart: Chart | null = null;
@@ -73,7 +70,7 @@ function updateChartInfo(newValue: number) {
 }
 
 function updateEntry() {
-  if (props.selectedSubject != "") {    
+  if (props.selectedSubject != "") {
     api.updateEntry(props.selectedSubject, sliderValue.value);
     updateChartInfo(sliderValue.value);
   } else {
@@ -85,7 +82,7 @@ watch(() => props.selectedSubject, getSubjectEntries);
 
 async function getSubjectEntries(subject: string) {
   chartData.subject = subject;
-  chartData.data = await api.getEntries(subject) as Entry[];
+  chartData.data = (await api.getEntries(subject)) as Entry[];
   chartData.data.sort(compareEntryDates);
   initializeChart(getChartConfig(), chartData);
   updateChart();
@@ -98,7 +95,7 @@ function setIfVertical() {
 function compareEntryDates(entry1: Entry, entry2: Entry): number {
   const date1 = new Date(entry1.creationDate);
   const date2 = new Date(entry2.creationDate);
-  
+
   if (date1 < date2) {
     return -1;
   } else if (date1 > date2) {
