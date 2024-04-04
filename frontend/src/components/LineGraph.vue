@@ -70,7 +70,7 @@ function updateChartInfo(newValue: number) {
 }
 
 function updateEntry() {
-  if (props.selectedSubject == "") return alert("Please select a subject.");
+  if (props.selectedSubject == "") return alert("Palun vali mõni aine.");
 
   api.updateEntry(props.selectedSubject, sliderValue.value);
   updateChartInfo(sliderValue.value);
