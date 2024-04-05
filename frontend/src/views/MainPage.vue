@@ -1,5 +1,5 @@
 <template>
-  <ModalMenu :is-open="isModalOpened" @modal-close="isModalOpened = false" />
+  <ModalMenu v-model:is-opened="isModalOpened" />
   <LineGraph :selected-subject="selectedSubject">
     <template #square>
       <DefaultButton id="modal-open-btn" @click="isModalOpened = true">

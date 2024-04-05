@@ -1,6 +1,6 @@
 <template>
-  <div v-if="isOpen" id="mask">
-    <OnClickOutside @trigger="emit('modal-close')">
+  <div v-if="isOpened" id="mask">
+    <OnClickOutside @trigger="isOpened = false">
       <div id="container">
         <div id="header">Vali õppeaineid</div>
         <DropdownMenu
@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, defineEmits, watch } from "vue";
+import { ref, defineModel, defineEmits, watch } from "vue";
 import { OnClickOutside } from "@vueuse/components";
 import { api } from "@/api/api";
 
@@ -37,14 +37,14 @@ import { Subject } from "@/api/types";
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
 import BasicIcon from "@/components/BasicIcon.vue";
 
-const props = defineProps({ isOpen: Boolean });
+const isOpened = defineModel<boolean>("isOpened", { required: true });
 const emit = defineEmits(["modal-close"]);
 
 const subjects = ref({ all: [] as Subject[], personal: [] as Subject[] });
 const isLoading = ref(false);
 
 function fetchSubjectsIfNeeded() {
-  if (props.isOpen && subjects.value.all.length == 0) fetchSubjects();
+  if (isOpened.value && subjects.value.all.length == 0) fetchSubjects();
 }
 
 async function fetchSubjects() {
@@ -77,7 +77,7 @@ function unfollow(subject: Subject) {
   api.unfollowSubject(subject);
 }
 
-watch(() => props.isOpen, fetchSubjectsIfNeeded);
+watch(() => isOpened.value, fetchSubjectsIfNeeded);
 </script>
 
 <style scoped lang="scss">
