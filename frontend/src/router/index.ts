@@ -3,7 +3,7 @@ import MainPage from "@/views/MainPage.vue";
 import OAuth2CallbackGoogle from "@/views/OAuth2CallbackGoogle.vue";
 
 const router = createRouter({
-  history: createWebHistory(), // TODO May need BASE_URL
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
