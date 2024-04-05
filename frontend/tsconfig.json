@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "esnext",
+    "module": "ESNext",
     "strict": true,
     "jsx": "preserve",
     "moduleResolution": "node",
@@ -13,7 +13,7 @@
     "useDefineForClassFields": true,
     "sourceMap": true,
     "baseUrl": "./",
-    "types": ["webpack-env", "vue"],
+    "types": ["webpack-env", "vue", "vite/client"],
     "paths": {
       "@/*": ["src/*"]
     },

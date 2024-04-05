@@ -6,18 +6,24 @@
 npm install
 ```
 
-Add a `.env.local` file with `VUE_APP_FRONTEND_BASE_URL` and `VUE_APP_BACKEND_BASE_URL` fields. Read about [.env](https://cli.vuejs.org/guide/mode-and-env.html#environment-variables) in Vue.js.
+Add a `.env.local` file with `VITE_FRONTEND_BASE_URL` and `VITE_BACKEND_BASE_URL` fields. Read about [.env](https://cli.vuejs.org/guide/mode-and-env.html#environment-variables) in Vue.js.
 
 ### Compiles and hot-reloads for development
 
 ```
-npm run serve
+npm run dev
 ```
 
 ### Compiles and minifies for production
 
 ```
 npm run build
+```
+
+### Compiles to preview production build locally
+
+```
+npm run serve
 ```
 
 ### Lints and fixes files

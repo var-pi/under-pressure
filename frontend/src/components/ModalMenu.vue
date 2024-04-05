@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineModel, defineEmits, watch } from "vue";
+import { ref, defineModel, watch } from "vue";
 import { OnClickOutside } from "@vueuse/components";
 import { api } from "@/api/api";
 

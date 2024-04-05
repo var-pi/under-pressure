@@ -17,7 +17,7 @@ function isRequestError(obj: any): obj is RequestError {
   );
 }
 
-const BASE_URL = process.env.VUE_APP_BACKEND_BASE_URL;
+const BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
 
 const server = {
   get: async <T>(endpoint: string): Promise<T> => {

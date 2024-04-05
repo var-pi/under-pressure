@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, computed } from "vue";
+import { ref, computed } from "vue";
 import LoaderComponent from "@/components/LoaderComponent.vue";
 import SearchBarComponent from "@/components/SearchBarComponent.vue";
 

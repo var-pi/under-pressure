@@ -1,12 +1,13 @@
-const path = require('path');
+import path from "path";
 
 module.exports = {
   configureWebpack: {
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, 'src'),
+        "@": path.resolve(__dirname, "src"),
       },
     },
   },
   transpileDependencies: true,
 };
+

@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 import Chart from "chart.js/auto";
-import { onMounted, ref, Ref, watch, defineProps } from "vue";
+import { onMounted, ref, Ref, watch } from "vue";
 import {
   getChartConfig,
   initializeChart,
