@@ -1,7 +1,7 @@
 // chartConfig.ts
 import { ChartConfiguration, ChartDataset } from "chart.js";
 import { dateFormatOptions, dateStringFormat } from "@/utils/dateFormatOptions";
-import "@/styles/colors/colors.css";
+import "@/styles/colors.css";
 
 // Define the initial static data
 const initialData: ChartConfiguration["data"] = {
@@ -157,3 +157,4 @@ function parseDate(dateString: string, format: string): Date {
 
   return new Date(year, month, day);
 }
+

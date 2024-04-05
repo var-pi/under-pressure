@@ -7,7 +7,7 @@
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
-@import "@/styles/colors/colors.css";
+@import "@/styles/colors.css";
 @import "@/styles/font";
 
 #app {
