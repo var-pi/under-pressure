@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineModel, defineEmits, watch } from "vue";
+import { ref, defineModel, watch } from "vue";
 import { OnClickOutside } from "@vueuse/components";
 import { api } from "@/api/api";
 
@@ -82,6 +82,7 @@ watch(() => isOpened.value, fetchSubjectsIfNeeded);
 
 <style scoped lang="scss">
 @import "@/styles/default";
+@import "@/styles/font";
 
 #mask {
   position: fixed;
@@ -125,6 +126,7 @@ watch(() => isOpened.value, fetchSubjectsIfNeeded);
     border-bottom: none !important;
   }
   .main-btn {
+    @include default-font;
     width: 100%;
     height: 100%;
     border-radius: 0px !important;

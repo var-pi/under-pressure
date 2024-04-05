@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, defineEmits, defineProps, onMounted } from "vue";
+import { ref, watch, onMounted } from "vue";
 
 const emits = defineEmits(["update:filterValue"]);
 
@@ -14,7 +14,7 @@ watch(filter, () => {
 });
 </script>
 
-<style>
+<style scoped>
 #search-bar {
   text-indent: 16px;
   text-align: center;
@@ -23,7 +23,6 @@ watch(filter, () => {
   width: 100%;
   height: var(--default-size);
   background-color: initial;
-  font-family: var(--font-family);
   color: var(--col-fg-default);
 
   &:focus {

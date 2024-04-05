@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, defineEmits, defineProps } from "vue";
+import { ref, watch } from "vue";
 import { api } from "@/api/api";
 
 import { Subject } from "@/api/types";

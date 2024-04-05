@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "esnext",
+    "module": "ESNext",
     "strict": true,
     "jsx": "preserve",
     "moduleResolution": "node",
@@ -13,19 +13,13 @@
     "useDefineForClassFields": true,
     "sourceMap": true,
     "baseUrl": "./",
-    "types": ["webpack-env", "vue"],
+    "types": ["vue", "vite/client"],
     "paths": {
       "@/*": ["src/*"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
-  ],
+  "include": ["src/**/*.ts", "src/**/*.vue", "tests/**/*.ts"],
   "exclude": ["node_modules"]
 }
 

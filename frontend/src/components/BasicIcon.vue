@@ -1,13 +1,15 @@
 <template>
-  <img id="icon" :src="require(`../../assets/icons/${name}`)" :alt="alt" />
+  <img id="icon" :src :alt="alt" />
 </template>
 
 <script setup lang="ts">
-import { defineProps, withDefaults } from "vue";
+import { withDefaults } from "vue";
 
-withDefaults(defineProps<{ name: string; alt?: string }>(), {
+const props = withDefaults(defineProps<{ name: string; alt?: string }>(), {
   alt: "",
 });
+
+const src = new URL(`../../assets/icons/${props.name}`, import.meta.url).href;
 </script>
 
 <style scoped>

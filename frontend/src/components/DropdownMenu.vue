@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, computed } from "vue";
+import { ref, computed } from "vue";
 import LoaderComponent from "@/components/LoaderComponent.vue";
 import SearchBarComponent from "@/components/SearchBarComponent.vue";
 
@@ -44,8 +44,6 @@ const filteredItems = computed(function () {
   border-top-right-radius: 0px;
   border: 1px solid var(--col-border);
   border-top: none;
-  font-size: 18px;
-  font-family: var(--font-family);
   color: var(--col-fg-default);
 }
 

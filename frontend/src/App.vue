@@ -1,14 +1,13 @@
 <template>
   <div id="app">
-    <RouterView />
+    <router-view></router-view>
   </div>
 </template>
 
 <script setup lang="ts"></script>
 
-<style scoped>
-@import "@/styles/colors/colors.css";
-@import "@/styles/fontStyles.css";
+<style scoped lang="scss">
+@import "@/styles/colors.css";
 
 #app {
   -webkit-font-smoothing: antialiased;

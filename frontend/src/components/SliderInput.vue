@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineModel, computed, withDefaults, defineProps } from "vue";
+import { defineModel, computed, withDefaults } from "vue";
 
 interface Props {
   isVertical?: boolean;
