@@ -6,11 +6,12 @@
 
 <script setup lang="ts"></script>
 
-<style scoped>
+<style scoped lang="scss">
 @import "@/styles/colors/colors.css";
-@import "@/styles/fontStyles.css";
+@import "@/styles/font";
 
 #app {
+  @include default-font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--col-bg-default);
