@@ -77,7 +77,7 @@ watch(
   () => props.modalOpen,
   () => {
     isDropdownVisible.value = false;
-  }
+  },
 );
 </script>
 
@@ -194,4 +194,3 @@ watch(
   }
 }
 </style>
-

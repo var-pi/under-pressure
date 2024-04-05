@@ -12,4 +12,3 @@ export interface RequestError {
 }
 
 export type Subject = string;
-

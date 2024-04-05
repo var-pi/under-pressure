@@ -17,4 +17,3 @@ const src = new URL(`../../assets/icons/${props.name}`, import.meta.url).href;
   width: 24px;
 }
 </style>
-

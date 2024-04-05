@@ -25,4 +25,3 @@ export const api = {
   getEntries,
   updateEntry,
 };
-

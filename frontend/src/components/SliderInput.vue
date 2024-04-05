@@ -1,10 +1,10 @@
 <template>
   <div
+    id="slider-wrapper"
+    :class="{ vertical: isVertical, horizontal: !isVertical }"
     @pointerdown="pointerDown"
     @pointermove="pointerMove"
     @pointerup="pointerUp"
-    id="slider-wrapper"
-    :class="{ vertical: isVertical, horizontal: !isVertical }"
   >
     <div
       id="slider-body"
@@ -35,7 +35,7 @@ function pointerMove(e: PointerEvent) {
   if (isPointerDown) updateValue(e);
 }
 
-function pointerUp(e: PointerEvent) {
+function pointerUp() {
   isPointerDown = false;
 }
 
@@ -51,7 +51,7 @@ function updateValue(e: PointerEvent) {
 }
 
 const sliderOffset = computed(
-  () => (props.isVertical ? 1 : -1) * (100 - model.value) + "%"
+  () => (props.isVertical ? 1 : -1) * (100 - model.value) + "%",
 );
 </script>
 
@@ -83,4 +83,3 @@ const sliderOffset = computed(
   }
 }
 </style>
-

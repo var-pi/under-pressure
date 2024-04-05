@@ -10,10 +10,10 @@ const initialData: ChartConfiguration["data"] = {
     {
       label: "",
       backgroundColor: getComputedStyle(
-        document.documentElement
+        document.documentElement,
       ).getPropertyValue("--col-bg-default"),
       borderColor: getComputedStyle(document.documentElement).getPropertyValue(
-        "--col-fg-accent"
+        "--col-fg-accent",
       ),
       data: [],
       fill: false,
@@ -48,7 +48,7 @@ export const getChartConfig = (): ChartConfiguration => {
 // Function to update chart data
 export const updateChartData = (
   config: ChartConfiguration,
-  newData: number
+  newData: number,
 ): void => {
   if (!config.data) {
     config.data = { ...initialData }; // Initialize data if not already present
@@ -63,7 +63,7 @@ export const updateChartData = (
   const currentDate: Date = new Date();
   const previousDate: Date = parseDate(
     config.data.labels.slice(-1)[0] as string,
-    dateStringFormat as string
+    dateStringFormat as string,
   );
 
   if (previousDate.getDate == currentDate.getDate) {
@@ -80,7 +80,7 @@ export const updateChartData = (
 
 export const initializeChart = (
   config: ChartConfiguration,
-  subjectData: { subject: string; data: Entry[] }
+  subjectData: { subject: string; data: Entry[] },
 ): void => {
   if (!config.data) {
     config.data = { ...initialData };
@@ -102,7 +102,7 @@ export const initializeChart = (
     const currentDate: Date = new Date(entry.creationDate);
     const currentDateString: string = currentDate.toLocaleDateString(
       "et-EE",
-      dateFormatOptions
+      dateFormatOptions,
     );
 
     if (previousDate !== null) {
@@ -119,7 +119,7 @@ export const initializeChart = (
     "Initialized chart with data:",
     dataset.data,
     "and labels:",
-    labels
+    labels,
   );
 };
 
@@ -127,7 +127,7 @@ function evaluateDatesBetween(
   previousDate: Date,
   currentDate: Date,
   dataset: ChartDataset,
-  labels: string[]
+  labels: string[],
 ) {
   while (previousDate < currentDate) {
     dataset.data.push(null);
@@ -157,4 +157,3 @@ function parseDate(dateString: string, format: string): Date {
 
   return new Date(year, month, day);
 }
-

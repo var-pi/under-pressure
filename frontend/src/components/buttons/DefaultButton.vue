@@ -15,4 +15,3 @@ import DefaultButton from "./BasicButton.vue";
   @include default;
 }
 </style>
-

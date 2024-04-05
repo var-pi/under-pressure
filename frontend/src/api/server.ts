@@ -11,9 +11,16 @@ const handleError = (error: unknown): void => {
   throw data;
 };
 
-function isRequestError(obj: any): obj is RequestError {
+function isRequestError(obj: unknown): obj is RequestError {
   return (
-    obj.statusMessage != null && obj.statusCode != null && obj.message != null
+    typeof obj === "object" &&
+    obj !== null &&
+    "statusMessage" in obj &&
+    typeof obj.statusMessage === "string" &&
+    "statusCode" in obj &&
+    typeof obj.statusCode === "number" &&
+    "message" in obj &&
+    typeof obj.message === "string"
   );
 }
 
@@ -57,4 +64,3 @@ const server = {
 };
 
 export default server;
-

@@ -34,4 +34,3 @@ const isModalOpened = ref(false);
   height: 100%;
 }
 </style>
-

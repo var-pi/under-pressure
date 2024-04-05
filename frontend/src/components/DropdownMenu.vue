@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown-content" v-if="isLoading || isDropdownVisible">
+  <div v-if="isLoading || isDropdownVisible" class="dropdown-content">
     <div v-if="isLoading">
       <LoaderComponent :loading="true" />
     </div>
@@ -57,4 +57,3 @@ const filteredItems = computed(function () {
   display: none;
 }
 </style>
-

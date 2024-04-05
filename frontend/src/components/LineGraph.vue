@@ -3,7 +3,7 @@
     <div id="canvas-wrapper">
       <canvas> </canvas>
     </div>
-    <SliderInput :is-vertical="!isMobile" v-model="sliderValue" />
+    <SliderInput v-model="sliderValue" :is-vertical="!isMobile" />
   </div>
 
   <div id="slots-and-button">
@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 import Chart from "chart.js/auto";
-import { onMounted, ref, Ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import {
   getChartConfig,
   initializeChart,
@@ -153,4 +153,3 @@ function compareEntryDates(entry1: Entry, entry2: Entry): number {
   flex: 1;
 }
 </style>
-

@@ -15,4 +15,3 @@ export const getIdTokenString: () => string | null = () => {
   const idTokenString = sessionStorage.getItem("idTokenString");
   return idTokenString;
 };
-

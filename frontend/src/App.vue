@@ -20,4 +20,3 @@
   --default-size: 64px;
 }
 </style>
-

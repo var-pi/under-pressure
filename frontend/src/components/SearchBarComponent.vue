@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
+import { ref, watch } from "vue";
 
 const emits = defineEmits(["update:filterValue"]);
 
@@ -34,4 +34,3 @@ watch(filter, () => {
   }
 }
 </style>
-

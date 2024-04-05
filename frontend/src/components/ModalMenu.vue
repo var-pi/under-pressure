@@ -4,11 +4,11 @@
       <div id="container">
         <div id="header">Vali õppeaineid</div>
         <DropdownMenu
+          id="body"
+          v-slot="{ item }"
           :is-loading="isLoading"
           :is-dropdown-visible="!isLoading"
           :menu-items="subjects.all"
-          v-slot="{ item }"
-          id="body"
         >
           <div class="line-wrapper">
             <DefaultButton class="main-btn" @click="toggleFollowStatus(item)">
@@ -38,7 +38,6 @@ import DefaultButton from "@/components/buttons/DefaultButton.vue";
 import BasicIcon from "@/components/BasicIcon.vue";
 
 const isOpened = defineModel<boolean>("isOpened", { required: true });
-const emit = defineEmits(["modal-close"]);
 
 const subjects = ref({ all: [] as Subject[], personal: [] as Subject[] });
 const isLoading = ref(false);
@@ -142,4 +141,3 @@ watch(() => isOpened.value, fetchSubjectsIfNeeded);
   }
 }
 </style>
-
