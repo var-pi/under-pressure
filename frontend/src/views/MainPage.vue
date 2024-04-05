@@ -10,7 +10,7 @@
     <template #fill-width>
       <DropdownPersonalSubjects
         :modal-open="isModalOpened"
-        @handle-selected-subject-update="(s) => (selectedSubject = s)"
+        @select-subject="(s) => (selectedSubject = s)"
       />
     </template>
   </LineGraph>
@@ -25,7 +25,7 @@ import DefaultButton from "@/components/buttons/DefaultButton.vue";
 import BasicIcon from "@/components/BasicIcon.vue";
 
 const selectedSubject = ref("");
-let isModalOpened = ref(false);
+const isModalOpened = ref(false);
 </script>
 
 <style scoped>

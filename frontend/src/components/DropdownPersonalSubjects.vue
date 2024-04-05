@@ -18,7 +18,7 @@
           <div class="menu-line-wrapper">
             <DefaultButton
               class="menubtn"
-              @click="emits('handleSelectedSubjectUpdate', item)"
+              @click="emits('selectSubject', item)"
             >
               {{ item }}
             </DefaultButton>
@@ -41,7 +41,7 @@ const props = defineProps<{
   modalOpen: boolean;
 }>();
 
-const emits = defineEmits(["handleSelectedSubjectUpdate"]);
+const emits = defineEmits(["selectSubject"]);
 
 const filter = ref("");
 const isDropdownVisible = ref(false);
