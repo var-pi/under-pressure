@@ -3,9 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, withDefaults } from "vue";
-// import src from `../../assets/icons/${props.name}`;
-// import src from "../../assets/icons/check.png"; // TODO!!
+import { withDefaults } from "vue";
 
 const props = withDefaults(defineProps<{ name: string; alt?: string }>(), {
   alt: "",
