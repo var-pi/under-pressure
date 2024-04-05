@@ -44,7 +44,6 @@ const filteredItems = computed(function () {
   border-top-right-radius: 0px;
   border: 1px solid var(--col-border);
   border-top: none;
-  font-size: 18px;
   color: var(--col-fg-default);
 }
 

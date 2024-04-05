@@ -1,7 +1,9 @@
+@import "./font";
+
 @mixin default {
+  @include default-font;
   border: 1px solid var(--col-border);
   border-radius: 8px;
-  font-size: 18px;
   color: var(--col-fg-default);
   background-color: initial;
   display: flex;

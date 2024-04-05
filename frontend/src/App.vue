@@ -8,10 +8,8 @@
 
 <style scoped lang="scss">
 @import "@/styles/colors.css";
-@import "@/styles/font";
 
 #app {
-  @include default-font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--col-bg-default);
