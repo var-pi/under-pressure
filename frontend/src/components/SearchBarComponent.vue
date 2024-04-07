@@ -1,23 +1,15 @@
 <template>
-  <input id="search-bar" v-model="filter" type="text" placeholder="Otsi..." />
+  <input v-model="text" placeholder="Otsi..." />
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
-
-const emits = defineEmits(["update:filterValue"]);
-
-const filter = ref("");
-
-watch(filter, () => {
-  emits("update:filterValue", filter.value);
-});
+const text = defineModel<string>({ required: true });
 </script>
 
 <style scoped lang="scss">
 @import "@/styles/default";
 
-#search-bar {
+input {
   @include default;
   border-radius: 0;
   border: none;
@@ -30,6 +22,9 @@ watch(filter, () => {
 
   &:focus {
     outline: none;
+    &::placeholder {
+      color: transparent;
+    }
   }
 
   &:hover {
