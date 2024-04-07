@@ -1,9 +1,9 @@
 <template>
-  <div v-if="isLoading || isDropdownVisible" class="dropdown-content">
+  <div v-if="isOpened" class="dropdown-content">
     <div v-if="isLoading">
       <LoaderComponent :loading="true" />
     </div>
-    <div v-else-if="isDropdownVisible">
+    <div v-else>
       <SearchBarComponent v-model="filter" />
       <div class="scrollable-content">
         <div v-for="item in filteredItems" :key="item">
@@ -20,16 +20,16 @@ import LoaderComponent from "@/components/LoaderComponent.vue";
 import SearchBarComponent from "@/components/SearchBarComponent.vue";
 
 const props = defineProps<{
+  isOpened: boolean;
   isLoading: boolean;
-  isDropdownVisible: boolean;
-  menuItems: string[];
+  items: string[];
 }>();
 
 const filter = ref("");
 
 const filteredItems = computed(function () {
   const filterText = filter.value.toUpperCase();
-  return props.menuItems.filter(function (item: string) {
+  return props.items.filter(function (item: string) {
     return item.toUpperCase().includes(filterText);
   });
 });
