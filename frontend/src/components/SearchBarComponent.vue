@@ -14,8 +14,7 @@ input {
   border-radius: 0;
   border: none;
   text-align: center;
-  padding-top: 0;
-  padding-bottom: 0;
+  padding: 0;
   width: 100%;
   height: var(--default-size);
   caret-color: var(--col-fg-default);
