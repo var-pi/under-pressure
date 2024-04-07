@@ -14,16 +14,19 @@ watch(filter, () => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "@/styles/default";
+
 #search-bar {
-  text-indent: 16px;
-  text-align: center;
-  padding: 0px;
+  @include default;
+  border-radius: 0;
   border: none;
+  text-align: center;
+  padding-top: 0;
+  padding-bottom: 0;
   width: 100%;
   height: var(--default-size);
-  background-color: initial;
-  color: var(--col-fg-default);
+  caret-color: var(--col-fg-default);
 
   &:focus {
     outline: none;
