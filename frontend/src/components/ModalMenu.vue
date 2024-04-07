@@ -6,9 +6,9 @@
         <DropdownMenu
           id="body"
           v-slot="{ item }"
-          :is-loading="isLoading"
-          :is-dropdown-visible="!isLoading"
-          :menu-items="subjects.all"
+          :is-loading
+          :is-opened
+          :items="subjects.all"
         >
           <div class="line-wrapper">
             <DefaultButton class="main-btn" @click="toggleFollowStatus(item)">

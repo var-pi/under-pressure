@@ -1,196 +1,53 @@
 <template>
-  <div id="personal-subjects" class="dropdown">
-    <div id="wrapper">
-      <DefaultButton
-        id="dropbtn"
-        :class="{ open: isDropdownVisible || isLoading }"
-        @click="toggleMenu"
-      >
-        Minu õppeained
-      </DefaultButton>
-      <DropdownMenu
-        :is-loading="isLoading"
-        :is-dropdown-visible="isDropdownVisible || isLoading"
-        :menu-items="personalSubjects"
-        class="dropdown-content"
-      >
-        <template #default="{ item }">
-          <div class="menu-line-wrapper">
-            <DefaultButton
-              class="menubtn"
-              @click="emits('selectSubject', item)"
-            >
-              {{ item }}
-            </DefaultButton>
-          </div>
-        </template>
-      </DropdownMenu>
-    </div>
-  </div>
+  <DefaultButton id="dropbtn" :class="{ opened: isOpened }" @click="toggleMenu">
+    Minu õppeained
+  </DefaultButton>
+  <DropdownMenu v-slot="{ item }" :is-loading :is-opened :items="subjects">
+    <DefaultButton class="menubtn" @click="emit('selectSubject', item)">
+      {{ item }}
+    </DefaultButton>
+  </DropdownMenu>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, Ref } from "vue";
 import { api } from "@/api/api";
 
-import { Subject } from "@/api/types";
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
 import DropdownMenu from "@/components/DropdownMenu.vue";
 
-const props = defineProps<{
-  modalOpen: boolean;
-}>();
+const emit = defineEmits(["selectSubject"]);
 
-const emits = defineEmits(["selectSubject"]);
-
-const filter = ref("");
-const isDropdownVisible = ref(false);
-const personalSubjects = ref([] as string[]);
-let isLoading = ref<boolean>(false);
+const isOpened = defineModel<boolean>("isOpened", { required: true });
+const isLoading = ref(false);
+const subjects: Ref<string[]> = ref([]);
 
 async function toggleMenu() {
-  if (!isDropdownVisible.value) {
+  if (!isOpened.value) {
     isLoading.value = true;
-    filter.value = "";
-    await getPersonalSubjects();
+    subjects.value = await api.getSubjects();
     isLoading.value = false;
   }
-  isDropdownVisible.value = !isDropdownVisible.value;
+  isOpened.value = !isOpened.value;
 }
-
-async function getPersonalSubjects() {
-  try {
-    const subjects: Subject[] = await api.getSubjects();
-    // Check if is not null before extracting the value
-    if (subjects) {
-      // Extract the array of strings
-      personalSubjects.value = subjects;
-    } else {
-      console.error("Failed to get subjects.");
-    }
-  } catch (error) {
-    console.error("Error:", error);
-  }
-}
-
-watch(
-  () => props.modalOpen,
-  () => {
-    isDropdownVisible.value = false;
-  },
-);
 </script>
 
 <style scoped lang="scss">
-@import "@/styles/default";
-
-#personal-subjects {
-  width: 100%;
-}
-
-:root {
-  --width-s: 45vw;
-  --width-m: 35vw;
-  --width-l: 25vw;
-  --width-xl: 440px;
-  --height: 5vw;
-  --height-xl: 66px;
-}
-
-#wrapper {
-  width: 100%;
-  --row-height: 48px;
-}
-
 #dropbtn {
-  padding: 0;
-  align-items: center;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
   width: 100%;
-  height: 64px;
-  text-decoration: none;
-  transform: translate3d(0, 0, 0);
-  vertical-align: baseline;
-  white-space: nowrap;
-  touch-action: manipulation;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-#dropbtn.open {
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
+  height: calc(var(--default-size) + 2px); // Account for the border
+  &.opened {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
 }
 
 .menubtn {
   width: 100%;
-  height: 100%;
-  border-radius: 0px !important;
-  text-indent: 16px;
-  border: none !important;
-}
-
-#content-wrapper {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-}
-
-#content-with-subjects {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.dropdown-content {
-  border-top: none !important;
-  border-top-left-radius: 0px !important;
-  border-top-right-radius: 0px !important;
-}
-
-.scrollable-content {
-  max-height: var(--width-xl);
-  overflow-y: scroll;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-.scrollable-content::-webkit-scrollbar {
-  display: none;
-}
-
-.dropdown {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.menu-line-wrapper {
-  @include default;
-  position: relative;
-  height: var(--row-height);
+  height: calc(var(--default-size) + 1px); // Account for the border
   border-radius: 0 !important;
   border-left: none !important;
   border-right: none !important;
   border-bottom: none !important;
-}
-
-@media screen and (max-width: 2200px) {
-  .scrollable-content {
-    max-height: var(--width-l);
-  }
-}
-
-@media screen and (max-width: 900px) {
-  .scrollable-content {
-    max-height: var(--width-m);
-  }
-}
-
-@media screen and (max-width: 550px) {
-  .scrollable-content {
-    max-height: var(--width-s);
-  }
 }
 </style>
