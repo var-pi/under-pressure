@@ -1,5 +1,5 @@
 <template>
-  <LoaderComponent id="loading" loading />
+  <LoaderComponent id="loading" />
 </template>
 
 <script setup lang="ts">
