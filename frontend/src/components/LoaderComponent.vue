@@ -1,6 +1,6 @@
 <!-- Loader by greyby: https://github.com/greyby/vue-spinner.git -->
 <template>
-  <div v-show="props.loading" id="v-spinner" class="v-spinner">
+  <div id="v-spinner" class="v-spinner">
     <div class="v-sync v-sync1" :style="[spinnerDelay1]"></div>
     <div class="v-sync v-sync2" :style="[spinnerDelay2]"></div>
     <div class="v-sync v-sync3" :style="[spinnerDelay3]"></div>
@@ -9,10 +9,6 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-
-const props = defineProps<{
-  loading: boolean;
-}>();
 
 const spinnerDelay1 = computed(() => ({
   animationDelay: "0.07s",
