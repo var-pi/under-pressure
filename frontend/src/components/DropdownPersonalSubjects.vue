@@ -23,12 +23,12 @@ const isLoading = ref(false);
 const subjects: Ref<string[]> = ref([]);
 
 async function toggleMenu() {
+  isOpened.value = !isOpened.value;
   if (!isOpened.value) {
     isLoading.value = true;
     subjects.value = await api.getSubjects();
     isLoading.value = false;
   }
-  isOpened.value = !isOpened.value;
 }
 </script>
 
