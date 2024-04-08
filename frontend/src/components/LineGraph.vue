@@ -1,17 +1,17 @@
-<template id="wrapper">
+<template>
   <div id="graph-and-slider" :class="{ mobile: isMobile }">
     <div id="canvas-wrapper">
-      <canvas> </canvas>
+      <canvas />
     </div>
     <SliderInput v-model="sliderValue" :is-vertical="!isMobile" />
   </div>
 
   <div id="slots-and-button">
     <div id="square-slot-wrapper">
-      <slot name="square"> </slot>
+      <slot name="square" />
     </div>
     <div id="fill-width-slot-wrapper">
-      <slot name="fill-width"> </slot>
+      <slot name="fill-width" />
     </div>
     <DefaultButton id="enter-btn" @click="updateEntry">
       {{ sliderValue }}
@@ -63,7 +63,6 @@ function updateChart() {
   chart = new Chart(context, getChartConfig());
 }
 
-// Function to update the chart with new value
 function updateChartInfo(newValue: number) {
   updateChartData(getChartConfig(), newValue);
   updateChart();
@@ -101,15 +100,6 @@ function compareEntryDates(entry1: Entry, entry2: Entry): number {
 <style lang="scss" scoped>
 @import "@/styles/default";
 
-/* wrapper for graph, slider and buttons */
-#wrapper {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 #graph-and-slider,
 #slots-and-button {
   display: flex;
@@ -117,7 +107,6 @@ function compareEntryDates(entry1: Entry, entry2: Entry): number {
   justify-content: center;
 }
 
-/* container for slider and graph */
 #graph-and-slider {
   flex: 1;
 
@@ -126,13 +115,11 @@ function compareEntryDates(entry1: Entry, entry2: Entry): number {
   }
 }
 
-/* wrapper for canvas */
 #canvas-wrapper {
   @include default;
   margin: var(--default-margin);
   flex: 1;
 
-  /* chart for expressing entries */
   canvas {
     position: absolute;
     height: 100%;
@@ -147,7 +134,6 @@ function compareEntryDates(entry1: Entry, entry2: Entry): number {
   height: var(--default-size);
 }
 
-/* slot for dropdown menu */
 #fill-width-slot-wrapper {
   margin: var(--default-margin);
   flex: 1;

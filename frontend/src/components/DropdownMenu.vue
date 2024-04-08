@@ -1,16 +1,12 @@
 <template>
-  <div v-if="isOpened" class="dropdown-content">
-    <div v-if="isLoading">
-      <LoaderComponent :loading="true" />
-    </div>
-    <div v-else>
+  <div v-show="isOpened" id="container">
+    <LoaderComponent v-if="isLoading" />
+    <template v-else>
       <SearchBarComponent v-model="filter" />
-      <div class="scrollable-content">
-        <div v-for="item in filteredItems" :key="item">
-          <slot :item="item"> </slot>
-        </div>
+      <div v-for="item in filteredItems" id="items" :key="item">
+        <slot :item />
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -27,33 +23,28 @@ const props = defineProps<{
 
 const filter = ref("");
 
-const filteredItems = computed(function () {
-  const filterText = filter.value.toUpperCase();
-  return props.items.filter(function (item: string) {
-    return item.toUpperCase().includes(filterText);
-  });
-});
+const filteredItems = computed(() =>
+  props.items.filter((i) => new RegExp(filter.value, "i").test(i)),
+);
 </script>
 
-<style scoped>
-.dropdown-content {
-  display: flex;
-  flex-direction: column;
-  border-radius: 8px;
+<style scoped lang="scss">
+@import "@/styles/default";
+
+#container {
+  @include default;
+  display: block;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
-  border: 1px solid var(--col-border);
   border-top: none;
-  color: var(--col-fg-default);
 }
 
-.scrollable-content {
-  max-height: var(--width-xl);
+#items {
   overflow-y: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-}
-.scrollable-content::-webkit-scrollbar {
-  display: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 </style>
