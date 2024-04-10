@@ -30,7 +30,9 @@ watch(() => props.isOpened, (newIsOpened) => {
 });
 
 const filteredItems = computed(() =>
-  props.items.filter((i) => new RegExp(filter.value, "i").test(i)),
+  props.items
+  .filter((i) => new RegExp(filter.value, "i").test(i))
+  .sort((a, b) => a.localeCompare(b))
 );
 </script>
 
