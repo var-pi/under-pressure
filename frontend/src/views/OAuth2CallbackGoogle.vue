@@ -1,5 +1,5 @@
 <template>
-  <LoaderComponent id="loading" />
+  <LoaderComponent class="center" />
 </template>
 
 <script setup lang="ts">
@@ -23,7 +23,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-#loading {
+.center {
   position: fixed;
   left: 50%;
   top: 50%;
