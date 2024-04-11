@@ -1,12 +1,13 @@
 <template>
-  <div v-show="isOpened" id="container">
+  <div v-show="isOpened" id="dropdown">
     <LoaderComponent v-if="isLoading" />
-    <template v-else>
+    <template v-else-if="items.length > 0">
       <SearchBarComponent v-model="filter" />
-      <div v-for="item in filteredItems" id="items" :key="item">
-        <slot :item />
+      <div id="items">
+        <slot v-for="(item, index) in filteredItems" :key="item" :item :index />
       </div>
     </template>
+    <slot v-else name="fallback" />
   </div>
 </template>
 
@@ -19,6 +20,7 @@ const props = defineProps<{
   isOpened: boolean;
   isLoading: boolean;
   items: string[];
+  maxVisible: number;
 }>();
 
 const filter = ref("");
@@ -39,15 +41,17 @@ const filteredItems = computed(() =>
 <style scoped lang="scss">
 @import "@/styles/default";
 
-#container {
+#dropdown {
   @include default;
   display: block;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
   border-top: none;
+  overflow: hidden;
 }
 
 #items {
+  max-height: calc(v-bind(maxVisible) * var(--default-size));
   overflow-y: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */

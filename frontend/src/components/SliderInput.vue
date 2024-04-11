@@ -1,15 +1,12 @@
 <template>
   <div
     id="slider-wrapper"
-    :class="{ vertical: isVertical, horizontal: !isVertical }"
+    :class="{ vertical: isVertical }"
     @pointerdown="pointerDown"
     @pointermove="pointerMove"
     @pointerup="pointerUp"
   >
-    <div
-      id="slider-body"
-      :class="{ vertical: isVertical, horizontal: !isVertical }"
-    ></div>
+    <div id="slider-body" :class="{ vertical: isVertical }" />
   </div>
 </template>
 
@@ -66,7 +63,7 @@ const sliderOffset = computed(
   &.vertical {
     width: 64px;
   }
-  &.horizontal {
+  &:not(.vertical) {
     height: 64px;
   }
 }
@@ -78,7 +75,7 @@ const sliderOffset = computed(
   &.vertical {
     translate: 0 v-bind(sliderOffset);
   }
-  &.horizontal {
+  &:not(.vertical) {
     translate: v-bind(sliderOffset) 0;
   }
 }

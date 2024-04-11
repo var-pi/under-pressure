@@ -1,16 +1,16 @@
 <template>
-  <div v-if="isOpened" id="mask">
+  <div v-show="isOpened" id="mask">
     <OnClickOutside @trigger="isOpened = false">
-      <div id="container">
+      <div id="modal-container" :class="{ loading: isLoading }">
         <div id="header">Vali õppeaineid</div>
         <DropdownMenu
-          id="body"
-          v-slot="{ item }"
+          v-slot="{ item, index }"
           :is-loading
           :is-opened
           :items="subjects.all"
+          :max-visible="2.5"
         >
-          <div class="line-wrapper">
+          <div class="line-wrapper" :class="{ first: index == 0 }">
             <DefaultButton class="main-btn" @click="toggleFollowStatus(item)">
               {{ item }}
             </DefaultButton>
@@ -30,7 +30,7 @@
 <script setup lang="ts">
 import { ref, defineModel, watch } from "vue";
 import { OnClickOutside } from "@vueuse/components";
-import { api } from "@/api/api";
+import { api } from "@/api";
 
 import DropdownMenu from "@/components/DropdownMenu.vue";
 import { Subject } from "@/api/types";
@@ -93,7 +93,7 @@ watch(() => isOpened.value, fetchSubjectsIfNeeded);
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-#container {
+#modal-container {
   @include default;
   display: block;
   position: fixed;
@@ -105,16 +105,7 @@ watch(() => isOpened.value, fetchSubjectsIfNeeded);
   width: 400px;
   max-width: 95vw;
   background-color: var(--col-bg-default);
-}
 
-#header {
-  @include default;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  height: var(--default-size);
-}
-
-#body {
   .line-wrapper {
     @include default;
     position: relative;
@@ -123,6 +114,9 @@ watch(() => isOpened.value, fetchSubjectsIfNeeded);
     border-left: none !important;
     border-right: none !important;
     border-bottom: none !important;
+    &.first {
+      border-top: none !important;
+    }
   }
   .main-btn {
     @include default-font;
@@ -139,5 +133,16 @@ watch(() => isOpened.value, fetchSubjectsIfNeeded);
     border-radius: 0px !important;
     border: none !important;
   }
+}
+
+#header {
+  @include default;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  height: var(--default-size);
+}
+
+#modal-container:not(.loading) #header {
+  border-bottom: none;
 }
 </style>
