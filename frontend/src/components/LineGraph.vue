@@ -27,7 +27,7 @@ import {
   initializeChart,
   updateChartData,
 } from "@/utils/chartConfig";
-import { api } from "@/api/api";
+import { api } from "@/api";
 import { Entry } from "@/api/types";
 import { ChartData } from "@/interfaces/interfaces";
 import DefaultButton from "@/components/buttons/DefaultButton.vue";

@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import { ref, Ref } from "vue";
-import { api } from "@/api/api";
+import { api } from "@/api";
 
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
 import DropdownMenu from "@/components/DropdownMenu.vue";
