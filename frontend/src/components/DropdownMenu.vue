@@ -37,6 +37,7 @@ const filteredItems = computed(() =>
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
   border-top: none;
+  overflow: hidden;
 }
 
 #items {
