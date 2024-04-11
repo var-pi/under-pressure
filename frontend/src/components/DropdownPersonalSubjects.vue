@@ -11,7 +11,7 @@
       <DefaultButton
         class="menu-entry"
         :class="{ 'no-top-border': index == 0 }"
-        @click="emit('selectSubject', item)"
+        @click="emit('select-subject', item)"
       >
         {{ item }}
       </DefaultButton>

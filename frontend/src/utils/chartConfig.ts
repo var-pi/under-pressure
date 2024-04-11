@@ -50,23 +50,20 @@ export const updateChartData = (
   config: ChartConfiguration,
   newData: number,
 ): void => {
-  if (!config.data) {
-    config.data = { ...initialData }; // Initialize data if not already present
-  }
-
-  if (!config.data.labels) {
-    config.data.labels = []; // Initialize labels if not already present
-  }
-
-  const dataset: ChartDataset = config.data.datasets[0];
   const labels: string[] = config.data.labels as string[];
+  const dataset: ChartDataset = config.data.datasets[0];
   const currentDate: Date = new Date();
-  const previousDate: Date = parseDate(
-    config.data.labels.slice(-1)[0] as string,
-    dateStringFormat as string,
-  );
-  
-  if (previousDate.getDate() == currentDate.getDate()) {
+  const previousDate: Date | null = labels.length > 0 
+    ? parseDate(
+      labels.slice(-1)[0] as string,
+      dateStringFormat as string
+      )
+    : null;
+
+  if (previousDate === null) {
+    dataset.data.push(newData);
+    labels.push(currentDate.toLocaleDateString("et-EE", dateFormatOptions));
+  } else if (previousDate.getDate() == currentDate.getDate()) {
     // Update the last data value to newData        
     dataset.data[dataset.data.length - 1] = newData;
   } else {
