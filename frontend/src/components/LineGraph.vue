@@ -34,7 +34,6 @@ import DefaultButton from "@/components/buttons/DefaultButton.vue";
 import SliderInput from "@/components/SliderInput.vue";
 
 const props = defineProps<{ selectedSubject: string }>();
-const emit = defineEmits(["open-personal-dropdown"])
 
 let canvas: HTMLCanvasElement | null = null;
 let chart: Chart | null = null;
@@ -70,10 +69,7 @@ function updateChartInfo(newValue: number) {
 }
 
 function updateEntry() {
-  if (props.selectedSubject == "") {
-    emit('open-personal-dropdown');
-    return alert("Palun vali mõni aine.");
-  }
+  if (props.selectedSubject == "") return alert("Palun vali mõni aine.");
   api.updateEntry(props.selectedSubject, sliderValue.value);
   updateChartInfo(sliderValue.value);
 }

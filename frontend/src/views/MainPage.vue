@@ -1,6 +1,6 @@
 <template>
   <ModalMenu v-model:is-opened="isOpened.modal" />
-  <LineGraph :selected-subject="selectedSubject" @open-personal-dropdown="isOpened.personal = true">
+  <LineGraph :selected-subject="selectedSubject">
     <template #square>
       <DefaultButton id="modal-open-btn" @click="isOpened.modal = true">
         <BasicIcon name="settings.png" alt="⚙️" />
@@ -11,7 +11,6 @@
       <DropdownPersonalSubjects
         v-model:is-opened="isOpened.personal"
         @select-subject="(s) => (selectedSubject = s)"
-        @open-modal="isOpened.modal = true"
       />
     </template>
   </LineGraph>

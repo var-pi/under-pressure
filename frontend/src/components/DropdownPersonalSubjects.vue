@@ -7,19 +7,16 @@
       {{ item }}
     </DefaultButton>
   </DropdownMenu>
-  <DefaultButton v-if="isOpened && subjects.length == 0 && !isLoading" id="link-text" class="menu-btn" @click="emit('open-modal')">
-    Jälgitavaid õppeaineid saab lisada seadetest
-  </DefaultButton>
 </template>
 
 <script setup lang="ts">
-import { ref, Ref, watchEffect } from "vue";
+import { ref, Ref } from "vue";
 import { api } from "@/api/api";
 
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
 import DropdownMenu from "@/components/DropdownMenu.vue";
 
-const emit = defineEmits(["select-subject", "open-modal"]);
+const emit = defineEmits(["select-subject"]);
 
 const isOpened = defineModel<boolean>("isOpened", { required: true });
 const isLoading = ref(false);
@@ -27,18 +24,13 @@ const subjects: Ref<string[]> = ref([]);
 
 async function toggleMenu() {
   isOpened.value = !isOpened.value;
-}
-
-watchEffect(() => {
-  if (isOpened.value) {
-    (async () => {
-      isLoading.value = true;
-      subjects.value = await api.getSubjects();
-      isLoading.value = false;    
-      console.log("ended here");  
-    })();
+  if (!isOpened.value) {
+    isLoading.value = true;
+    subjects.value = await api.getSubjects();
+    isLoading.value = false;
   }
-});</script>
+}
+</script>
 
 <style scoped lang="scss">
 #dropbtn {
@@ -57,9 +49,5 @@ watchEffect(() => {
   border-left: none !important;
   border-right: none !important;
   border-bottom: none !important;
-}
-
-#link-text {
-  color: #539bf5;
 }
 </style>

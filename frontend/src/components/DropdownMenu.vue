@@ -2,7 +2,7 @@
   <div v-show="isOpened" id="container">
     <LoaderComponent v-if="isLoading" />
     <template v-else>
-      <SearchBarComponent v-if="items.length != 0" v-model="filter" />
+      <SearchBarComponent v-model="filter" />
       <div v-for="item in filteredItems" id="items" :key="item">
         <slot :item />
       </div>
