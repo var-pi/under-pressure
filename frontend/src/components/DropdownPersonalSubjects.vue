@@ -1,9 +1,23 @@
 <template>
-  <DefaultButton id="dropbtn" :class="{ opened: isOpened }" @click="toggleMenu">
+  <DefaultButton
+    id="dropbtn"
+    :class="{ opened: isOpened, ready: !isLoading }"
+    @click="toggleMenu"
+  >
     Minu õppeained
   </DefaultButton>
-  <DropdownMenu v-slot="{ item }" :is-loading :is-opened :items="subjects">
-    <DefaultButton class="menubtn" @click="emit('selectSubject', item)">
+  <DropdownMenu
+    v-slot="{ item, index }"
+    :is-loading
+    :is-opened
+    :items="subjects"
+    :max-visible="2.5"
+  >
+    <DefaultButton
+      class="menubtn"
+      :class="{ first: index == 0 }"
+      @click="emit('selectSubject', item)"
+    >
       {{ item }}
     </DefaultButton>
   </DropdownMenu>
@@ -34,20 +48,30 @@ async function toggleMenu() {
 
 <style scoped lang="scss">
 #dropbtn {
+  --total-border-height: 2px;
   width: 100%;
-  height: calc(var(--default-size) + 2px); // Account for the border
+  height: calc(var(--default-size) + var(--total-border-height));
   &.opened {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+    &.ready {
+      --total-border-height: 1px;
+      border-bottom: none;
+    }
   }
 }
 
 .menubtn {
+  --total-border-height: 1px;
   width: 100%;
-  height: calc(var(--default-size) + 1px); // Account for the border
+  height: calc(var(--default-size) + var(--total-border-height));
   border-radius: 0 !important;
   border-left: none !important;
   border-right: none !important;
   border-bottom: none !important;
+  &.first {
+    --total-border-height: 0px;
+    border-top: none !important;
+  }
 }
 </style>

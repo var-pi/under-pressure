@@ -12,11 +12,12 @@ const text = defineModel<string>({ required: true });
 input {
   @include default;
   border-radius: 0;
-  border: none;
+  border-right: none;
+  border-left: none;
   text-align: center;
   padding: 0;
   width: 100%;
-  height: var(--default-size);
+  height: calc(var(--default-size));
   caret-color: var(--col-fg-default);
 
   &:focus {
