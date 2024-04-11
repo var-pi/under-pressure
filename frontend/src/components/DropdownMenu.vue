@@ -7,9 +7,7 @@
         <slot v-for="(item, index) in filteredItems" :key="item" :item :index />
       </div>
     </template>
-    <div v-else>
-      <slot name="fallback" />
-    </div>
+    <slot v-else name="fallback" />
   </div>
 </template>
 
