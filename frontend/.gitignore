@@ -1,7 +1,6 @@
 .DS_Store
 node_modules
 /dist
-frontend/src/api/api.config.ts
 
 # local env files
 .env.local

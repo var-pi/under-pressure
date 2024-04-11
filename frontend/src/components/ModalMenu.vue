@@ -30,7 +30,7 @@
 <script setup lang="ts">
 import { ref, defineModel, watch } from "vue";
 import { OnClickOutside } from "@vueuse/components";
-import { api } from "@/api/api";
+import { api } from "@/api";
 
 import DropdownMenu from "@/components/DropdownMenu.vue";
 import { Subject } from "@/api/types";
