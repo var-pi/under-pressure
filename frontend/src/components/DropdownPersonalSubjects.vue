@@ -2,11 +2,14 @@
   <DefaultButton id="dropbtn" :class="{ opened: isOpened }" @click="toggleMenu">
     Minu õppeained
   </DefaultButton>
-  <DropdownMenu v-slot="{ item }" :is-loading :is-opened :items="subjects">
-    <DefaultButton class="menubtn" @click="emit('selectSubject', item)">
+  <DropdownMenu v-if="subjects.length != 0" v-slot="{ item }" :is-loading :is-opened :items="subjects">
+    <DefaultButton class="menu-btn" @click="emit('select-subject', item)">
       {{ item }}
     </DefaultButton>
   </DropdownMenu>
+  <DefaultButton v-else-if="isOpened" class="menu-btn" @click="emit('open-modal')">
+    Jälgitavaid õppeaineid saab lisada seadetest
+  </DefaultButton>
 </template>
 
 <script setup lang="ts">
@@ -16,7 +19,7 @@ import { api } from "@/api/api";
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
 import DropdownMenu from "@/components/DropdownMenu.vue";
 
-const emit = defineEmits(["selectSubject"]);
+const emit = defineEmits(["select-subject", "open-modal"]);
 
 const isOpened = defineModel<boolean>("isOpened", { required: true });
 const isLoading = ref(false);
@@ -42,10 +45,10 @@ async function toggleMenu() {
   }
 }
 
-.menubtn {
+.menu-btn {
   width: 100%;
   height: calc(var(--default-size) + 1px); // Account for the border
-  border-radius: 0 !important;
+  border-radius: 0;
   border-left: none !important;
   border-right: none !important;
   border-bottom: none !important;

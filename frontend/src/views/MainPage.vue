@@ -11,6 +11,7 @@
       <DropdownPersonalSubjects
         v-model:is-opened="isOpened.personal"
         @select-subject="(s) => (selectedSubject = s)"
+        @open-modal="isOpened.modal = true"
       />
     </template>
   </LineGraph>
