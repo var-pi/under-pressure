@@ -2,18 +2,18 @@
   <DefaultButton id="dropbtn" :class="{ opened: isOpened }" @click="toggleMenu">
     Minu õppeained
   </DefaultButton>
-  <DropdownMenu v-if="subjects.length != 0" v-slot="{ item }" :is-loading :is-opened :items="subjects">
+  <DropdownMenu v-slot="{ item }" :is-loading :is-opened :items="subjects">
     <DefaultButton class="menu-btn" @click="emit('select-subject', item)">
       {{ item }}
     </DefaultButton>
   </DropdownMenu>
-  <DefaultButton v-else-if="isOpened" class="menu-btn" @click="emit('open-modal')">
+  <DefaultButton v-if="isOpened && subjects.length == 0 && !isLoading" id="link-text" class="menu-btn" @click="emit('open-modal')">
     Jälgitavaid õppeaineid saab lisada seadetest
   </DefaultButton>
 </template>
 
 <script setup lang="ts">
-import { ref, Ref } from "vue";
+import { ref, Ref, watchEffect } from "vue";
 import { api } from "@/api/api";
 
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
@@ -27,13 +27,18 @@ const subjects: Ref<string[]> = ref([]);
 
 async function toggleMenu() {
   isOpened.value = !isOpened.value;
-  if (!isOpened.value) {
-    isLoading.value = true;
-    subjects.value = await api.getSubjects();
-    isLoading.value = false;
-  }
 }
-</script>
+
+watchEffect(() => {
+  if (isOpened.value) {
+    (async () => {
+      isLoading.value = true;
+      subjects.value = await api.getSubjects();
+      isLoading.value = false;    
+      console.log("ended here");  
+    })();
+  }
+});</script>
 
 <style scoped lang="scss">
 #dropbtn {
@@ -52,5 +57,9 @@ async function toggleMenu() {
   border-left: none !important;
   border-right: none !important;
   border-bottom: none !important;
+}
+
+#link-text {
+  color: #539bf5;
 }
 </style>
