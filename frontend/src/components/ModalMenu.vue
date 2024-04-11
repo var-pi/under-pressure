@@ -1,7 +1,7 @@
 <template>
-  <div v-if="isOpened" id="mask">
+  <div v-show="isOpened" id="mask">
     <OnClickOutside @trigger="isOpened = false">
-      <div id="modal-container" :class="{ ready: !isLoading }">
+      <div id="modal-container" :class="{ loading: isLoading }">
         <div id="header">Vali õppeaineid</div>
         <DropdownMenu
           v-slot="{ item, index }"
@@ -142,7 +142,7 @@ watch(() => isOpened.value, fetchSubjectsIfNeeded);
   height: var(--default-size);
 }
 
-.ready #header {
+#modal-container:not(.loading) #header {
   border-bottom: none;
 }
 </style>
