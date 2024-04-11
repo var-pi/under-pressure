@@ -6,20 +6,20 @@
   >
     Minu õppeained
   </DefaultButton>
-  <DropdownMenu
-    v-slot="{ item, index }"
-    :is-loading
-    :is-opened
-    :items="subjects"
-    :max-visible="2.5"
-  >
-    <DefaultButton
-      class="menubtn"
-      :class="{ first: index == 0 }"
-      @click="emit('selectSubject', item)"
-    >
-      {{ item }}
-    </DefaultButton>
+  <DropdownMenu :is-loading :is-opened :items="subjects" :max-visible="2.5">
+    <template #default="{ item, index }">
+      <DefaultButton
+        class="menu-entry"
+        :class="{ 'no-top-border': index == 0 }"
+        @click="emit('selectSubject', item)"
+      >
+        {{ item }}
+      </DefaultButton>
+    </template>
+
+    <template #fallback>
+      <div class="fallback menu-entry">Lisa aineid seadetes! ⚙️</div>
+    </template>
   </DropdownMenu>
 </template>
 
@@ -47,6 +47,8 @@ async function toggleMenu() {
 </script>
 
 <style scoped lang="scss">
+@import "@/styles/default";
+
 #dropbtn {
   --total-border-height: 2px;
   width: 100%;
@@ -61,7 +63,11 @@ async function toggleMenu() {
   }
 }
 
-.menubtn {
+.menu-entry {
+  &.fallback {
+    @include default;
+    color: var(--col-fg-accent);
+  }
   --total-border-height: 1px;
   width: 100%;
   height: calc(var(--default-size) + var(--total-border-height));
@@ -69,7 +75,7 @@ async function toggleMenu() {
   border-left: none !important;
   border-right: none !important;
   border-bottom: none !important;
-  &.first {
+  &.no-top-border {
     --total-border-height: 0px;
     border-top: none !important;
   }

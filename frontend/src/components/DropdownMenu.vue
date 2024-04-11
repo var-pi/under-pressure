@@ -1,12 +1,15 @@
 <template>
   <div v-show="isOpened" id="dropdown">
     <LoaderComponent v-if="isLoading" />
-    <template v-else>
+    <template v-else-if="items.length > 0">
       <SearchBarComponent v-model="filter" />
       <div id="items">
         <slot v-for="(item, index) in filteredItems" :key="item" :item :index />
       </div>
     </template>
+    <div v-else>
+      <slot name="fallback" />
+    </div>
   </div>
 </template>
 
