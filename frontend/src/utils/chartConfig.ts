@@ -65,30 +65,22 @@ export const updateChartData = (
     config.data.labels.slice(-1)[0] as string,
     dateStringFormat as string,
   );
-
-  if (previousDate.getDate == currentDate.getDate) {
-    // Update the last data value to newData
+  
+  if (previousDate.getDate() == currentDate.getDate()) {
+    // Update the last data value to newData        
     dataset.data[dataset.data.length - 1] = newData;
   } else {
     previousDate.setDate(previousDate.getDate() + 1);
     evaluateDatesBetween(previousDate, currentDate, dataset, labels);
+    dataset.data.push(newData);
     labels.push(currentDate.toLocaleDateString("et-EE", dateFormatOptions));
-    dataset.data = [...dataset.data, newData];
   }
-  console.log("Updated data to", dataset.data);
 };
 
 export const initializeChart = (
   config: ChartConfiguration,
   subjectData: { subject: string; data: Entry[] },
 ): void => {
-  if (!config.data) {
-    config.data = { ...initialData };
-  }
-
-  if (!config.data.labels) {
-    config.data.labels = [];
-  }
   const dataset: ChartDataset = config.data.datasets[0];
   const labels: string[] = config.data.labels as string[];
 
@@ -114,13 +106,6 @@ export const initializeChart = (
     labels.push(currentDateString);
     previousDate = entry.creationDate;
   }
-
-  console.log(
-    "Initialized chart with data:",
-    dataset.data,
-    "and labels:",
-    labels,
-  );
 };
 
 function evaluateDatesBetween(

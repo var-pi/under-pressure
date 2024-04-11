@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import LoaderComponent from "@/components/LoaderComponent.vue";
 import SearchBarComponent from "@/components/SearchBarComponent.vue";
 
@@ -25,8 +25,16 @@ const props = defineProps<{
 
 const filter = ref("");
 
+watch(() => props.isOpened, (newIsOpened) => {
+  if (newIsOpened) {
+    filter.value = "";
+  }
+});
+
 const filteredItems = computed(() =>
-  props.items.filter((i) => new RegExp(filter.value, "i").test(i)),
+  props.items
+  .filter((i) => new RegExp(filter.value, "i").test(i))
+  .sort((a, b) => a.localeCompare(b))
 );
 </script>
 

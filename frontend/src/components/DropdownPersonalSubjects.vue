@@ -30,7 +30,7 @@ import { api } from "@/api";
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
 import DropdownMenu from "@/components/DropdownMenu.vue";
 
-const emit = defineEmits(["selectSubject"]);
+const emit = defineEmits(["select-subject"]);
 
 const isOpened = defineModel<boolean>("isOpened", { required: true });
 const isLoading = ref(false);
