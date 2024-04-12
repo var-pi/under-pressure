@@ -11,7 +11,7 @@
       <DefaultButton
         class="menu-entry"
         :class="{ 'no-top-border': index == 0 }"
-        @click="emit('select-subject', item)"
+        @click="subjectStore.current = item"
       >
         {{ item }}
       </DefaultButton>
@@ -29,12 +29,12 @@ import { api } from "@/api";
 
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
 import DropdownMenu from "@/components/DropdownMenu.vue";
-
-const emit = defineEmits(["select-subject"]);
+import { useSubjectStore } from "@/stores/subject";
 
 const isOpened = defineModel<boolean>("isOpened", { required: true });
 const isLoading = ref(false);
 const subjects: Ref<string[]> = ref([]);
+const subjectStore = useSubjectStore();
 
 async function toggleMenu() {
   isOpened.value = !isOpened.value;

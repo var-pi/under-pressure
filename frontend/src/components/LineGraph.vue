@@ -13,9 +13,6 @@
     <div id="fill-width-slot-wrapper">
       <slot name="fill-width" />
     </div>
-    <DefaultButton id="enter-btn" @click="updateEntry">
-      {{ sliderValue }}
-    </DefaultButton>
   </div>
 </template>
 
@@ -30,10 +27,10 @@ import {
 import { api } from "@/api";
 import { Entry } from "@/api/types";
 import { ChartData } from "@/interfaces/interfaces";
-import DefaultButton from "@/components/buttons/DefaultButton.vue";
 import SliderInput from "@/components/SliderInput.vue";
+import { useEventStore } from "@/stores/event";
 
-const props = defineProps<{ selectedSubject: string }>();
+const props = defineProps<{ selectedSubject: string | null }>();
 
 let canvas: HTMLCanvasElement | null = null;
 let chart: Chart | null = null;
@@ -45,12 +42,16 @@ let isMobile = ref(false);
 const canvasMissing: Error = new Error("Canvas element is not initialized.");
 const contextMissing: Error = new Error("Failed to obtain canvas context.");
 
+const eventStore = useEventStore();
+
 onMounted(() => {
   setIfVertical();
   window.addEventListener("resize", setIfVertical);
 
   canvas = document.querySelector("canvas");
   updateChart();
+
+  eventStore.on("entryupdated", (e) => updateChartInfo(e.value));
 });
 
 function updateChart() {
@@ -68,15 +69,10 @@ function updateChartInfo(newValue: number) {
   updateChart();
 }
 
-function updateEntry() {
-  if (props.selectedSubject == "") return alert("Palun vali mõni aine.");
-  api.updateEntry(props.selectedSubject, sliderValue.value);
-  updateChartInfo(sliderValue.value);
-}
-
 watch(() => props.selectedSubject, getSubjectEntries);
 
-async function getSubjectEntries(subject: string) {
+async function getSubjectEntries(subject: string | null) {
+  if (subject == null) return alert("Palun valige mõni aine.");
   chartData.subject = subject;
   chartData.data = await api.getEntries(subject);
   chartData.data.sort(compareEntryDates);

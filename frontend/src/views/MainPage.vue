@@ -1,6 +1,6 @@
 <template>
   <ModalMenu v-model:is-opened="isOpened.modal" />
-  <LineGraph :selected-subject="selectedSubject">
+  <LineGraph :selected-subject="subjects.current">
     <template #square>
       <DefaultButton id="modal-open-btn" @click="isOpened.modal = true">
         <BasicIcon name="settings.png" alt="⚙️" />
@@ -8,12 +8,10 @@
     </template>
 
     <template #fill-width>
-      <DropdownPersonalSubjects
-        v-model:is-opened="isOpened.personal"
-        @select-subject="(s) => (selectedSubject = s)"
-      />
+      <DropdownPersonalSubjects v-model:is-opened="isOpened.personal" />
     </template>
   </LineGraph>
+  <EntryButton :value="10" />
 </template>
 
 <script setup lang="ts">
@@ -23,9 +21,11 @@ import LineGraph from "@/components/LineGraph.vue";
 import ModalMenu from "@/components/ModalMenu.vue";
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
 import BasicIcon from "@/components/BasicIcon.vue";
+import EntryButton from "@/components/EntryButton.vue";
+import { useSubjectStore } from "@/stores/subject";
 
-const selectedSubject = ref("");
 const isOpened = ref({ modal: false, personal: false });
+const subjects = useSubjectStore();
 
 watchEffect(() => {
   if (isOpened.value.modal) isOpened.value.personal = false;
