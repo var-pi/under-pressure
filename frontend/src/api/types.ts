@@ -10,5 +10,3 @@ export interface RequestError {
   statusCode: HttpStatusCode;
   message: string;
 }
-
-export type Subject = string;

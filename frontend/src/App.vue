@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="container">
     <router-view></router-view>
   </div>
 </template>
@@ -9,14 +9,16 @@
 <style scoped lang="scss">
 @import "@/styles/colors.css";
 
-#app {
+#container {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--col-bg-default);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   --default-margin: 8px;
   --default-size: 64px;
+  --default-transition-length: 0.5s;
 }
 </style>

@@ -17,7 +17,7 @@ input {
   text-align: center;
   padding: 0;
   width: 100%;
-  height: calc(var(--default-size));
+  height: var(--default-size);
   caret-color: var(--col-fg-default);
 
   &:focus {

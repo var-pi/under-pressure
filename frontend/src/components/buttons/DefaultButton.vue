@@ -1,11 +1,11 @@
 <template>
-  <DefaultButton class="default-button">
+  <BasicButton class="default-button">
     <slot />
-  </DefaultButton>
+  </BasicButton>
 </template>
 
 <script setup lang="ts">
-import DefaultButton from "./BasicButton.vue";
+import BasicButton from "./BasicButton.vue";
 </script>
 
 <style lang="scss" local>
