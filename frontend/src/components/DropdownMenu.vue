@@ -1,5 +1,5 @@
 <template>
-  <div v-show="isOpened" id="dropdown">
+  <div id="dropdown" :class="{ opened: isOpened }">
     <LoaderComponent v-if="isLoading" />
     <template v-else-if="items.length > 0">
       <SearchBarComponent v-model="filter" />
@@ -51,6 +51,17 @@ const filteredItems = computed(() =>
   border-top-right-radius: 0px;
   border-top: none;
   overflow: hidden;
+  max-height: 0px;
+  &:not(.opened) {
+    border-width: 0px;
+    transition:
+      border-width 0s var(--default-transition-length),
+      max-height var(--default-transition-length);
+  }
+  &.opened {
+    max-height: calc((v-bind(maxVisible) + 1) * var(--default-size));
+    transition: max-height var(--default-transition-length);
+  }
 }
 
 #items {

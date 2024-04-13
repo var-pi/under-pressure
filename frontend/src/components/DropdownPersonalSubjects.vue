@@ -62,16 +62,17 @@ async function toggleMenu() {
 }
 
 #dropbtn {
-  --total-border-height: 2px;
   width: 100%;
-  height: calc(var(--default-size) + var(--total-border-height));
+  height: var(--default-size);
   &.opened {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     &.ready {
-      --total-border-height: 1px;
       border-bottom: none;
     }
+  }
+  &:not(.opened) {
+    transition: all 0s var(--default-transition-length);
   }
 }
 
@@ -80,15 +81,13 @@ async function toggleMenu() {
     @include default;
     color: var(--col-fg-accent);
   }
-  --total-border-height: 1px;
   width: 100%;
-  height: calc(var(--default-size) + var(--total-border-height));
+  height: var(--default-size);
   border-radius: 0 !important;
   border-left: none !important;
   border-right: none !important;
   border-bottom: none !important;
   &.no-top-border {
-    --total-border-height: 0px;
     border-top: none !important;
   }
 }

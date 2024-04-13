@@ -6,9 +6,12 @@
     <SliderInput v-model="sliderValue" :is-vertical="!isMobile" />
   </div>
   <div id="buttons-row">
-    <ModalButton @click="isOpened.modal = true" />
+    <ModalButton
+      :is-hidden="isOpened.personal"
+      @click="isOpened.modal = true"
+    />
     <DropdownPersonalSubjects v-model:is-opened="isOpened.personal" />
-    <EntryButton :value="sliderValue" />
+    <EntryButton :value="sliderValue" :is-hidden="isOpened.personal" />
   </div>
 </template>
 

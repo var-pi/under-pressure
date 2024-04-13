@@ -15,5 +15,6 @@ const src = new URL(`../../assets/icons/${props.name}`, import.meta.url).href;
 <style scoped>
 #icon {
   width: 24px;
+  max-width: 100%;
 }
 </style>

@@ -1,7 +1,13 @@
 <template>
-  <DefaultButton id="entry-button" @click="updateEntry">
-    {{ value }}
-  </DefaultButton>
+  <ShrinkingContainer :is-hidden>
+    <DefaultButton
+      id="entry-button"
+      :class="{ hidden: isHidden }"
+      @click="updateEntry"
+    >
+      {{ value }}
+    </DefaultButton>
+  </ShrinkingContainer>
 </template>
 
 <script setup lang="ts">
@@ -9,8 +15,9 @@ import DefaultButton from "@/components/buttons/DefaultButton.vue";
 import { api } from "@/api";
 import { useSubjectStore } from "@/stores/subject";
 import { useEventStore } from "@/stores/event";
+import ShrinkingContainer from "@/components/ShrinkingContainer.vue";
 
-const props = defineProps<{ value: number }>();
+const props = defineProps<{ value: number; isHidden: boolean }>();
 const subjectStore = useSubjectStore();
 const eventStore = useEventStore();
 
@@ -24,8 +31,13 @@ function updateEntry() {
 
 <style scoped lang="scss">
 #entry-button {
-  margin: var(--default-margin);
+  right: 0;
+  position: absolute;
   width: var(--default-size);
   height: var(--default-size);
+  transition: all var(--default-transition-length);
+  &.hidden {
+    translate: calc(100% + var(--default-margin));
+  }
 }
 </style>
