@@ -44,11 +44,9 @@ watchEffect(() => {
 #chart-row {
   display: flex;
   flex: 1;
+  flex-direction: row;
   &.mobile {
     flex-direction: column;
-  }
-  &:not(.mobile) {
-    flex-direction: row;
   }
 }
 #buttons-row {

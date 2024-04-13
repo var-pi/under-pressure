@@ -74,21 +74,6 @@ function compareEntryDates(entry1: Entry, entry2: Entry): number {
 <style lang="scss" scoped>
 @import "@/styles/default";
 
-// #graph-and-slider,
-// #slots-and-button {
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: center;
-// }
-
-// #graph-and-slider {
-//   flex: 1;
-
-//   &.mobile {
-//     flex-direction: column;
-//   }
-// }
-
 #canvas-wrapper {
   @include default;
   margin: var(--default-margin);
