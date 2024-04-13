@@ -1,9 +1,9 @@
 import server from "./server";
-import { Entry, Subject } from "./types";
+import { Entry } from "./types";
 
-const getSubjectsAll = (): Promise<Subject[]> => server.get("/subjects/all");
+const getSubjectsAll = (): Promise<string[]> => server.get("/subjects/all");
 
-const getSubjects = (): Promise<Subject[]> => server.get("/subjects");
+const getSubjects = (): Promise<string[]> => server.get("/subjects");
 
 const followSubject = (subjectName: string): Promise<null> =>
   server.post(`/subjects/${subjectName}`, {});
