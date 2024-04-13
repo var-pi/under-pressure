@@ -55,5 +55,6 @@ watchEffect(() => {
 #buttons-row {
   display: flex;
   overflow: hidden;
+  transition: all var(--default-transition-length);
 }
 </style>
