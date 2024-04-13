@@ -16,7 +16,6 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   --default-margin: 8px;
   --default-size: 64px;
   --default-transition-length: 0.5s;
