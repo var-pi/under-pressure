@@ -7,7 +7,7 @@
           v-slot="{ item, index }"
           :is-loading
           :is-opened
-          :items="subjects.all"
+          :items="subjectStore.subjects.all"
           :max-visible="2.5"
         >
           <div class="line-wrapper" :class="{ first: index == 0 }">
@@ -15,7 +15,7 @@
               {{ item }}
             </DefaultButton>
             <DefaultButton
-              v-if="subjects.personal.includes(item)"
+              v-if="subjectStore.subjects.personal.includes(item)"
               class="side-btn"
             >
               <BasicIcon name="check.png" alt="✔" />
@@ -33,17 +33,18 @@ import { OnClickOutside } from "@vueuse/components";
 import { api } from "@/api";
 
 import DropdownMenu from "@/components/DropdownMenu.vue";
-import { Subject } from "@/api/types";
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
 import BasicIcon from "@/components/BasicIcon.vue";
 
-const isOpened = defineModel<boolean>("isOpened", { required: true });
+import { useSubjectStore } from "@/stores/subject";
 
-const subjects = ref({ all: [] as Subject[], personal: [] as Subject[] });
+const isOpened = defineModel<boolean>("isOpened", { required: true });
 const isLoading = ref(false);
 
+const subjectStore = useSubjectStore();
+
 function fetchSubjectsIfNeeded() {
-  if (isOpened.value && subjects.value.all.length == 0) fetchSubjects();
+  if (isOpened.value && subjectStore.subjects.all.length == 0) fetchSubjects();
 }
 
 async function fetchSubjects() {
@@ -54,25 +55,25 @@ async function fetchSubjects() {
     api.getSubjects(),
   ]);
 
-  subjects.value.all = allSubjects;
-  subjects.value.personal = personalSubjects;
+  subjectStore.subjects.all = allSubjects;
+  subjectStore.subjects.personal = personalSubjects;
 
   isLoading.value = false;
 }
 
-function toggleFollowStatus(subject: Subject) {
-  if (subjects.value.personal.includes(subject)) unfollow(subject);
+function toggleFollowStatus(subject: string) {
+  if (subjectStore.subjects.personal.includes(subject)) unfollow(subject);
   else follow(subject);
 }
 
-function follow(subject: Subject) {
-  subjects.value.personal.push(subject);
+function follow(subject: string) {
+  subjectStore.subjects.personal.push(subject);
   api.followSubject(subject);
 }
 
-function unfollow(subject: Subject) {
-  const index = subjects.value.personal.indexOf(subject);
-  subjects.value.personal.splice(index, 1);
+function unfollow(subject: string) {
+  const index = subjectStore.subjects.personal.indexOf(subject);
+  subjectStore.subjects.personal.splice(index, 1);
   api.unfollowSubject(subject);
 }
 

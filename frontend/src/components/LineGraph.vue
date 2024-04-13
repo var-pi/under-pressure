@@ -29,8 +29,7 @@ import { Entry } from "@/api/types";
 import { ChartData } from "@/interfaces/interfaces";
 import SliderInput from "@/components/SliderInput.vue";
 import { useEventStore } from "@/stores/event";
-
-const props = defineProps<{ selectedSubject: string | null }>();
+import { useSubjectStore } from "@/stores/subject";
 
 let canvas: HTMLCanvasElement | null = null;
 let chart: Chart | null = null;
@@ -43,6 +42,7 @@ const canvasMissing: Error = new Error("Canvas element is not initialized.");
 const contextMissing: Error = new Error("Failed to obtain canvas context.");
 
 const eventStore = useEventStore();
+const subjectStore = useSubjectStore();
 
 onMounted(() => {
   setIfVertical();
@@ -69,7 +69,7 @@ function updateChartInfo(newValue: number) {
   updateChart();
 }
 
-watch(() => props.selectedSubject, getSubjectEntries);
+watch(() => subjectStore.subjects.current, getSubjectEntries);
 
 async function getSubjectEntries(subject: string | null) {
   if (subject == null) return alert("Palun valige mõni aine.");

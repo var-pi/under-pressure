@@ -6,12 +6,17 @@
   >
     Minu õppeained
   </DefaultButton>
-  <DropdownMenu :is-loading :is-opened :items="subjects" :max-visible="2.5">
+  <DropdownMenu
+    :is-loading
+    :is-opened
+    :items="subjectStore.subjects.personal"
+    :max-visible="2.5"
+  >
     <template #default="{ item, index }">
       <DefaultButton
         class="menu-entry"
         :class="{ 'no-top-border': index == 0 }"
-        @click="subjectStore.current = item"
+        @click="subjectStore.subjects.current = item"
       >
         {{ item }}
       </DefaultButton>
@@ -24,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Ref } from "vue";
+import { ref } from "vue";
 import { api } from "@/api";
 
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
@@ -33,14 +38,13 @@ import { useSubjectStore } from "@/stores/subject";
 
 const isOpened = defineModel<boolean>("isOpened", { required: true });
 const isLoading = ref(false);
-const subjects: Ref<string[]> = ref([]);
 const subjectStore = useSubjectStore();
 
 async function toggleMenu() {
   isOpened.value = !isOpened.value;
   if (!isOpened.value) {
     isLoading.value = true;
-    subjects.value = await api.getSubjects();
+    subjectStore.subjects.personal = await api.getSubjects();
     isLoading.value = false;
   }
 }

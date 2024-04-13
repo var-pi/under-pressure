@@ -1,6 +1,6 @@
 <template>
   <ModalMenu v-model:is-opened="isOpened.modal" />
-  <LineGraph :selected-subject="subjects.current">
+  <LineGraph>
     <template #square>
       <DefaultButton id="modal-open-btn" @click="isOpened.modal = true">
         <BasicIcon name="settings.png" alt="⚙️" />
@@ -22,10 +22,8 @@ import ModalMenu from "@/components/ModalMenu.vue";
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
 import BasicIcon from "@/components/BasicIcon.vue";
 import EntryButton from "@/components/EntryButton.vue";
-import { useSubjectStore } from "@/stores/subject";
 
 const isOpened = ref({ modal: false, personal: false });
-const subjects = useSubjectStore();
 
 watchEffect(() => {
   if (isOpened.value.modal) isOpened.value.personal = false;

@@ -9,16 +9,15 @@ import DefaultButton from "@/components/buttons/DefaultButton.vue";
 import { api } from "@/api";
 import { useSubjectStore } from "@/stores/subject";
 import { useEventStore } from "@/stores/event";
-import { EntryUpdated } from "@/stores/events/entryUpdated";
 
 const props = defineProps<{ value: number }>();
-const subjects = useSubjectStore();
+const subjectStore = useSubjectStore();
 const eventStore = useEventStore();
 
 function updateEntry() {
-  if (subjects.current == null) return alert("Palun vali mõni aine.");
-  api.updateEntry(subjects.current, props.value);
-  const body: EntryUpdated = { subject: subjects.current, value: props.value };
-  eventStore.emit("entryupdated", body);
+  const subject = subjectStore.subjects.current;
+  if (subject == null) return alert("Palun vali mõni aine.");
+  api.updateEntry(subject, props.value);
+  eventStore.emit("entryupdated", { value: props.value });
 }
 </script>

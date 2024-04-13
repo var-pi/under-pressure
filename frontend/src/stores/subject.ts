@@ -1,8 +1,12 @@
 import { defineStore } from "pinia";
-import { Ref, ref } from "vue";
+import { ref } from "vue";
 
 export const useSubjectStore = defineStore("counter", () => {
-  const current: Ref<string | null> = ref(null);
+  const subjects = {
+    all: ref<string[]>([]),
+    personal: ref<string[]>([]),
+    current: ref<string | null>(null),
+  };
 
-  return { current };
+  return { subjects };
 });
