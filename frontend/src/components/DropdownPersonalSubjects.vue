@@ -1,31 +1,33 @@
 <template>
-  <DefaultButton
-    id="dropbtn"
-    :class="{ opened: isOpened, ready: !isLoading }"
-    @click="toggleMenu"
-  >
-    Minu õppeained
-  </DefaultButton>
-  <DropdownMenu
-    :is-loading
-    :is-opened
-    :items="subjectStore.subjects.personal"
-    :max-visible="2.5"
-  >
-    <template #default="{ item, index }">
-      <DefaultButton
-        class="menu-entry"
-        :class="{ 'no-top-border': index == 0 }"
-        @click="subjectStore.subjects.current = item"
-      >
-        {{ item }}
-      </DefaultButton>
-    </template>
+  <div id="dropdown-personal-container">
+    <DefaultButton
+      id="dropbtn"
+      :class="{ opened: isOpened, ready: !isLoading }"
+      @click="toggleMenu"
+    >
+      Minu õppeained
+    </DefaultButton>
+    <DropdownMenu
+      :is-loading
+      :is-opened
+      :items="subjectStore.subjects.personal"
+      :max-visible="2.5"
+    >
+      <template #default="{ item, index }">
+        <DefaultButton
+          class="menu-entry"
+          :class="{ 'no-top-border': index == 0 }"
+          @click="subjectStore.subjects.current = item"
+        >
+          {{ item }}
+        </DefaultButton>
+      </template>
 
-    <template #fallback>
-      <div class="fallback menu-entry">Lisa aineid seadetes! ⚙️</div>
-    </template>
-  </DropdownMenu>
+      <template #fallback>
+        <div class="fallback menu-entry">Lisa aineid seadetes! ⚙️</div>
+      </template>
+    </DropdownMenu>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -52,6 +54,12 @@ async function toggleMenu() {
 
 <style scoped lang="scss">
 @import "@/styles/default";
+
+#dropdown-personal-container {
+  margin: var(--default-margin);
+  flex: 1;
+  height: fit-content;
+}
 
 #dropbtn {
   --total-border-height: 2px;

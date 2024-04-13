@@ -1,29 +1,39 @@
 <template>
   <ModalMenu v-model:is-opened="isOpened.modal" />
-  <LineGraph>
-    <template #square>
-      <DefaultButton id="modal-open-btn" @click="isOpened.modal = true">
-        <BasicIcon name="settings.png" alt="⚙️" />
-      </DefaultButton>
-    </template>
 
-    <template #fill-width>
-      <DropdownPersonalSubjects v-model:is-opened="isOpened.personal" />
-    </template>
-  </LineGraph>
-  <EntryButton :value="10" />
+  <div id="chart-row" :class="{ mobile: isMobile }">
+    <LineGraph :is-mobile />
+    <SliderInput v-model="sliderValue" :is-vertical="!isMobile" />
+  </div>
+  <div id="buttons-row">
+    <ModalButton @click="isOpened.modal = true" />
+    <DropdownPersonalSubjects v-model:is-opened="isOpened.personal" />
+    <EntryButton :value="sliderValue" />
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect } from "vue";
+import { onMounted, ref, watchEffect } from "vue";
 import DropdownPersonalSubjects from "@/components/DropdownPersonalSubjects.vue";
 import LineGraph from "@/components/LineGraph.vue";
 import ModalMenu from "@/components/ModalMenu.vue";
-import DefaultButton from "@/components/buttons/DefaultButton.vue";
-import BasicIcon from "@/components/BasicIcon.vue";
 import EntryButton from "@/components/EntryButton.vue";
+import ModalButton from "@/components/buttons/ModalButton.vue";
+import SliderInput from "@/components/SliderInput.vue";
 
 const isOpened = ref({ modal: false, personal: false });
+const sliderValue = ref<number>(50);
+const isMobile = ref(false);
+const mobileMaxWidth = 900;
+
+onMounted(() => {
+  setIfVertical();
+  window.addEventListener("resize", setIfVertical);
+});
+
+function setIfVertical() {
+  isMobile.value = window.innerWidth < mobileMaxWidth;
+}
 
 watchEffect(() => {
   if (isOpened.value.modal) isOpened.value.personal = false;
@@ -31,8 +41,17 @@ watchEffect(() => {
 </script>
 
 <style scoped>
-#modal-open-btn {
-  width: 100%;
-  height: 100%;
+#chart-row {
+  display: flex;
+  flex: 1;
+  &.mobile {
+    flex-direction: column;
+  }
+  &:not(.mobile) {
+    flex-direction: row;
+  }
+}
+#buttons-row {
+  display: flex;
 }
 </style>

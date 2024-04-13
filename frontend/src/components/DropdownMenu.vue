@@ -25,16 +25,19 @@ const props = defineProps<{
 
 const filter = ref("");
 
-watch(() => props.isOpened, (newIsOpened) => {
-  if (newIsOpened) {
-    filter.value = "";
-  }
-});
+watch(
+  () => props.isOpened,
+  (newIsOpened) => {
+    if (newIsOpened) {
+      filter.value = "";
+    }
+  },
+);
 
 const filteredItems = computed(() =>
   props.items
-  .filter((i) => new RegExp(filter.value, "i").test(i))
-  .sort((a, b) => a.localeCompare(b))
+    .filter((i) => new RegExp(filter.value, "i").test(i))
+    .sort((a, b) => a.localeCompare(b)),
 );
 </script>
 

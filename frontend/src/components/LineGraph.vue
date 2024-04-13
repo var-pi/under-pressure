@@ -1,24 +1,12 @@
 <template>
-  <div id="graph-and-slider" :class="{ mobile: isMobile }">
-    <div id="canvas-wrapper">
-      <canvas />
-    </div>
-    <SliderInput v-model="sliderValue" :is-vertical="!isMobile" />
-  </div>
-
-  <div id="slots-and-button">
-    <div id="square-slot-wrapper">
-      <slot name="square" />
-    </div>
-    <div id="fill-width-slot-wrapper">
-      <slot name="fill-width" />
-    </div>
+  <div id="canvas-wrapper" :class="{ mobile: isMobile }">
+    <canvas />
   </div>
 </template>
 
 <script setup lang="ts">
 import Chart from "chart.js/auto";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, watch } from "vue";
 import {
   getChartConfig,
   initializeChart,
@@ -27,16 +15,14 @@ import {
 import { api } from "@/api";
 import { Entry } from "@/api/types";
 import { ChartData } from "@/interfaces/interfaces";
-import SliderInput from "@/components/SliderInput.vue";
 import { useEventStore } from "@/stores/event";
 import { useSubjectStore } from "@/stores/subject";
 
+defineProps<{ isMobile: boolean }>();
+
 let canvas: HTMLCanvasElement | null = null;
 let chart: Chart | null = null;
-const sliderValue = ref<number>(50);
 const chartData: ChartData = { subject: "", data: [] };
-const mobileMaxWidth = 900;
-let isMobile = ref(false);
 
 const canvasMissing: Error = new Error("Canvas element is not initialized.");
 const contextMissing: Error = new Error("Failed to obtain canvas context.");
@@ -45,9 +31,6 @@ const eventStore = useEventStore();
 const subjectStore = useSubjectStore();
 
 onMounted(() => {
-  setIfVertical();
-  window.addEventListener("resize", setIfVertical);
-
   canvas = document.querySelector("canvas");
   updateChart();
 
@@ -80,10 +63,6 @@ async function getSubjectEntries(subject: string | null) {
   updateChart();
 }
 
-function setIfVertical() {
-  isMobile.value = window.innerWidth < mobileMaxWidth;
-}
-
 function compareEntryDates(entry1: Entry, entry2: Entry): number {
   const date1 = new Date(entry1.creationDate);
   const date2 = new Date(entry2.creationDate);
@@ -95,20 +74,20 @@ function compareEntryDates(entry1: Entry, entry2: Entry): number {
 <style lang="scss" scoped>
 @import "@/styles/default";
 
-#graph-and-slider,
-#slots-and-button {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
+// #graph-and-slider,
+// #slots-and-button {
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: center;
+// }
 
-#graph-and-slider {
-  flex: 1;
+// #graph-and-slider {
+//   flex: 1;
 
-  &.mobile {
-    flex-direction: column;
-  }
-}
+//   &.mobile {
+//     flex-direction: column;
+//   }
+// }
 
 #canvas-wrapper {
   @include default;
@@ -120,17 +99,5 @@ function compareEntryDates(entry1: Entry, entry2: Entry): number {
     height: 100%;
     width: 100%;
   }
-}
-
-#square-slot-wrapper,
-#enter-btn {
-  margin: var(--default-margin);
-  width: var(--default-size);
-  height: var(--default-size);
-}
-
-#fill-width-slot-wrapper {
-  margin: var(--default-margin);
-  flex: 1;
 }
 </style>

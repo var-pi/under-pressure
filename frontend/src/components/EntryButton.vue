@@ -1,5 +1,5 @@
 <template>
-  <DefaultButton id="enter-btn" @click="updateEntry">
+  <DefaultButton id="entry-button" @click="updateEntry">
     {{ value }}
   </DefaultButton>
 </template>
@@ -21,3 +21,11 @@ function updateEntry() {
   eventStore.emit("entryupdated", { value: props.value });
 }
 </script>
+
+<style scoped lang="scss">
+#entry-button {
+  margin: var(--default-margin);
+  width: var(--default-size);
+  height: var(--default-size);
+}
+</style>
