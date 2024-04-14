@@ -1,19 +1,22 @@
 <template>
   <div id="dropdown-personal-container">
-    <DefaultButton
-      id="dropbtn"
-      :class="{ opened: isOpened, ready: !isLoading }"
-      @click="toggleMenu"
-    >
-      Minu õppeained
-    </DefaultButton>
     <DropdownMenu
       :is-loading
       :is-opened
       :items="subjectStore.subjects.personal"
       :max-visible="2.5"
     >
-      <template #default="{ item, index }">
+      <template #head>
+        <DefaultButton
+          id="dropbtn"
+          :class="{ opened: isOpened, ready: !isLoading }"
+          @click="toggleMenu"
+        >
+          Minu õppeained
+        </DefaultButton>
+      </template>
+
+      <template #content="{ item, index }">
         <DefaultButton
           class="menu-entry"
           :class="{ 'no-top-border': index == 0 }"
@@ -64,16 +67,8 @@ async function toggleMenu() {
 #dropbtn {
   width: 100%;
   height: var(--default-size);
-  &.opened {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    &.ready {
-      border-bottom: none;
-    }
-  }
-  &:not(.opened) {
-    transition: all 0s var(--default-transition-length);
-  }
+  border: none;
+  border-radius: 0;
 }
 
 .menu-entry {
