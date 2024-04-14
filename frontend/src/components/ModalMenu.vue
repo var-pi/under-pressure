@@ -2,25 +2,29 @@
   <div v-show="isOpened" id="mask">
     <OnClickOutside @trigger="isOpened = false">
       <div id="modal-container" :class="{ loading: isLoading }">
-        <div id="header">Vali õppeaineid</div>
         <DropdownMenu
-          v-slot="{ item, index }"
           :is-loading
           :is-opened
           :items="subjectStore.subjects.all"
           :max-visible="2.5"
         >
-          <div class="line-wrapper" :class="{ first: index == 0 }">
-            <DefaultButton class="main-btn" @click="toggleFollowStatus(item)">
-              {{ item }}
-            </DefaultButton>
-            <DefaultButton
-              v-if="subjectStore.subjects.personal.includes(item)"
-              class="side-btn"
-            >
-              <BasicIcon name="check.png" alt="✔" />
-            </DefaultButton>
-          </div>
+          <template #head>
+            <div id="header">Vali õppeaineid</div>
+          </template>
+
+          <template #content="{ item, index }">
+            <div class="line-wrapper" :class="{ first: index == 0 }">
+              <DefaultButton class="main-btn" @click="toggleFollowStatus(item)">
+                {{ item }}
+              </DefaultButton>
+              <DefaultButton
+                v-if="subjectStore.subjects.personal.includes(item)"
+                class="side-btn"
+              >
+                <BasicIcon name="check.png" alt="✔" />
+              </DefaultButton>
+            </div>
+          </template>
         </DropdownMenu>
       </div>
     </OnClickOutside>
@@ -138,8 +142,7 @@ watch(() => isOpened.value, fetchSubjectsIfNeeded);
 
 #header {
   @include default;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  border: none;
   height: var(--default-size);
 }
 
