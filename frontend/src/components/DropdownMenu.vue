@@ -1,13 +1,25 @@
 <template>
-  <div id="dropdown" :class="{ opened: isOpened }">
-    <LoaderComponent v-if="isLoading" />
-    <template v-else-if="items.length > 0">
-      <SearchBarComponent v-model="filter" />
-      <div id="items">
-        <slot v-for="(item, index) in filteredItems" :key="item" :item :index />
-      </div>
-    </template>
-    <slot v-else name="fallback" />
+  <div id="dropdown">
+    <slot name="head" />
+
+    <div id="dropdown-body" :class="{ opened: isOpened }">
+      <LoaderComponent v-if="isLoading" />
+
+      <template v-else-if="items.length > 0">
+        <SearchBarComponent v-model="filter" />
+        <div id="items">
+          <slot
+            v-for="(item, index) in filteredItems"
+            :key="item"
+            name="content"
+            :item
+            :index
+          />
+        </div>
+      </template>
+
+      <slot v-else name="fallback" />
+    </div>
   </div>
 </template>
 
@@ -45,23 +57,17 @@ const filteredItems = computed(() =>
 @import "@/styles/default";
 
 #dropdown {
-  @include default;
-  display: block;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
-  border-top: none;
+  @include border;
+  @include radius;
   overflow: hidden;
+}
+
+#dropdown-body {
   max-height: 0px;
-  &:not(.opened) {
-    border-width: 0px;
-    transition:
-      border-width 0s var(--default-transition-length),
-      max-height var(--default-transition-length);
-  }
   &.opened {
     max-height: calc((v-bind(maxVisible) + 1) * var(--default-size));
-    transition: max-height var(--default-transition-length);
   }
+  transition: max-height var(--default-transition-length);
 }
 
 #items {

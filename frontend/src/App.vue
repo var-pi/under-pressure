@@ -32,6 +32,6 @@ function setVhProperty() {
   flex-direction: column;
   --default-margin: 8px;
   --default-size: 64px;
-  --default-transition-length: 1s;
+  --default-transition-length: 5s;
 }
 </style>
