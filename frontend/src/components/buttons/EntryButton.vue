@@ -23,9 +23,11 @@ const eventStore = useEventStore();
 
 function updateEntry() {
   const subject = subjectStore.subjects.current;
-  if (subject == null) return alert("Palun vali mõni aine.");
-  api.updateEntry(subject, props.value);
-  eventStore.emit("entryupdated", { value: props.value });
+  if (subject == null) eventStore.emit("currentmissing");
+  else {
+    api.updateEntry(subject, props.value);
+    eventStore.emit("entryupdated", { value: props.value });
+  }
 }
 </script>
 
