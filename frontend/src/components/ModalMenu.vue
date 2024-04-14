@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineModel, watch } from "vue";
+import { ref, defineModel, watch, onMounted } from "vue";
 import { OnClickOutside } from "@vueuse/components";
 import { api } from "@/api";
 
@@ -41,11 +41,22 @@ import DefaultButton from "@/components/buttons/DefaultButton.vue";
 import BasicIcon from "@/components/BasicIcon.vue";
 
 import { useSubjectStore } from "@/stores/subject";
+import { useEventStore } from "@/stores/event";
 
 const isOpened = defineModel<boolean>("isOpened", { required: true });
 const isLoading = ref(false);
 
 const subjectStore = useSubjectStore();
+const eventStore = useEventStore();
+
+onMounted(() => {
+  eventStore.on("personalmissing", requestToSelect);
+});
+
+function requestToSelect() {
+  alert("Palun vali mõni aine jälgitavaks.");
+  isOpened.value = true;
+}
 
 function fetchSubjectsIfNeeded() {
   if (isOpened.value && subjectStore.subjects.all.length == 0) fetchSubjects();

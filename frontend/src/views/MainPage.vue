@@ -20,7 +20,7 @@ import { onMounted, ref, watchEffect } from "vue";
 import DropdownPersonalSubjects from "@/components/DropdownPersonalSubjects.vue";
 import LineGraph from "@/components/LineGraph.vue";
 import ModalMenu from "@/components/ModalMenu.vue";
-import EntryButton from "@/components/EntryButton.vue";
+import EntryButton from "@/components/buttons/EntryButton.vue";
 import ModalButton from "@/components/buttons/ModalButton.vue";
 import SliderInput from "@/components/SliderInput.vue";
 

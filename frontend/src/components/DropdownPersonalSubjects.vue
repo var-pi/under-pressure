@@ -20,30 +20,45 @@
         <DefaultButton
           class="menu-entry"
           :class="{ 'no-top-border': index == 0 }"
-          @click="subjectStore.subjects.current = item"
+          @click="chooseSubject(item)"
         >
           {{ item }}
         </DefaultButton>
-      </template>
-
-      <template #fallback>
-        <div class="fallback menu-entry">Lisa aineid seadetes! ⚙️</div>
       </template>
     </DropdownMenu>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { api } from "@/api";
 
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
 import DropdownMenu from "@/components/DropdownMenu.vue";
 import { useSubjectStore } from "@/stores/subject";
+import { useEventStore } from "@/stores/event";
 
 const isOpened = defineModel<boolean>("isOpened", { required: true });
 const isLoading = ref(false);
 const subjectStore = useSubjectStore();
+const eventStore = useEventStore();
+
+onMounted(() => {
+  eventStore.on("currentmissing", requestToSelect);
+});
+
+function requestToSelect() {
+  if (hasSubjects()) {
+    alert("Palun vali mõni aine.");
+    isOpened.value = true;
+  }
+}
+
+function hasSubjects(): boolean {
+  const b = subjectStore.subjects.personal.length > 0;
+  if (!b) eventStore.emit("personalmissing");
+  return b;
+}
 
 async function toggleMenu() {
   isOpened.value = !isOpened.value;
@@ -52,6 +67,12 @@ async function toggleMenu() {
     subjectStore.subjects.personal = await api.getSubjects();
     isLoading.value = false;
   }
+  hasSubjects();
+}
+
+function chooseSubject(subject: string) {
+  subjectStore.subjects.current = subject;
+  isOpened.value = false;
 }
 </script>
 
