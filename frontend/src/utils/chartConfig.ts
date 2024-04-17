@@ -35,13 +35,16 @@ export const getChartConfig = (): ChartConfiguration => {
       maintainAspectRatio: false,
       animation: false, // If true - TypeError: Cannot read properties of null (reading 'getContext')
       scales: {
+        x: {
+          display: false,
+        },
         y: {
           min: 0,
           max: 100,
           ticks: {
             stepSize: 10,
           },
-        },
+        }
       },
       plugins: {
         legend: {
