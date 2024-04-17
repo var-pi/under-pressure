@@ -41,6 +41,11 @@ export const getChartConfig = (): ChartConfiguration => {
           },
         },
       },
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
     },
   };
 };
