@@ -18,6 +18,8 @@ const initialData: ChartConfiguration["data"] = {
       data: [],
       fill: false,
       tension: 0.4,
+      pointRadius: 5.5,
+      pointHoverRadius: 5,
       spanGaps: true,
     },
   ],
@@ -43,7 +45,18 @@ export const getChartConfig = (): ChartConfiguration => {
       },
       plugins: {
         legend: {
-          display: false
+          display: false,
+        },
+        tooltip: {
+          titleFont: {
+            weight: "bold",
+            size: 15
+          },
+          bodyFont: {
+            size: 15
+          },
+          caretSize: 0,
+          caretPadding: 8,
         }
       },
     },
