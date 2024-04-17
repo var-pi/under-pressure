@@ -17,12 +17,14 @@ import { Entry } from "@/api/types";
 import { ChartData } from "@/interfaces/interfaces";
 import { useEventStore } from "@/stores/event";
 import { useSubjectStore } from "@/stores/subject";
+import zoomPlugin from "chartjs-plugin-zoom";
 
 defineProps<{ isMobile: boolean }>();
 
 let canvas: HTMLCanvasElement | null = null;
 let chart: Chart | null = null;
 const chartData: ChartData = { subject: "", data: [] };
+Chart.register(zoomPlugin);
 
 const canvasMissing: Error = new Error("Canvas element is not initialized.");
 const contextMissing: Error = new Error("Failed to obtain canvas context.");

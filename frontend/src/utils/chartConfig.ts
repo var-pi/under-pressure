@@ -47,6 +47,19 @@ export const getChartConfig = (): ChartConfiguration => {
         }
       },
       plugins: {
+        zoom: {
+          pan: {
+            enabled: true,
+            mode: 'x',
+            modifierKey: 'ctrl',
+          },
+          zoom: {
+            drag: {
+              enabled: true
+            },
+            mode: 'x',
+          },
+        },
         legend: {
           display: false,
         },
