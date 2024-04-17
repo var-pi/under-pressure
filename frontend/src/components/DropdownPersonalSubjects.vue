@@ -66,8 +66,8 @@ async function toggleMenu() {
     isLoading.value = true;
     subjectStore.subjects.personal = await api.getSubjects();
     isLoading.value = false;
+    hasSubjects();
   }
-  hasSubjects();
 }
 
 function chooseSubject(subject: string) {
