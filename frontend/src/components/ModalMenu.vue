@@ -83,12 +83,15 @@ function toggleFollowStatus(subject: string) {
 
 function follow(subject: string) {
   subjectStore.subjects.personal.push(subject);
+  subjectStore.subjects.current = subject;
   api.followSubject(subject);
 }
 
 function unfollow(subject: string) {
   const index = subjectStore.subjects.personal.indexOf(subject);
   subjectStore.subjects.personal.splice(index, 1);
+  if (subjectStore.subjects.current == subject)
+    subjectStore.subjects.current = null;
   api.unfollowSubject(subject);
 }
 
