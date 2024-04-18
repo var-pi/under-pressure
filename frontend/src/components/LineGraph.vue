@@ -39,7 +39,6 @@ onMounted(() => {
 
 function updateChart() {
   if (!canvas) throw canvasMissing;
-
   const context = canvas.getContext("2d");
   if (!context) throw contextMissing;
 
@@ -55,10 +54,13 @@ function updateChartInfo(newValue: number) {
 watch(() => subjectStore.subjects.current, getSubjectEntries);
 
 async function getSubjectEntries(subject: string | null) {
-  if (subject == null) return alert("Palun valige mõni aine.");
-  chartData.subject = subject;
-  chartData.data = await api.getEntries(subject);
-  chartData.data.sort(compareEntryDates);
+  if (subject == null) {
+    chartData.subject = "";
+    chartData.data = [];
+  } else {
+    chartData.subject = subject;
+    chartData.data = (await api.getEntries(subject)).sort(compareEntryDates);
+  }
   initializeChart(getChartConfig(), chartData);
   updateChart();
 }
