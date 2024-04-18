@@ -20,6 +20,7 @@ const initialData: ChartConfiguration["data"] = {
       tension: 0.4,
       pointRadius: 5.5,
       pointHoverRadius: 5,
+      pointHitRadius: 10,
       spanGaps: true,
     },
   ],
