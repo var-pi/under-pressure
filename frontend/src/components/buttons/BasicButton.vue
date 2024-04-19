@@ -6,14 +6,16 @@
 
 <script setup lang="ts"></script>
 
-<style scoped>
+<style scoped lang="scss">
 .basic-button {
   cursor: pointer;
   justify-content: center;
   transition: background-color 200ms;
 
-  &:hover {
-    background-color: var(--col-bg-lighter);
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--col-bg-lighter);
+    }
   }
 }
 </style>
