@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<style>
+<style scoped lang="scss">
 #v-spinner {
   display: flex;
   height: var(--default-size);

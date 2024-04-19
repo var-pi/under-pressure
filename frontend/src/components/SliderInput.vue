@@ -13,10 +13,7 @@
 <script setup lang="ts">
 import { defineModel, computed, withDefaults } from "vue";
 
-interface Props {
-  isVertical?: boolean;
-}
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<{ isVertical?: boolean }>(), {
   isVertical: false,
 });
 const model = defineModel<number>({ required: true });
