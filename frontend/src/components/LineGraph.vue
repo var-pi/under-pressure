@@ -1,5 +1,5 @@
 <template>
-  <div id="canvas-wrapper" :class="{ mobile: isMobile }" >
+  <div id="canvas-wrapper" :class="{ mobile: deviceStore.isMobile }" >
     <canvas @dblclick="resetZoomFunc()"/>
   </div>
 </template>
@@ -17,9 +17,9 @@ import { Entry } from "@/api/types";
 import { ChartData } from "@/interfaces/interfaces";
 import { useEventStore } from "@/stores/event";
 import { useSubjectStore } from "@/stores/subject";
+import { useDeviceStore } from "@/stores/device";
 import zoomPlugin from "chartjs-plugin-zoom";
 
-defineProps<{ isMobile: boolean }>();
 Chart.register(zoomPlugin);
 
 let canvas: HTMLCanvasElement | null = null;
@@ -31,6 +31,7 @@ const contextMissing: Error = new Error("Failed to obtain canvas context.");
 
 const eventStore = useEventStore();
 const subjectStore = useSubjectStore();
+const deviceStore = useDeviceStore();
 
 onMounted(() => {
   canvas = document.querySelector("canvas");
