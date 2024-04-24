@@ -1,6 +1,6 @@
 <template>
-  <div id="canvas-wrapper" :class="{ mobile: isMobile }">
-    <canvas />
+  <div id="canvas-wrapper" :class="{ mobile: isMobile }" >
+    <canvas @dblclick="resetZoomFunc()"/>
   </div>
 </template>
 
@@ -20,11 +20,11 @@ import { useSubjectStore } from "@/stores/subject";
 import zoomPlugin from "chartjs-plugin-zoom";
 
 defineProps<{ isMobile: boolean }>();
+Chart.register(zoomPlugin);
 
 let canvas: HTMLCanvasElement | null = null;
 let chart: Chart | null = null;
 const chartData: ChartData = { subject: "", data: [] };
-Chart.register(zoomPlugin);
 
 const canvasMissing: Error = new Error("Canvas element is not initialized.");
 const contextMissing: Error = new Error("Failed to obtain canvas context.");
@@ -71,6 +71,12 @@ function compareEntryDates(entry1: Entry, entry2: Entry): number {
 
   return date1 < date2 ? -1 : date1 > date2 ? 1 : 0;
 }
+
+function resetZoomFunc() {
+  if (chart !== null) {
+    chart.resetZoom();
+  }
+};
 </script>
 
 <style lang="scss" scoped>
