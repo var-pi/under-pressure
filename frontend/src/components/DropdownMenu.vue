@@ -10,7 +10,7 @@
         <div id="items">
           <slot
             v-for="(item, index) in filteredItems"
-            :key="item"
+            :key="index"
             name="content"
             :item
             :index
@@ -37,6 +37,12 @@ const props = defineProps<{
 
 const filter = ref("");
 
+const filteredItems = computed(() =>
+  props.items
+    .filter((i) => new RegExp(filter.value, "i").test(i))
+    .sort((a, b) => a.localeCompare(b)),
+);
+
 watch(
   () => props.isOpened,
   (newIsOpened) => {
@@ -44,12 +50,6 @@ watch(
       filter.value = "";
     }
   },
-);
-
-const filteredItems = computed(() =>
-  props.items
-    .filter((i) => new RegExp(filter.value, "i").test(i))
-    .sort((a, b) => a.localeCompare(b)),
 );
 </script>
 
