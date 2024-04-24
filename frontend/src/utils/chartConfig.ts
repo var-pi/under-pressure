@@ -55,7 +55,8 @@ export const getChartConfig = (): ChartConfiguration => {
           },
           zoom: {
             drag: {
-              enabled: true
+              enabled: true,
+              threshold: 50,
             },
             mode: 'x',
           },
