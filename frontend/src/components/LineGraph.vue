@@ -1,6 +1,6 @@
 <template>
-  <div id="canvas-wrapper" :class="{ mobile: isMobile }">
-    <canvas />
+  <div id="canvas-wrapper" :class="{ mobile: isMobile }" >
+    <canvas @dblclick="resetZoomFunc()"/>
   </div>
 </template>
 
@@ -17,8 +17,10 @@ import { Entry } from "@/api/types";
 import { ChartData } from "@/interfaces/interfaces";
 import { useEventStore } from "@/stores/event";
 import { useSubjectStore } from "@/stores/subject";
+import zoomPlugin from "chartjs-plugin-zoom";
 
 defineProps<{ isMobile: boolean }>();
+Chart.register(zoomPlugin);
 
 let canvas: HTMLCanvasElement | null = null;
 let chart: Chart | null = null;
@@ -71,6 +73,12 @@ function compareEntryDates(entry1: Entry, entry2: Entry): number {
 
   return date1 < date2 ? -1 : date1 > date2 ? 1 : 0;
 }
+
+function resetZoomFunc() {
+  if (chart !== null) {
+    chart.resetZoom();
+  }
+};
 </script>
 
 <style lang="scss" scoped>
