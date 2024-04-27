@@ -1,6 +1,6 @@
 <template>
-  <div id="canvas-wrapper" :class="{ mobile: deviceStore.isMobile }" >
-    <canvas @dblclick="resetZoomFunc()"/>
+  <div id="canvas-wrapper" :class="{ mobile: deviceStore.isMobile }">
+    <canvas @dblclick="resetZoomFunc()" />
   </div>
 </template>
 
@@ -13,7 +13,6 @@ import {
   updateChartData,
 } from "@/utils/chartConfig";
 import { api } from "@/api";
-import { Entry } from "@/api/types";
 import { ChartData } from "@/interfaces/interfaces";
 import { useEventStore } from "@/stores/event";
 import { useSubjectStore } from "@/stores/subject";
@@ -62,24 +61,17 @@ async function getSubjectEntries(subject: string | null) {
     chartData.data = [];
   } else {
     chartData.subject = subject;
-    chartData.data = (await api.getEntries(subject)).sort(compareEntryDates);
+    chartData.data = await api.getEntries(subject);
   }
   initializeChart(getChartConfig(), chartData);
   updateChart();
-}
-
-function compareEntryDates(entry1: Entry, entry2: Entry): number {
-  const date1 = new Date(entry1.creationDate);
-  const date2 = new Date(entry2.creationDate);
-
-  return date1 < date2 ? -1 : date1 > date2 ? 1 : 0;
 }
 
 function resetZoomFunc() {
   if (chart !== null) {
     chart.resetZoom();
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
