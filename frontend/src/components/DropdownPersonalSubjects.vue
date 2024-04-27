@@ -98,7 +98,7 @@ function chooseSubject(subject: string) {
     color: var(--col-fg-accent);
   }
   width: 100%;
-  height: var(--default-size);
+  padding: 16px;
   border-radius: 0 !important;
   border-left: none !important;
   border-right: none !important;
