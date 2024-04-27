@@ -14,14 +14,14 @@
 
           <template #content="{ item, index }">
             <div class="line-wrapper" :class="{ first: index == 0 }">
-              <DefaultButton class="main-btn" @click="toggleFollowStatus(item)">
-                {{ item }}
-              </DefaultButton>
               <DefaultButton
-                v-if="subjectStore.subjects.personal.includes(item)"
-                class="side-btn"
+                class="main-btn"
+                :class="{
+                  chosen: subjectStore.subjects.personal.includes(item),
+                }"
+                @click="toggleFollowStatus(item)"
               >
-                <BasicIcon name="check.png" alt="✔" />
+                {{ item }}
               </DefaultButton>
             </div>
           </template>
@@ -38,7 +38,7 @@ import { api } from "@/api";
 
 import DropdownMenu from "@/components/DropdownMenu.vue";
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
-import BasicIcon from "@/components/BasicIcon.vue";
+// import BasicIcon from "@/components/BasicIcon.vue";
 
 import { useSubjectStore } from "@/stores/subject";
 import { useEventStore } from "@/stores/event";
@@ -113,6 +113,8 @@ watch(() => isOpened.value, fetchSubjectsIfNeeded);
 }
 
 #modal-container {
+  --max-width: 95vw;
+
   @include default;
   display: block;
   position: fixed;
@@ -120,15 +122,15 @@ watch(() => isOpened.value, fetchSubjectsIfNeeded);
   top: 50%;
   translate: -50% -50%;
   border: none;
-  min-width: max-content;
   width: 400px;
-  max-width: 95vw;
+  min-width: max-content;
+  max-width: var(--max-width);
   background-color: var(--col-bg-default);
 
   .line-wrapper {
     @include default;
-    position: relative;
-    height: var(--default-size);
+    max-width: var(--max-width);
+    min-height: fit-content;
     border-radius: 0 !important;
     border-left: none !important;
     border-right: none !important;
@@ -139,18 +141,14 @@ watch(() => isOpened.value, fetchSubjectsIfNeeded);
   }
   .main-btn {
     @include default-font;
+    padding: 16px;
     width: 100%;
-    height: 100%;
+    height: fit-content;
     border-radius: 0px !important;
     border: none !important;
-  }
-  .side-btn {
-    position: absolute;
-    right: 0;
-    aspect-ratio: 1;
-    height: 100%;
-    border-radius: 0px !important;
-    border: none !important;
+    &.chosen {
+      color: var(--col-fg-accent);
+    }
   }
 }
 
