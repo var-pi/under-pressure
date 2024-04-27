@@ -65,7 +65,8 @@ watch(
 #dropdown-body {
   max-height: 0px;
   &.opened {
-    max-height: calc((v-bind(maxVisible) + 1) * var(--default-size));
+    --proposed-max-height: calc((v-bind(maxVisible) + 1) * var(--default-size));
+    max-height: calc(min(70vh, var(--proposed-max-height)));
   }
   transition: max-height var(--default-transition-length);
 }

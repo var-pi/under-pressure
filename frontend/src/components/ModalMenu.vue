@@ -6,7 +6,7 @@
           :is-loading
           :is-opened
           :items="subjectStore.subjects.all"
-          :max-visible="2.5"
+          :max-visible="10"
         >
           <template #head>
             <div id="header">Vali õppeaineid</div>
@@ -38,7 +38,6 @@ import { api } from "@/api";
 
 import DropdownMenu from "@/components/DropdownMenu.vue";
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
-// import BasicIcon from "@/components/BasicIcon.vue";
 
 import { useSubjectStore } from "@/stores/subject";
 import { useEventStore } from "@/stores/event";
@@ -143,7 +142,6 @@ watch(() => isOpened.value, fetchSubjectsIfNeeded);
     @include default-font;
     padding: 16px;
     width: 100%;
-    height: fit-content;
     border-radius: 0px !important;
     border: none !important;
     &.chosen {
