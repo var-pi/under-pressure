@@ -19,7 +19,10 @@
       <template #content="{ item, index }">
         <DefaultButton
           class="menu-entry"
-          :class="{ 'no-top-border': index == 0 }"
+          :class="{
+            'no-top-border': index == 0,
+            chosen: item == subjectStore.subjects.current,
+          }"
           @click="chooseSubject(item)"
         >
           {{ item }}
@@ -97,6 +100,9 @@ watch(
 .menu-entry {
   &.fallback {
     @include default;
+    color: var(--col-fg-accent);
+  }
+  &.chosen {
     color: var(--col-fg-accent);
   }
   width: 100%;
