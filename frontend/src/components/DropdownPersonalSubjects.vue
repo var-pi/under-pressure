@@ -10,7 +10,7 @@
         <DefaultButton
           id="dropbtn"
           :class="{ opened: isOpened, ready: !isLoading }"
-          @click="toggleMenu"
+          @click="isOpened = !isOpened"
         >
           Minu õppeained
         </DefaultButton>
@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { api } from "@/api";
 
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
@@ -60,20 +60,22 @@ function hasSubjects(): boolean {
   return b;
 }
 
-async function toggleMenu() {
-  isOpened.value = !isOpened.value;
-  if (!isOpened.value) {
-    isLoading.value = true;
-    subjectStore.subjects.personal = await api.getSubjects();
-    isLoading.value = false;
-    hasSubjects();
-  }
-}
-
 function chooseSubject(subject: string) {
   subjectStore.subjects.current = subject;
   isOpened.value = false;
 }
+
+watch(
+  () => isOpened.value,
+  async (b: boolean) => {
+    if (!b) return;
+
+    isLoading.value = true;
+    subjectStore.subjects.personal = await api.getSubjects();
+    isLoading.value = false;
+    hasSubjects();
+  },
+);
 </script>
 
 <style scoped lang="scss">
