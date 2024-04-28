@@ -26,7 +26,6 @@ function setVhProperty() {
 #container {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--col-bg-default);
   min-height: calc(var(--vh) * 100);
   display: flex;
   flex-direction: column;
