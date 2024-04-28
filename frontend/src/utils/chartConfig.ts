@@ -2,6 +2,7 @@
 import { ChartConfiguration, ChartDataset } from "chart.js";
 import { dateFormatOptions, dateStringFormat } from "@/utils/dateFormatOptions";
 import "@/styles/colors.css";
+import { useSubjectStore } from "@/stores/subject";
 
 // Define the initial static data
 const initialData: ChartConfiguration["data"] = {
@@ -45,21 +46,31 @@ export const getChartConfig = (): ChartConfiguration => {
           ticks: {
             stepSize: 10,
           },
-        }
+        },
       },
       plugins: {
         zoom: {
           pan: {
             enabled: true,
-            mode: 'x',
-            modifierKey: 'ctrl',
+            mode: "x",
+            modifierKey: "ctrl",
           },
           zoom: {
             drag: {
               enabled: true,
               threshold: 50,
             },
-            mode: 'x',
+            mode: "x",
+          },
+        },
+        title: {
+          display: true,
+          text: useSubjectStore().subjects.current || "",
+          color: getComputedStyle(document.documentElement).getPropertyValue(
+            "--col-fg-default",
+          ),
+          font: {
+            size: 16, // TODO Use a centralized approach.
           },
         },
         legend: {
@@ -68,14 +79,14 @@ export const getChartConfig = (): ChartConfiguration => {
         tooltip: {
           titleFont: {
             weight: "bold",
-            size: 15
+            size: 15,
           },
           bodyFont: {
-            size: 15
+            size: 15,
           },
           caretSize: 0,
           caretPadding: 8,
-        }
+        },
       },
     },
   };
@@ -89,18 +100,16 @@ export const updateChartData = (
   const labels: string[] = config.data.labels as string[];
   const dataset: ChartDataset = config.data.datasets[0];
   const currentDate: Date = new Date();
-  const previousDate: Date | null = labels.length > 0 
-    ? parseDate(
-      labels.slice(-1)[0] as string,
-      dateStringFormat as string
-      )
-    : null;
+  const previousDate: Date | null =
+    labels.length > 0
+      ? parseDate(labels.slice(-1)[0] as string, dateStringFormat as string)
+      : null;
 
   if (previousDate === null) {
     dataset.data.push(newData);
     labels.push(currentDate.toLocaleDateString("et-EE", dateFormatOptions));
   } else if (previousDate.getDate() == currentDate.getDate()) {
-    // Update the last data value to newData        
+    // Update the last data value to newData
     dataset.data[dataset.data.length - 1] = newData;
   } else {
     previousDate.setDate(previousDate.getDate() + 1);
