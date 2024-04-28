@@ -3,7 +3,7 @@
 
   <div id="chart-row" :class="{ mobile: deviceStore.isMobile }">
     <LineGraph />
-    <SliderInput v-model="sliderValue" :is-vertical="!deviceStore.isMobile"  />
+    <SliderInput v-model="sliderValue" :is-vertical="!deviceStore.isMobile" />
   </div>
   <div id="buttons-row">
     <ModalButton
@@ -24,10 +24,20 @@ import EntryButton from "@/components/buttons/EntryButton.vue";
 import ModalButton from "@/components/buttons/ModalButton.vue";
 import SliderInput from "@/components/SliderInput.vue";
 import { useDeviceStore } from "@/stores/device";
+import { useSwipeOpenClose } from "@/composables/swipeOpenClose";
 
 const isOpened = ref({ modal: false, personal: false });
 const sliderValue = ref<number>(50);
 const deviceStore = useDeviceStore();
+useSwipeOpenClose(openPersonal, closePersonal);
+
+function openPersonal() {
+  if (isOpened.value.modal == false) isOpened.value.personal = true;
+}
+
+function closePersonal() {
+  if (isOpened.value.modal == false) isOpened.value.personal = false;
+}
 
 watchEffect(() => {
   if (isOpened.value.modal) isOpened.value.personal = false;
