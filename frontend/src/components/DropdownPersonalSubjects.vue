@@ -51,7 +51,11 @@ onMounted(() => {
 });
 
 const dropdownButtonText = computed(() => {
-  return subjectStore.subjects.current !== null ? subjectStore.subjects.current : "Minu õppeained";
+  if (subjectStore.subjects.current === null) {
+    return "Minu õppeained"
+  }
+  const text = subjectStore.subjects.current;
+  return text.substring(text.indexOf(" ") + 1, text.lastIndexOf("(") - 1);
 });
 
 function requestToSelect() {
