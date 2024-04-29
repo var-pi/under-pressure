@@ -12,7 +12,7 @@
           :class="{ opened: isOpened, ready: !isLoading }"
           @click="isOpened = !isOpened"
         >
-          Minu õppeained
+          {{ dropdownButtonText }}
         </DefaultButton>
       </template>
 
@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 import { api } from "@/api";
 
 import DefaultButton from "@/components/buttons/DefaultButton.vue";
@@ -48,6 +48,10 @@ const eventStore = useEventStore();
 
 onMounted(() => {
   eventStore.on("currentmissing", requestToSelect);
+});
+
+const dropdownButtonText = computed(() => {
+  return subjectStore.subjects.current !== null ? subjectStore.subjects.current : "Minu õppeained";
 });
 
 function requestToSelect() {

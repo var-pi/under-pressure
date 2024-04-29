@@ -2,7 +2,6 @@
 import { ChartConfiguration, ChartDataset } from "chart.js";
 import { dateFormatOptions, dateStringFormat } from "@/utils/dateFormatOptions";
 import "@/styles/colors.css";
-import { useSubjectStore } from "@/stores/subject";
 
 // Define the initial static data
 const initialData: ChartConfiguration["data"] = {
@@ -61,16 +60,6 @@ export const getChartConfig = (): ChartConfiguration => {
               threshold: 50,
             },
             mode: "x",
-          },
-        },
-        title: {
-          display: true,
-          text: useSubjectStore().subjects.current || "",
-          color: getComputedStyle(document.documentElement).getPropertyValue(
-            "--col-fg-default",
-          ),
-          font: {
-            size: 16, // TODO Use a centralized approach.
           },
         },
         legend: {
