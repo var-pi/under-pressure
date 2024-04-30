@@ -1,9 +1,8 @@
-// chartConfig.ts
-import { ChartConfiguration, ChartDataset } from "chart.js";
+import { ChartConfiguration, ChartDataset, ChartOptions } from "chart.js";
 import { dateFormatOptions, dateStringFormat } from "@/utils/dateFormatOptions";
 import "@/styles/colors.css";
+import { ZoomPluginOptions } from "chartjs-plugin-zoom/types/options";
 
-// Define the initial static data
 const initialData: ChartConfiguration["data"] = {
   labels: [""],
   datasets: [
@@ -26,65 +25,72 @@ const initialData: ChartConfiguration["data"] = {
   ],
 };
 
-// Function to get the initial chart configuration
+const chartOptions: ChartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  animation: false,
+  scales: {
+    x: {
+      display: false,
+    },
+    y: {
+      min: 0,
+      max: 100,
+      ticks: {
+        stepSize: 10,
+      },
+    },
+  },
+  plugins: {
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      titleFont: {
+        weight: "bold",
+        size: 15,
+      },
+      bodyFont: {
+        size: 15,
+      },
+      caretSize: 0,
+      caretPadding: 8,
+    },
+  },
+};
+
+const zoomOptions: ZoomPluginOptions = {
+  pan: {
+    enabled: true,
+    mode: "x",
+    modifierKey: "ctrl",
+  },
+  zoom: {
+    drag: {
+      enabled: true,
+      threshold: 50,
+    },
+    pinch: {
+      enabled: true,
+    },
+    mode: "x",
+  },
+};
+
 export const getChartConfig = (): ChartConfiguration => {
   return {
     type: "line",
-    data: { ...initialData }, // Use a copy to avoid modifying the original
+    data: { ...initialData },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      animation: false, // If true - TypeError: Cannot read properties of null (reading 'getContext')
-      scales: {
-        x: {
-          display: false,
-        },
-        y: {
-          min: 0,
-          max: 100,
-          ticks: {
-            stepSize: 10,
-          },
-        },
-      },
+      ...chartOptions,
       plugins: {
-        zoom: {
-          pan: {
-            enabled: true,
-            mode: "x",
-            modifierKey: "ctrl",
-          },
-          zoom: {
-            drag: {
-              enabled: true,
-              threshold: 50,
-            },
-            pinch: {
-              enabled: true,
-            },
-            mode: "x",
-          },
-        },
-        legend: {
-          display: false,
-        },
-        tooltip: {
-          titleFont: {
-            weight: "bold",
-            size: 15,
-          },
-          bodyFont: {
-            size: 15,
-          },
-          caretSize: 0,
-          caretPadding: 8,
-        },
+        ...chartOptions.plugins,
+        zoom: zoomOptions,
       },
     },
   };
 };
 
-// Function to update chart data
 export const updateChartData = (
   config: ChartConfiguration,
   newData: number,
@@ -101,7 +107,6 @@ export const updateChartData = (
     dataset.data.push(newData);
     labels.push(currentDate.toLocaleDateString("et-EE", dateFormatOptions));
   } else if (previousDate.getDate() == currentDate.getDate()) {
-    // Update the last data value to newData
     dataset.data[dataset.data.length - 1] = newData;
   } else {
     previousDate.setDate(previousDate.getDate() + 1);
