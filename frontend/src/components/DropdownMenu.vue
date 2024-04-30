@@ -9,6 +9,13 @@
         <SearchBarComponent v-model="filter" />
         <div id="items">
           <slot
+            v-for="(priorityItem, index) in filteredPriorityItems"
+            :key="index"
+            name="priority-content"
+            :priority-item
+            :index
+          />
+          <slot
             v-for="(item, index) in filteredItems"
             :key="index"
             name="content"
@@ -32,14 +39,22 @@ const props = defineProps<{
   isOpened: boolean;
   isLoading: boolean;
   items: string[];
+  priorityItems: string[] | null;
   maxVisible: number;
 }>();
 
 const filter = ref("");
 
+const filteredPriorityItems = computed(() =>
+  (props.priorityItems ?? [])
+    .filter((item: string) => new RegExp(filter.value, "i").test(item))
+    .sort((a: string, b: string) => a.localeCompare(b)),
+);
+
 const filteredItems = computed(() =>
   props.items
-    .filter((i) => new RegExp(filter.value, "i").test(i))
+    .filter((item) => new RegExp(filter.value, "i").test(item))
+    .filter((item) => !filteredPriorityItems.value.includes(item))
     .sort((a, b) => a.localeCompare(b)),
 );
 
