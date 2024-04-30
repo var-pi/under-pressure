@@ -6,14 +6,25 @@
           :is-loading
           :is-opened
           :items="subjectStore.subjects.all"
+          :priority-items="subjectStore.subjects.personal"
           :max-visible="10"
         >
           <template #head>
             <div id="header">Vali õppeaineid</div>
           </template>
+          <template #priority-content="{ priorityItem, index}">
+            <div class="line-wrapper" :class="{ first: index == 0 }">
+              <DefaultButton
+                class="main-btn chosen"
+                @click="toggleFollowStatus(priorityItem)"
+              >
+                {{ priorityItem }}
+              </DefaultButton>
+            </div>
+          </template>
 
           <template #content="{ item, index }">
-            <div class="line-wrapper" :class="{ first: index == 0 }">
+            <div class="line-wrapper" :class="{ first: index == 0 && subjectStore.subjects.personal.length == 0}">
               <DefaultButton
                 class="main-btn"
                 :class="{

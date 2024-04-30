@@ -4,6 +4,7 @@
       :is-loading
       :is-opened
       :items="subjectStore.subjects.personal"
+      :priority-items="null"
       :max-visible="2.5"
     >
       <template #head>
