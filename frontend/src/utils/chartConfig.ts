@@ -59,6 +59,9 @@ export const getChartConfig = (): ChartConfiguration => {
               enabled: true,
               threshold: 50,
             },
+            pinch: {
+              enabled: true,
+            },
             mode: "x",
           },
         },
