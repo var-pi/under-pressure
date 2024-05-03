@@ -12,13 +12,13 @@ onMounted(() => {
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get("code");
 
-  if (!code) return router.push({ name: "home" });
+  if (!code) return router.push({ name: "app" });
 
   // Now you have the authorization code, and you can send it to your backend
   server
     .post<{ code: string }, string>("/auth", { code })
     .then((r) => sessionStorage.setItem("idTokenString", r))
-    .then(() => router.push({ name: "home" }));
+    .then(() => router.push({ name: "app" }));
 });
 </script>
 
