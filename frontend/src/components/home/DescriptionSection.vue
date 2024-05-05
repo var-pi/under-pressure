@@ -15,11 +15,19 @@
         <InfoBlock head="Stressi prognoos" body="Tegutse ennetavalt" />
       </div>
     </div>
+    <a
+      href="https://github.com/var-pi/under-pressure-public"
+      target="_blank"
+      style="color: inherit"
+    >
+      <FontAwesomeIcon id="github-icon" :icon="['fab', 'github']" size="2x" />
+    </a>
   </section>
 </template>
 
 <script setup lang="ts">
 import InfoBlock from "@/components/home/InfoBlock.vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 </script>
 
 <style lang="scss" scoped>
@@ -63,6 +71,14 @@ section {
         margin: var(--default-margin);
       }
     }
+  }
+
+  #github-icon {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    translate: -50%;
+    padding: var(--default-margin);
   }
 }
 </style>

@@ -20,6 +20,7 @@ header {
   justify-content: right;
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--col-border);
+
   button {
     height: var(--default-size);
     padding: 0 var(--default-size);
