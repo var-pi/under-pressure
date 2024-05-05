@@ -34,6 +34,7 @@ export class StarPainter {
   private maxDAlpha = this.maxAlpha;
   private dots: Dot[] = [];
   private timestamp: number;
+  private maxDt = 0.1;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -94,7 +95,7 @@ export class StarPainter {
       const newTimestamp = performance.now();
       const dt = (newTimestamp - this.timestamp) / 1000;
       this.timestamp = newTimestamp;
-      return dt;
+      return dt > this.maxDt ? 0 : dt;
     };
 
     this.clear();
