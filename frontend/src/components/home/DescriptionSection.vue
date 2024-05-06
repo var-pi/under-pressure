@@ -11,8 +11,8 @@
           head="Võrdle keskmisega"
           body="Tõde, et ka teistel on raske"
         />
-        <InfoBlock head="Avalik statistika" body="Arvesta aine koormavusega" />
-        <InfoBlock head="Stressi prognoos" body="Tegutse ennetavalt" />
+        <InfoBlock head="Avalik statistika" body="Arvesta aine koormusega" />
+        <InfoBlock head="Stressiprognoos" body="Tegutse ennetavalt" />
       </div>
     </div>
     <a
